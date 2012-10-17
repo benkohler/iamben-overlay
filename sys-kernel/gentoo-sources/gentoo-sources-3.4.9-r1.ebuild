@@ -19,7 +19,7 @@ DESCRIPTION="Full sources including the Gentoo patchset for the ${KV_MAJOR}.${KV
 SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 src_prepare() {
-	epatch ${FILESDIR}/3.4.9-lpfc-debug-fix.patch
+	epatch "${FILESDIR}"/3.4.9-lpfc-debug-fix.patch
 }
 
 pkg_postinst() {

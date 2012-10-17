@@ -3,8 +3,9 @@
 # $Header: /var/cvsroot/gentoo-x86/app-pda/barry/barry-0.17.1-r1.ebuild,v 1.1 2012/08/11 16:45:51 ssuominen Exp $
 
 EAPI="4"
+WX_GTK_VER="2.8"
 
-inherit autotools-utils bash-completion eutils toolchain-funcs
+inherit autotools-utils bash-completion eutils toolchain-funcs wxwidgets
 
 DESCRIPTION="Sync, backup, program management, and charging for BlackBerry devices"
 HOMEPAGE="http://www.netdirect.ca/software/packages/barry/"
