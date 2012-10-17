@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,12 +17,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
+DEPEND="test? ( app-admin/mce-inject )"
 
 CONFIG_CHECK="~X86_MCE"
 
-# test suite needs mce-inject, we don't have a package for it yet
-#RESTRICT="test"
+# test suite seems broken even with mce-inject available
+RESTRICT="test"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-0.8_pre1-timestamp-mcelog.patch

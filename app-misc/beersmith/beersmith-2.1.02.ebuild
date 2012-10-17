@@ -3,18 +3,18 @@
 # $Header: $
 
 EAPI=4
+WX_GTK_VER="2.9"
 
-inherit eutils
+inherit eutils wxwidgets
 
 MY_PN="BeerSmith2"
 
 DESCRIPTION="BeerSmith Home Brewing Software"
 HOMEPAGE="http://www.beersmith.com/"
-SRC_URI="x86? ( https://s3.amazonaws.com/BeerSmith2-1/BeerSmith-${PV}.deb ) 
+SRC_URI="x86? ( https://s3.amazonaws.com/BeerSmith2-1/BeerSmith-${PV}.deb )
 	amd64? ( https://s3.amazonaws.com/BeerSmith2-1/BeerSmith-${PV}_amd64.deb )"
 
 LICENSE="BeerSmith
-	wxWinLL-3
 	GPL-2"
 
 SLOT="0"
@@ -31,7 +31,8 @@ RDEPEND="media-libs/libpng:1.2
 	x11-libs/gdk-pixbuf
 	x11-libs/libSM
 	x11-libs/pango
-	x11-libs/gtk+:2"
+	x11-libs/gtk+:2
+	=x11-libs/wxGTK-2.9.3*[X]"
 
 S="${WORKDIR}"
 
@@ -42,8 +43,6 @@ src_unpack() {
 src_install() {
 	into /opt
 	dobin usr/bin/beersmith2
-	into /opt/${PN}
-	dolib usr/lib/*
 
 	insinto /usr/share/${MY_PN}
 	cd usr/share/${MY_PN}
@@ -59,8 +58,4 @@ src_install() {
 		insinto /usr/share/icons/hicolor/${size}x${size}/apps
 		doins usr/share/icons/hicolor/${size}x${size}/apps/${PN}.png
 	done
-	doicon usr/share/icons/hicolor/48x48/apps/${PN}.png
-
-	echo -n "LDPATH=/opt/${PN}/$(get_libdir)/" > "${T}/99beersmith"
-	doenvd "${T}/99beersmith"
 }

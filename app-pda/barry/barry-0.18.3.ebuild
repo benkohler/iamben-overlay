@@ -28,8 +28,8 @@ RDEPEND="
 	>=dev-libs/libtar-1.2.11-r2
 	boost?	( >=dev-libs/boost-1.33 )
 	desktop? (	dev-cpp/glibmm:2
-				>=net-libs/libgcal-0.9.6 
-				dev-cpp/libxmlpp:2.6 
+				>=net-libs/libgcal-0.9.6
+				dev-cpp/libxmlpp:2.6
 				x11-libs/wxGTK:2.8 )
 	backup?	( dev-cpp/glibmm:2
 			  dev-cpp/gtkmm:2.4
