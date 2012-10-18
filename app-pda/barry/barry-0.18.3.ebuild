@@ -68,7 +68,7 @@ src_compile() {
 
 src_install() {
 	autotools-utils_src_install
-
+	use watch || rm "${D}"/usr/bin/bwatch &> /dev/null
 	# docs
 	rm -rf "${S}"/doc/www/*.php
 	rm -rf "${S}"/doc/www/*.sh
