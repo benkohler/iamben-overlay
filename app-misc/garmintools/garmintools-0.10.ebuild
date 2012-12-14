@@ -13,5 +13,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
+DEPEND="virtual/libusb:0"
 RDEPEND="${DEPEND}"
