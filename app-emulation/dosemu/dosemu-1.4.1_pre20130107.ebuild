@@ -4,7 +4,7 @@
 
 EAPI="5"
 
-inherit eutils flag-o-matic
+inherit flag-o-matic
 
 P_FD="dosemu-freedos-1.0-bin"
 DESCRIPTION="DOS Emulator"
