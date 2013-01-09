@@ -47,7 +47,7 @@ src_configure() {
 	unset KERNEL
 
 	econf $(use_with X x) \
-        $(use_enable svga svgalib) \
+        $(use_with svga svgalib) \
         $(use_enable debug) \
         $(use_with gpm) \
         $(use_with alsa) \
