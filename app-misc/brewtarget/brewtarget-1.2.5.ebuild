@@ -17,10 +17,10 @@ KEYWORDS="~amd64"
 IUSE="kde"
 
 DEPEND="
-	>=x11-libs/qt-core-4.6:4
-	>=x11-libs/qt-gui-4.6:4
-	>=x11-libs/qt-svg-4.6:4
-	>=x11-libs/qt-webkit-4.6:4
+	>=dev-qt/qtcore-4.6:4
+	>=dev-qt/qtgui-4.6:4
+	>=dev-qt/qtsvg-4.6:4
+	>=dev-qt/qtwebkit-4.6:4
 	kde? ( media-libs/phonon )
 	!kde? ( || ( >=x11-libs/qt-phonon-4.6:4 media-libs/phonon ) )
 "
