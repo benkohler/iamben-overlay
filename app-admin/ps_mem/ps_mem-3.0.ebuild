@@ -25,6 +25,6 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}"
 
 src_install() {
-	newsbin "${DISTDIR}/${P}.py" ps_mem
+	newsbin "${DISTDIR}/${P}.py" "${PN}"
 	python_replicate_script "${D}/usr/sbin/${PN}"
 }
