@@ -24,7 +24,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND=""
-RDEPEND="media-libs/libpng:1.2
+RDEPEND="media-libs/libpng:1.5
 	sys-libs/zlib
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
