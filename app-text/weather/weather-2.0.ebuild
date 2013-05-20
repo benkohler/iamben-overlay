@@ -2,12 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-PYTHON_DEPEND="*"
-SUPPORT_PYTHON_ABIS="1"
+PYTHON_COMPAT=( python2_7 python3_2 )
 
-inherit python
+inherit python-r1
 
 DESCRIPTION="Command-line utility intended to provide quick access to current weather conditions and forecasts."
 HOMEPAGE="http://fungi.yuggoth.org/${PN}"
@@ -41,5 +40,5 @@ src_install() {
 		insinto $(python_get_sitedir)
 		doins ${PN}.py
 	}
-	python_execute_function installation
+	python_foreach_impl installation
 }
