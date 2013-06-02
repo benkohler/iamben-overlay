@@ -6,7 +6,7 @@ EAPI="4"
 
 inherit vcs-snapshot linux-info eutils toolchain-funcs
 
-COMMITID="187b1aec830e053633ddfc1e0b1e4c316c991dfa"
+COMMITID="d2e13bf0bdc72e9d19d63921056b808d5ce8ef62"
 
 DESCRIPTION="A tool to log and decode Machine Check Exceptions"
 HOMEPAGE="http://mcelog.org/"
