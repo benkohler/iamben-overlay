@@ -53,6 +53,7 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
+	epatch "${FILESDIR}/remove-gnome-aliases.patch"
 	epatch_user
 	# Regenerate marshaling code for <glib-2.31 compat
 	rm -v src/gs-marshal.{c,h} || die
