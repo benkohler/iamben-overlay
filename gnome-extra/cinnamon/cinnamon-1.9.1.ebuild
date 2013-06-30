@@ -188,7 +188,7 @@ src_install() {
 	python_optimize "${ED}usr/$(get_libdir)/cinnamon-"{settings,menu-editor}
 	# Fix broken shebangs
 	sed -e "s%#!.*python%#!$(python_get_PYTHON)%" \
-		-i "${ED}usr/bin/cinnamon-"{launcher,menu-editor,settings} \
+		-i "${ED}usr/bin/cinnamon-"{launcher,menu-editor,settings,screensaver-lock-dialog} \
 		-i "${ED}usr/$(get_libdir)/cinnamon-settings/cinnamon-settings.py" || die
 
 	# Required for gnome-shell on hardened/PaX, bug #398941
