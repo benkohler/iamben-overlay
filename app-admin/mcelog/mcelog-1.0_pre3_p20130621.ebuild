@@ -1,52 +1,59 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/app-admin/mcelog/mcelog-1.0_pre3_p20120918-r1.ebuild,v 1.5 2013/06/25 12:57:47 ago Exp $
 
-EAPI="4"
+EAPI=5
 
-inherit vcs-snapshot linux-info eutils toolchain-funcs
+inherit linux-info eutils toolchain-funcs vcs-snapshot
 
-COMMITID="b842ecb44965722ecd67bed1ed9d900073e3313f"
-
+COMMIT="b842ecb44965722ecd67bed1ed9d900073e3313f"
 DESCRIPTION="A tool to log and decode Machine Check Exceptions"
 HOMEPAGE="http://mcelog.org/"
-SRC_URI="https://github.com/andikleen/${PN}/tarball/${COMMITID} -> ${P}.tar.gz"
+SRC_URI="https://github.com/andikleen/${PN}/tarball/${COMMIT} -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE=""
+KEYWORDS="amd64 x86"
+IUSE="selinux"
 
-DEPEND="test? ( app-admin/mce-inject )"
+RDEPEND="selinux? ( sec-policy/selinux-mcelog )"
 
 CONFIG_CHECK="~X86_MCE"
 
-# test suite seems broken even with mce-inject available
+# TODO: add mce-inject to the tree to support test phase
 RESTRICT="test"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-0.8_pre1-timestamp-mcelog.patch
-
-	sed -i \
-		-e 's:-g:${CFLAGS}:g' \
-		-e 's:\tgcc:\t$(CC):g' Makefile || die "sed makefile failed"
-}
-
-src_compile() {
-	emake CC="$(tc-getCC)" || die
+	epatch "${FILESDIR}"/${PN}-0.8_pre1-timestamp-${PN}.patch \
+		"${FILESDIR}"/${P}-build.patch \
+		"${FILESDIR}"/${P}-bashism.patch
+	tc-export CC
 }
 
 src_install() {
-	dosbin mcelog
-	doman mcelog.8
+	dosbin ${PN}
 
 	insinto /etc/cron.daily
-	newins mcelog.cron mcelog
+	newins ${PN}.cron ${PN}
 
 	insinto /etc/logrotate.d/
-	newins mcelog.logrotate mcelog
+	newins ${PN}.logrotate ${PN}
 
-	newinitd "${FILESDIR}"/mcelog.init mcelog
+	newinitd "${FILESDIR}"/${PN}.init ${PN}
+
+	insinto /etc/${PN}
+	doins mcelog.conf
+	exeinto /etc/${PN}
+	doexe triggers/*
 
 	dodoc CHANGES README TODO *.pdf
+	doman ${PN}.8
+}
+
+pkg_postinst() {
+	einfo "The default configuration set is now installed in /etc/${PN}"
+	einfo "you might want to edit those files."
+	einfo
+	einfo "A sample cronjob is installed into /etc/cron.daily"
+	einfo "without executable bit (system service is the preferred method now)"
 }
