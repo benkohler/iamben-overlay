@@ -31,7 +31,7 @@ PATCHES=(
 )
 
 src_prepare() {
-	base_src_prepare
+	cmake-utils_src_prepare
 
 	# Fix docs install path
 	sed -i -e "/DOCDIR / s:\${CMAKE_PROJECT_NAME}:${PF}:" \
