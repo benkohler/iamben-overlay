@@ -61,6 +61,10 @@ src_install() {
 	if use amd64 || use x86; then
 		exeinto /usr/lib/os-probes/mounted
 		doexe os-probes/mounted/powerpc/20macosx
+
+		dodir /usr/lib/os-probes/mounted/efi
+		exeinto /usr/lib/os-probes/mounted/efi
+		doexe os-probes/mounted/x86/efi/*
 	fi
 
 	dodoc README TODO debian/changelog
