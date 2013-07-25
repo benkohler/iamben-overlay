@@ -12,7 +12,7 @@ MY_PN="BeerSmith"
 DESCRIPTION="BeerSmith Home Brewing Software"
 HOMEPAGE="http://www.beersmith.com/"
 SRC_URI="x86? ( https://s3.amazonaws.com/${MY_PN}2-1/${MY_PN}-${PV}.deb )
-  amd64? ( https://s3.amazonaws.com/${MY_PN}2-1/${MY_PN}-${PV}_amd64.deb )"
+	amd64? ( https://s3.amazonaws.com/${MY_PN}2-1/${MY_PN}-${PV}_amd64.deb )"
 
 LICENSE="${MY_PN}
 	GPL-2"
