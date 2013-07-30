@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+<repo quality="experimental" status="unofficial">
+        <name>iamben</name>
+        <description>Ben's overlay</description>
+        <owner>
+                <email>bkohler@gmail.com</email>
+                <name>Ben Kohler</name>
+        </owner>
+        <source type="git">https://github.com/benkohler/iamben-overlay.git</source>
+</repo>
+</repositories>
