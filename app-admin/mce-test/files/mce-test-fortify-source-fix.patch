@@ -1,0 +1,12 @@
+diff -ur mce-test-20120424/cases/function/hwpoison/tinjpage.c mce-test-20120424.new/cases/function/hwpoison/tinjpage.c
+--- mce-test-20120424/cases/function/hwpoison/tinjpage.c	2013-09-03 16:16:33.907378037 -0500
++++ mce-test-20120424.new/cases/function/hwpoison/tinjpage.c	2013-09-03 16:17:51.307921323 -0500
+@@ -379,7 +379,7 @@
+ 	char *page;
+ 	char fn[30];
+ 	snprintf(fn, 30, TMPDIR "~test%d", tmpcount++);
+-	int fd = open(fn, O_RDWR|O_TRUNC|O_CREAT);
++	int fd = open(fn, O_RDWR|O_TRUNC|O_CREAT, S_IRUSR|S_IWUSR);
+ 	if (fd < 0)
+ 		err("open temp file");
+ 	write(fd, fn, 4);
