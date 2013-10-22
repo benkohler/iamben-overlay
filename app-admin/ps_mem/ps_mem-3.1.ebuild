@@ -25,6 +25,6 @@ src_install() {
 	doman ${PN}.1
 	dodoc README.md
 
-	newsbin ${PN}.py "${PN}"
+	dosbin ${PN}
 	python_replicate_script "${D}/usr/sbin/${PN}"
 }
