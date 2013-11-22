@@ -32,7 +32,7 @@ RDEPEND="media-libs/libpng:1.5
 	x11-libs/libSM
 	x11-libs/libX11
 	x11-libs/pango
-	=x11-libs/wxGTK-2.9.3*[X]"
+	x11-libs/wxGTK:2.9/2.9.3"
 
 S="${WORKDIR}"
 

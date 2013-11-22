@@ -7,11 +7,11 @@ EAPI=4
 inherit multilib
 
 MY_PN="GarminPlugin"
-S="${WORKDIR}/adiesner-${MY_PN}-ee0849f/src"
+S="${WORKDIR}/${MY_PN}-${PV}/src"
 
 DESCRIPTION="Linux Garmin Communicator Plugin"
 HOMEPAGE="http://www.andreas-diesner.de/garminplugin/doku.php"
-SRC_URI="https://github.com/adiesner/${MY_PN}/tarball/V${PV} -> ${P}.tar.gz"
+SRC_URI="https://github.com/adiesner/${MY_PN}/archive/V${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

@@ -1,8 +1,8 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/wxGTK/wxGTK-2.9.3.1.ebuild,v 1.2 2012/05/05 03:52:23 jdhore Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/wxGTK/wxGTK-2.9.3.1-r1.ebuild,v 1.1 2013/08/10 06:07:51 dirtyepic Exp $
 
-EAPI="3"
+EAPI="5"
 
 inherit eutils flag-o-matic
 
@@ -15,14 +15,16 @@ SRC_URI="mirror://sourceforge/wxpython/wxPython-src-${PV}.tar.bz2
 	doc? ( mirror://sourceforge/wxpython/wxPython-docs-${PV}.tar.bz2 )"
 
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
-IUSE="X aqua compat doc debug gnome gstreamer opengl pch sdl tiff"
+IUSE="+X aqua compat doc debug gnome gstreamer opengl pch sdl tiff webkit"
+
+SLOT="2.9/2.9.3"
 
 RDEPEND="
 	dev-libs/expat
 	sdl?    ( media-libs/libsdl )
 	X?  (
 		>=dev-libs/glib-2.22:2
-		media-libs/libpng:0
+		media-libs/libpng:0=
 		sys-libs/zlib
 		virtual/jpeg
 		>=x11-libs/gtk+-2.18:2
@@ -37,6 +39,7 @@ RDEPEND="
 			media-libs/gst-plugins-base:0.10 )
 		opengl? ( virtual/opengl )
 		tiff?   ( media-libs/tiff:0 )
+		webkit? ( net-libs/webkit-gtk:2 )
 		)
 	aqua? (
 		>=x11-libs/gtk+-2.4[aqua=]
@@ -46,16 +49,16 @@ RDEPEND="
 
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
+	opengl? ( virtual/glu )
 	X?  (
 		x11-proto/xproto
 		x11-proto/xineramaproto
 		x11-proto/xf86vidmodeproto
 		)"
-#		test? ( dev-util/cppunit )
+#	test? ( dev-util/cppunit )
 
 PDEPEND=">=app-admin/eselect-wxwidgets-1.4"
 
-SLOT="2.9"
 LICENSE="wxWinLL-3
 		GPL-2
 		doc?	( wxWinFDL-3 )"
@@ -64,6 +67,7 @@ S="${WORKDIR}/wxPython-src-${PV}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-collision.patch
+	epatch_user
 }
 
 src_configure() {
@@ -72,9 +76,9 @@ src_configure() {
 	append-flags -fno-strict-aliasing
 
 	# X independent options
-	myconf="--with-zlib=sys
+	myconf="$(use_enable compat compat26)
+			--with-zlib=sys
 			--with-expat=sys
-			$(use_enable compat compat26)
 			$(use_enable pch precomp-headers)
 			$(use_with sdl)"
 
@@ -93,7 +97,6 @@ src_configure() {
 	# wxGTK options
 	#   --enable-graphics_ctx - needed for webkit, editra
 	#   --without-gnomevfs - bug #203389
-
 	use X && \
 		myconf="${myconf}
 			--enable-graphics_ctx
@@ -103,6 +106,7 @@ src_configure() {
 			--with-libjpeg=sys
 			--without-gnomevfs
 			$(use_enable gstreamer mediactrl)
+			$(use_enable webkit webview)
 			$(use_with opengl)
 			$(use_with gnome gnomeprint)
 			$(use_with !gnome gtkprint)
@@ -133,7 +137,7 @@ src_configure() {
 
 src_compile() {
 	cd "${S}"/wxgtk_build
-	emake || die "make failed."
+	emake
 }
 
 # Currently fails - need to investigate
@@ -146,7 +150,7 @@ src_compile() {
 src_install() {
 	cd "${S}"/wxgtk_build
 
-	emake DESTDIR="${D}" install || die "install failed."
+	emake DESTDIR="${D}" install
 
 	cd "${S}"/docs
 	dodoc changes.txt readme.txt
@@ -156,6 +160,10 @@ src_install() {
 	if use doc; then
 		dohtml -r "${S}"/docs/doxygen/out/html/*
 	fi
+
+	# Stray windows locale file, causes collisions
+	local wxmsw="${ED}usr/share/locale/it/LC_MESSAGES/wxmsw.mo"
+	[[ -e ${wxmsw} ]] && rm "${wxmsw}"
 }
 
 pkg_postinst() {
