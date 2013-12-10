@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
+
+inherit multilib
 
 DESCRIPTION="SquidAnalyzer"
 HOMEPAGE="http://squidanalyzer.darold.net/"
@@ -13,9 +15,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-DEPEND="dev-perl/GD
-	dev-perl/GDGraph
-	dev-perl/GD-Graph3d"
+DEPEND="dev-lang/perl"
 RDEPEND="${DEPEND}"
 
 src_configure() {
