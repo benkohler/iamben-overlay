@@ -24,23 +24,20 @@ HOMEPAGE="http://www.freedesktop.org/wiki/Software/kmscon"
 
 LICENSE="MIT LGPL-2.1 BSD-2"
 SLOT="0"
-IUSE="dbus debug doc +drm +fbdev +gles2 multiseat +optimizations +pango pixman
-static-libs systemd udev +unicode wayland"
+IUSE="debug doc +drm +fbdev +gles2 multiseat +optimizations +pango pixman
+static-libs systemd +unicode"
 
 COMMON_DEPEND="
 	dev-libs/glib:2
 	>=virtual/udev-172
 	x11-libs/libxkbcommon
 	sys-apps/libtsm
-	dbus? ( sys-apps/dbus )
 	drm? ( x11-libs/libdrm
 		>=media-libs/mesa-8.0.3[egl,gbm] )
 	gles2? ( >=media-libs/mesa-8.0.3[gles2] )
 	pango? ( x11-libs/pango )
 	systemd? ( sys-apps/systemd )
-	udev? ( virtual/udev )
-	pixman? ( x11-libs/pixman )
-	wayland? ( dev-libs/wayland )"
+	pixman? ( x11-libs/pixman )"
 RDEPEND="${COMMON_DEPEND}
 	x11-misc/xkeyboard-config"
 DEPEND="${COMMON_DEPEND}
@@ -134,18 +131,14 @@ src_configure() {
 	# xkbcommon not in portage
 	econf \
 		$(use_enable static-libs static) \
-		$(use_enable udev hotplug) \
-		$(use_enable dbus eloop-dbus) \
 		$(use_enable debug) \
 		$(use_enable optimizations) \
 		$(use_enable multiseat multi-seat) \
-		$(use_enable wayland wlterm) \
 		--htmldir=/usr/share/doc/${PF}/html \
 		--with-video=${VIDEO} \
 		--with-fonts=${FONTS} \
 		--with-renderers=${RENDER} \
-		--with-sessions=dummy,terminal \
-		--enable-kmscon
+		--with-sessions=dummy,terminal
 }
 
 src_install() {
