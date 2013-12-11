@@ -28,7 +28,6 @@ IUSE="debug doc +drm +fbdev +gles2 multiseat +optimizations +pango pixman
 static-libs systemd +unicode"
 
 COMMON_DEPEND="
-	dev-libs/glib:2
 	>=virtual/udev-172
 	x11-libs/libxkbcommon
 	sys-apps/libtsm
