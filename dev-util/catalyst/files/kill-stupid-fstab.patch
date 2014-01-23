@@ -1,0 +1,16 @@
+diff -ur catalyst-2.0.16/targets/support/livecdfs-update.sh catalyst-2.0.16.new/targets/support/livecdfs-update.sh
+--- catalyst-2.0.16/targets/support/livecdfs-update.sh	2014-01-22 18:15:45.799473785 -0600
++++ catalyst-2.0.16.new/targets/support/livecdfs-update.sh	2014-01-22 18:46:33.562716964 -0600
+@@ -100,9 +100,9 @@
+ echo "####################################################" >> /etc/fstab
+ 
+ # fstab tweaks
+-echo "tmpfs	/					tmpfs	defaults	0 0" >> /etc/fstab
+-echo "tmpfs	/lib/firmware			tmpfs	defaults	0 0" >> /etc/fstab
+-echo "tmpfs	/usr/portage			tmpfs	defaults	0 0" >> /etc/fstab
++#echo "tmpfs	/					tmpfs	defaults	0 0" >> /etc/fstab
++#echo "tmpfs	/lib/firmware			tmpfs	defaults	0 0" >> /etc/fstab
++#echo "tmpfs	/usr/portage			tmpfs	defaults	0 0" >> /etc/fstab
+ # If /usr/lib/X11/xkb/compiled then make it tmpfs
+ if [ -d /usr/lib/X11/xkb/compiled ]
+ then
