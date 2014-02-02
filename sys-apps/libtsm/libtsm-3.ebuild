@@ -13,5 +13,5 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="!!=app-misc/kmscon-7"
+DEPEND="!!=sys-apps/kmscon-7"
 RDEPEND="${DEPEND}"
