@@ -7,7 +7,7 @@ EAPI="5"
 inherit cmake-utils vcs-snapshot
 
 if [[ ${PV} != 9999* ]]; then
-	COMMIT="3d75db05e9e1c78da8503987cc6c4b5e9965bb34"
+	COMMIT="4982c03e3d566402719292f3bfc2b61c7aba38a6"
 	SRC_URI="https://github.com/FreeRDP/FreeRDP/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 else
