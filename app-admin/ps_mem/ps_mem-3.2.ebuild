@@ -7,7 +7,7 @@ EAPI=5
 PYTHON_COMPAT=( python{2_7,3_2,3_3} )
 inherit python-r1 vcs-snapshot
 
-COMMIT="d7622c956e93881dad353f0b4ae812af9a64e3d1"
+COMMIT="73e97546ce9c06a1f3169d4232afc8eff8cb14ed"
 
 DESCRIPTION="Memory usage analyzer"
 HOMEPAGE="https://github.com/pixelb/${PN}"
