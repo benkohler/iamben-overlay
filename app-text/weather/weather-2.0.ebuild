@@ -6,7 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_7 python3_3 )
 
-inherit python-r1
+inherit eutils python-r1
 
 DESCRIPTION="Command-line utility intended to provide quick access to current weather conditions and forecasts."
 HOMEPAGE="http://fungi.yuggoth.org/${PN}"
@@ -22,6 +22,7 @@ RDEPEND="${DEPEND}"
 
 src_prepare () {
 	sed -i -e 's/^#setpath/setpath/' ${PN}rc
+	epatch "${FILESDIR}/${PN}-py3.3-fix.patch"
 }
 
 src_install() {
