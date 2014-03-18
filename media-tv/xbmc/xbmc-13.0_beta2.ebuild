@@ -1,6 +1,6 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-tv/xbmc/xbmc-9999.ebuild,v 1.148 2013/07/20 16:10:24 aballier Exp $
+# $Header: $
 
 EAPI=5
 
@@ -13,14 +13,14 @@ inherit eutils python-single-r1 multiprocessing autotools
 
 case ${PV} in
 9999)
-	EGIT_REPO_URI="git://github.com/xbmc/xbmc.git"
+	EGIT_REPO_URI="git://github.com/${PN}/${PN}.git"
 	inherit git-2
 	SRC_URI=""
 	;;
 *_alpha*|*_beta*|*_rc*)
 	MY_PV="Gotham_${PV#*_}"
 	MY_P="${PN}-${MY_PV}"
-	SRC_URI="https://github.com/xbmc/xbmc/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
 	;;
 *)
