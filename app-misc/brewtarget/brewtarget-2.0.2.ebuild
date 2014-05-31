@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PLOCALES="ca cs de en es fr hu it nb nl pl pt ru sv"
+PLOCALES="ca cs da de el en es fr hu it nb nl pl pt ru sv zh"
 inherit cmake-utils l10n
 
 DESCRIPTION="Application to create and manage beer recipes"
