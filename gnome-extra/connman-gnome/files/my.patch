@@ -1,0 +1,52 @@
+diff -ur connman-gnome-0.7/common/connman-client.c connman-gnome-0.7.new/common/connman-client.c
+--- connman-gnome-0.7/common/connman-client.c	2014-07-12 15:40:56.983735573 -0500
++++ connman-gnome-0.7.new/common/connman-client.c	2014-07-12 15:44:20.568983398 -0500
+@@ -325,7 +325,7 @@
+ }
+ 
+ void connman_client_scan(ConnmanClient *client, const gchar *device,
+-						connman_scan_reply callback, gpointer user_data)
++						net_connman_scan_reply callback, gpointer user_data)
+ {
+ 	ConnmanClientPrivate *priv = CONNMAN_CLIENT_GET_PRIVATE(client);
+ 	DBusGProxy *proxy;
+@@ -428,7 +428,7 @@
+ }
+ 
+ void connman_client_connect_async(ConnmanClient *client, const gchar *network,
+-		connman_connect_reply callback, gpointer userdata)
++		net_connman_connect_reply callback, gpointer userdata)
+ {
+ 	ConnmanClientPrivate *priv = CONNMAN_CLIENT_GET_PRIVATE(client);
+ 	DBusGProxy *proxy;
+diff -ur connman-gnome-0.7/common/connman-client.h connman-gnome-0.7.new/common/connman-client.h
+--- connman-gnome-0.7/common/connman-client.h	2014-07-12 15:40:56.982735576 -0500
++++ connman-gnome-0.7.new/common/connman-client.h	2014-07-12 15:44:00.377959115 -0500
+@@ -70,13 +70,13 @@
+ gboolean connman_client_set_ipv4(ConnmanClient *client, const gchar *device,
+ 				struct ipv4_config *ipv4_config);
+ void connman_client_scan(ConnmanClient *client, const gchar *device,
+-							connman_scan_reply callback, gpointer user_data);
++							net_connman_scan_reply callback, gpointer user_data);
+ 
+ void connman_client_connect(ConnmanClient *client, const gchar *network);
+ void connman_client_disconnect(ConnmanClient *client, const gchar *network);
+ gchar *connman_client_get_security(ConnmanClient *client, const gchar *network);
+ void connman_client_connect_async(ConnmanClient *client, const gchar *network,
+-				connman_connect_reply callback, gpointer userdata);
++				net_connman_connect_reply callback, gpointer userdata);
+ void connman_client_set_remember(ConnmanClient *client, const gchar *network,
+ 							gboolean remember);
+ 
+diff -ur connman-gnome-0.7/common/connman-dbus.xml connman-gnome-0.7.new/common/connman-dbus.xml
+--- connman-gnome-0.7/common/connman-dbus.xml	2014-07-12 15:40:56.983735573 -0500
++++ connman-gnome-0.7.new/common/connman-dbus.xml	2014-07-12 15:41:33.025784820 -0500
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8" ?>
+ 
+ <node name="/">
+-  <interface name="connman">
++  <interface name="net.connman">
+     <method name="GetProperties">
+       <arg type="a{sv}" direction="out"/>
+     </method>
