@@ -27,10 +27,9 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	pushd icons/
-	for i in *png; do
-		pngfix -q ${i} || \
-		einfo "pngfix-ing ${i}" && \
-		pngfix -q --suffix=fixed ${i} || \
+	for i in connman-signal-??.png; do
+		einfo "pngfix-ing ${i}"
+		pngfix -q --suffix=fixed ${i}
 		mv ${i}fixed ${i}
 	done
 	popd
