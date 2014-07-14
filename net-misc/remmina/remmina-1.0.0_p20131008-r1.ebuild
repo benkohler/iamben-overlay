@@ -8,7 +8,7 @@ inherit gnome2-utils cmake-utils
 
 if [[ ${PV} != 9999 ]]; then
 	inherit vcs-snapshot
-	COMMIT="b6a55ae6f4633d55f8f03e7ce2eeb5899514a8fc"
+	COMMIT="26b814aec6e930746d079c885449dd50d3484fb0"
 	SRC_URI="https://github.com/FreeRDP/Remmina/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
 else
@@ -34,7 +34,7 @@ RDEPEND="
 	avahi? ( net-dns/avahi[gtk3] )
 	ayatana? ( dev-libs/libappindicator )
 	crypt? ( dev-libs/libgcrypt )
-	freerdp? ( >=net-misc/freerdp-1.1.0_beta1_p20130710 )
+	freerdp? ( >=net-misc/freerdp-1.1.0_beta1_p20140709[client] )
 	gnome-keyring? ( gnome-base/libgnome-keyring )
 	ssh? ( net-libs/libssh[sftp] )
 	telepathy? ( net-libs/telepathy-glib )
@@ -53,9 +53,7 @@ DOCS=( README )
 
 src_prepare() {
 	epatch "${FILESDIR}/remmina-external_tools.patch"
-	has_version ">=net-misc/freerdp-1.1.0_beta1_p20130816" && \
-		epatch "${FILESDIR}/fix-for-freerdp-20130816-changes.patch"
-
+	epatch "${FILESDIR}/fix-for-removed-freerdp-function.patch"
 	cmake-utils_src_prepare
 }
 
