@@ -53,6 +53,7 @@ DOCS=( README )
 
 src_prepare() {
 	epatch "${FILESDIR}/remmina-external_tools.patch"
+	epatch "${FILESDIR}/fix-for-removed-freerdp-function.patch"
 	cmake-utils_src_prepare
 }
 

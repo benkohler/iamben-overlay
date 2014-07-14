@@ -1,0 +1,11 @@
+diff -ur remmina-1.0.0_p20131008/remmina-plugins/rdp/rdp_plugin.c remmina-1.0.0_p20131008.fixed/remmina-plugins/rdp/rdp_plugin.c
+--- remmina-1.0.0_p20131008/remmina-plugins/rdp/rdp_plugin.c	2014-07-14 12:13:33.535688472 -0500
++++ remmina-1.0.0_p20131008.fixed/remmina-plugins/rdp/rdp_plugin.c	2014-07-14 12:15:22.729458429 -0500
+@@ -1095,7 +1095,6 @@
+ 	if (! service->register_plugin((RemminaPlugin*) &remmina_rdps))
+ 		return FALSE;
+ 
+-	freerdp_channels_global_init();
+ 	remmina_rdp_settings_init();
+ 
+ 	return TRUE;
