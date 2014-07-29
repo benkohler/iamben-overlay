@@ -33,7 +33,7 @@ RDEPEND="
 	x11-libs/libxkbfile
 	avahi? ( net-dns/avahi[gtk3] )
 	ayatana? ( dev-libs/libappindicator )
-	crypt? ( dev-libs/libgcrypt )
+	crypt? ( dev-libs/libgcrypt:0 )
 	freerdp? ( >=net-misc/freerdp-1.1.0_beta1_p20140709[client] )
 	gnome-keyring? ( gnome-base/libgnome-keyring )
 	ssh? ( net-libs/libssh[sftp] )
