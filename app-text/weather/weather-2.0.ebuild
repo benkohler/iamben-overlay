@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 python3_2 python3_3 )
 
 inherit eutils python-single-r1
 
-DESCRIPTION="Command-line utility intended to provide quick access to current weather conditions and forecasts."
+DESCRIPTION="Command-line utility intended to provide quick access to current weather conditions and forecasts"
 HOMEPAGE="http://fungi.yuggoth.org/${PN}"
 SRC_URI="${HOMEPAGE}/src/${P}.tar.xz"
 
