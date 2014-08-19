@@ -12,11 +12,12 @@ if [[ ${PV} != 9999 ]]; then
 	SRC_URI="https://github.com/FreeRDP/Remmina/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
 else
-	inherit git-2
+	inherit git-r3
 	SRC_URI=""
 	EGIT_REPO_URI="git://github.com/FreeRDP/Remmina.git
 		https://github.com/FreeRDP/Remmina.git"
 	KEYWORDS=""
+	EGIT_BRANCH="gtk3"
 fi
 
 DESCRIPTION="A GTK+ RDP, VNC, XDMCP and SSH client"
