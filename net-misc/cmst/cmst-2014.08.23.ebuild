@@ -1,0 +1,35 @@
+# Copyright 1999-2014 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+EAPI=5
+
+inherit qmake-utils
+
+DESCRIPTION="Qt GUI for Connman with system tray icon"
+HOMEPAGE="https://github.com/andrew-bibb/cmst"
+SRC_URI="${HOMEPAGE}/archive/${P}.tar.gz"
+
+LICENSE=""
+SLOT="0"
+KEYWORDS="~amd64"
+IUSE=""
+
+S="${WORKDIR}/${PN}-${P}"
+
+DEPEND="net-misc/connman
+	dev-qt/qtbase:5
+	dev-qt/qtdbus:5
+	dev-qt/qtgui:5
+	dev-qt/qtwidgets:5
+	x11-libs/libxkbcommon"
+RDEPEND="${DEPEND}"
+
+src_compile() {
+	eqmake5
+	emake
+}
+
+src_install() {
+	emake INSTALL_ROOT="${D}" install
+}
