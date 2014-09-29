@@ -40,9 +40,6 @@ src_prepare() {
 	l10n_find_plocales_changes "${S}/translations" bt_ .ts
 	l10n_for_each_disabled_locale_do remove_locale
 
-	# Fix desktop file
-	sed -i -e '/^Encoding=/d' ${PN}.desktop.in || die
-
 	cmake-utils_src_prepare
 }
 
