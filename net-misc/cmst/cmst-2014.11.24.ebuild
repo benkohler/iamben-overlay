@@ -12,7 +12,7 @@ SRC_URI="${HOMEPAGE}/archive/${P}.tar.gz"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 S="${WORKDIR}/${PN}-${P}"
