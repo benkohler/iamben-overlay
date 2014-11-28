@@ -18,7 +18,7 @@ IUSE=""
 S="${WORKDIR}/${PN}-${P}"
 
 DEPEND="net-misc/connman
-	dev-qt/qtbase:5
+	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
