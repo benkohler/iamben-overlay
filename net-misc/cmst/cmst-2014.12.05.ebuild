@@ -26,6 +26,10 @@ DEPEND="net-misc/connman
 	x11-libs/libxkbcommon"
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+	sed -i -e 's/Version=1.1/Version=1.0/' -e '/Categories/ s/$/;/'
+}
+
 src_compile() {
 	eqmake5
 	emake
