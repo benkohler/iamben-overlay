@@ -27,7 +27,9 @@ DEPEND="net-misc/connman
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	sed -i -e 's/Version=1.1/Version=1.0/' -e '/Categories/ s/$/;/'
+	sed -i misc/desktop/cmst.desktop \
+		-e 's/Version=1.1/Version=1.0/' \
+		-e '/Categories/ s/$/;/'
 }
 
 src_compile() {
