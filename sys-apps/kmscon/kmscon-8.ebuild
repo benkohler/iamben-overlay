@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,10 +6,7 @@ EAPI=5
 
 if [[ $PV = *9999* ]]; then
 	scm_eclass=git-2
-	EGIT_REPO_URI="
-				git://people.freedesktop.org/~dvdhrm/${PN}
-				git://github.com/dvdhrm/${PN}.git
-				git://github.com/dvdhrm/${PN}.git"
+	EGIT_REPO_URI="git://people.freedesktop.org/~dvdhrm/${PN}"
 	SRC_URI=""
 	KEYWORDS=""
 else
@@ -24,18 +21,17 @@ HOMEPAGE="http://www.freedesktop.org/wiki/Software/kmscon"
 
 LICENSE="MIT LGPL-2.1 BSD-2"
 SLOT="0"
-IUSE="debug doc +drm +fbdev +gles2 multiseat +optimizations +pango pixman
-static-libs systemd +unicode"
+IUSE="debug doc +drm +fbdev +gles2 multiseat +optimizations +pango pixman static-libs +unicode"
 
 COMMON_DEPEND="
 	>=virtual/udev-172
 	x11-libs/libxkbcommon
-	sys-apps/libtsm
+	sys-libs/libtsm
 	drm? ( x11-libs/libdrm
 		>=media-libs/mesa-8.0.3[egl,gbm] )
 	gles2? ( >=media-libs/mesa-8.0.3[gles2] )
-	pango? ( x11-libs/pango )
-	systemd? ( sys-apps/systemd )
+	multiseat? ( sys-apps/systemd )
+	pango? ( x11-libs/pango dev-libs/glib:2 )
 	pixman? ( x11-libs/pixman )"
 RDEPEND="${COMMON_DEPEND}
 	x11-misc/xkeyboard-config"
@@ -44,8 +40,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-proto/xproto
 	doc? ( dev-util/gtk-doc )"
 
-REQUIRED_USE="gles2? ( drm )
-	multiseat? ( systemd )"
+REQUIRED_USE="gles2? ( drm )"
 
 # args - names of renderers to enable
 renderers_enable() {
