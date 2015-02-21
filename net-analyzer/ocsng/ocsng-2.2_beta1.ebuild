@@ -19,7 +19,7 @@ DEPEND=">=virtual/mysql-4.1
 	>=www-apache/mod_perl-1.29
 	>=dev-lang/php-4.3.2[zip,apache2]
 	>=dev-perl/XML-Simple-2.12
-	>=perl-core/Compress-Raw-Zlib-1.64.0
+	>=perl-core/Compress-Raw-Zlib-2.64.0
 	>=dev-perl/DBI-1.40
 	>=dev-perl/DBD-mysql-2.9004
 	>=dev-perl/Apache-DBI-0.93
