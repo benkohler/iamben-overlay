@@ -17,7 +17,7 @@ SRC_URI="https://github.com/tenchman/${PN}/tarball/${COMMIT} -> ${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="ftp"
+IUSE="filter ftp proctitle upstream"
 
 DEPEND="sys-devel/bison
 	sys-devel/flex"
@@ -39,7 +39,10 @@ src_prepare () {
 
 src_configure() {
 	local mycmakeargs=(
+		$(cmake-utils_use filter FILTER_SUPPORT)
 		$(cmake-utils_use ftp FTP_SUPPORT)
+		$(cmake-utils_use proctitle PROCTITLE_SUPPORT)
+		$(cmake-utils_use upstream UPSTREAM_SUPPORT)
 	)
 	cmake-utils_src_configure
 }
