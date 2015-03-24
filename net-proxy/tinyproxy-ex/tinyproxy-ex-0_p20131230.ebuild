@@ -17,10 +17,11 @@ SRC_URI="https://github.com/tenchman/${PN}/tarball/${COMMIT} -> ${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="filter ftp proctitle upstream"
+IUSE="diet filter ftp proctitle upstream"
 
 DEPEND="sys-devel/bison
-	sys-devel/flex"
+	sys-devel/flex
+	diet? ( dev-libs/dietlibc )"
 RDEPEND="${DEPEND}
 	!net-proxy/tinyproxy"
 
@@ -35,10 +36,12 @@ src_prepare () {
 		-e "s|nogroup|${UPN}|g" \
 		-e 's|/var/run/|/run/|g' \
 		doc/${PN}.conf.in || die "sed failed"
+	sed -i -e "/^FIND_PROGRAM(DIET/d" CMakeLists.txt
 }
 
 src_configure() {
-	local mycmakeargs=(
+	local mycmakeargs=(i
+		$(cmake-utils_use diet DIET)
 		$(cmake-utils_use filter FILTER_SUPPORT)
 		$(cmake-utils_use ftp FTP_SUPPORT)
 		$(cmake-utils_use proctitle PROCTITLE_SUPPORT)
