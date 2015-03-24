@@ -17,7 +17,7 @@ SRC_URI="https://github.com/tenchman/${PN}/tarball/${COMMIT} -> ${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="ftp"
 
 DEPEND="sys-devel/bison
 	sys-devel/flex"
@@ -35,6 +35,13 @@ src_prepare () {
 		-e "s|nogroup|${UPN}|g" \
 		-e 's|/var/run/|/run/|g' \
 		doc/${PN}.conf.in || die "sed failed"
+}
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use ftp FTP_SUPPORT)
+	)
+	cmake-utils_src_configure
 }
 
 src_install() {
