@@ -13,7 +13,7 @@ get_config() {
     fi
 }
 
-: ${CONFFILE:="/etc/${SVCNAME}.conf"}
+: ${CONFFILE:="/etc/${SVCNAME}/${SVCNAME}.conf"}
 
 command=/usr/sbin/tinyproxy
 command_args="-c ${CONFFILE}"
