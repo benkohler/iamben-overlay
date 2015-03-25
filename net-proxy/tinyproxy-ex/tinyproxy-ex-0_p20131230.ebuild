@@ -36,12 +36,13 @@ src_prepare () {
 		-e "s|nogroup|${UPN}|g" \
 		-e 's|/var/run/|/run/|g' \
 		doc/${PN}.conf.in || die "sed failed"
-	sed -i -e "/^FIND_PROGRAM(DIET/d" CMakeLists.txt
+
+		epatch "${FILESDIR}/tinyproxy-ex_dietlibc-fix.patch"
 }
 
 src_configure() {
 	local mycmakeargs=(i
-		$(cmake-utils_use diet DIET)
+		$(cmake-utils_use diet USE_DIET)
 		$(cmake-utils_use filter FILTER_SUPPORT)
 		$(cmake-utils_use ftp FTP_SUPPORT)
 		$(cmake-utils_use proctitle PROCTITLE_SUPPORT)

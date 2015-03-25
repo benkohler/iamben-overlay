@@ -1,0 +1,46 @@
+diff -ur tinyproxy-ex-0_p20131230.old/CMakeLists.txt tinyproxy-ex-0_p20131230/CMakeLists.txt
+--- tinyproxy-ex-0_p20131230.old/CMakeLists.txt	2015-03-25 09:41:20.928752405 -0500
++++ tinyproxy-ex-0_p20131230/CMakeLists.txt	2015-03-25 09:40:53.923906401 -0500
+@@ -4,17 +4,6 @@
+ SET(PACKAGE "tinyproxy-ex")
+ SET(VERSION "1.6.4.3")
+ 
+-# look if we have dietlibc installed and if so, build against it
+-FIND_PROGRAM(DIET diet PATH /opt/diet/bin /usr/bin /bin)
+-IF(DIET)
+-  MESSAGE("-- Found dietlibc gcc wrapper: ${DIET}")
+-  SET(CMAKE_C_COMPILER ${CMAKE_CURRENT_BINARY_DIR}/dietgcc)
+-  CONFIGURE_FILE(dietgcc.in ${CMAKE_CURRENT_BINARY_DIR}/dietgcc)
+-  SET(DIET_FOUND "YES")
+-ELSE(DIET)
+-  SET(DIET_FOUND "NO")
+-ENDIF(DIET)
+-
+ SET(CMAKE_C_FLAGS "-Os -ffunction-sections -fdata-sections -I ${CMAKE_CURRENT_BINARY_DIR}/src -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CMAKE_CURRENT_SOURCE_DIR}/src")
+ SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--gc-sections")
+ 
+@@ -26,6 +15,17 @@
+   "Enable filtering of domains/URLs.")
+ SET(PROCTITLE_SUPPORT OFF CACHE BOOL
+   "Include support for status indicators via proctitle.")
++SET(USE_DIET OFF CACHE BOOL
++  "Build against dietlibc.")
++
++IF(USE_DIET)
++  FIND_PROGRAM(DIET diet PATH /opt/diet/bin /usr/bin /bin)
++  MESSAGE("-- Found dietlibc gcc wrapper: ${DIET}")
++  SET(CMAKE_C_COMPILER ${CMAKE_CURRENT_BINARY_DIR}/dietgcc)
++  CONFIGURE_FILE(dietgcc.in ${CMAKE_CURRENT_BINARY_DIR}/dietgcc)
++  SET(DIET_FOUND "YES")
++ENDIF(USE_DIET)
++
+ 
+ SET(CONFIGDIR "/etc/${PACKAGE}" CACHE STRING
+   "The location for configuraton files")
+@@ -113,5 +113,5 @@
+ MESSAGE("  FTP support:         ${FTP_SUPPORT}")
+ MESSAGE("  Proctitle support:   ${PROCTITLE_SUPPORT}")
+ MESSAGE("  Upstream support:    ${UPSTREAM_SUPPORT}")
+-MESSAGE("  Build with dietlibc: ${DIET_FOUND}")
++MESSAGE("  Build with dietlibc: ${USE_DIET}")
+ MESSAGE(" ================================================")
