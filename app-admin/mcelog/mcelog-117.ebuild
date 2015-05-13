@@ -31,7 +31,8 @@ src_prepare() {
 
 src_install() {
 	default
-
+	
+	insinto /etc/logrotate.d/
 	newins ${PN}.logrotate ${PN}
 
 	newinitd "${FILESDIR}"/${PN}.init-r1 ${PN}
