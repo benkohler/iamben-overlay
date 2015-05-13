@@ -31,7 +31,10 @@ src_prepare() {
 
 src_install() {
 	default
-	
+
+	insinto /etc/cron.daily
+	newins ${PN}.cron ${PN}
+
 	insinto /etc/logrotate.d/
 	newins ${PN}.logrotate ${PN}
 
@@ -44,4 +47,7 @@ src_install() {
 pkg_postinst() {
 	einfo "The default configuration set is now installed in /etc/${PN}"
 	einfo "you might want to edit those files."
+	einfo
+	einfo "A sample cronjob is installed into /etc/cron.daily"
+	einfo "without executable bit (system service is the preferred method now)"
 }
