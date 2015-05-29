@@ -30,6 +30,7 @@ src_prepare() {
 	sed -i misc/desktop/cmst.desktop \
 		-e 's/Version=1.1/Version=1.0/' \
 		-e '/Categories/ s/$/;/'
+	rm misc/desktop/cmst-autostart.desktop
 }
 
 src_compile() {
