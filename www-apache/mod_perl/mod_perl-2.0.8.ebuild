@@ -26,6 +26,7 @@ SLOT="1"
 DEPEND="
 	>=www-servers/apache-2.4
 	>=dev-perl/Apache-Test-1.360
+	dev-perl/CGI
 	dev-lang/perl
 	www-servers/apache
 	|| ( www-servers/apache[-threads] dev-lang/perl[ithreads] )
