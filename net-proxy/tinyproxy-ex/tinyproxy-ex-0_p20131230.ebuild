@@ -22,12 +22,12 @@ IUSE="diet filter ftp proctitle upstream"
 DEPEND="sys-devel/bison
 	sys-devel/flex
 	diet? ( dev-libs/dietlibc )"
-RDEPEND="${DEPEND}
+RDEPEND="diet? ( dev-libs/dietlibc )
 	!net-proxy/tinyproxy"
 
 pkg_setup() {
-    enewgroup ${UPN}
-    enewuser ${UPN} "" "" "" ${UPN}
+	enewgroup ${UPN}
+	enewuser ${UPN} "" "" "" ${UPN}
 }
 
 src_prepare () {
@@ -54,7 +54,7 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	newinitd ${FILESDIR}/${PN}.initd tinyproxy-ex
+	newinitd "${FILESDIR}/${PN}.initd" tinyproxy-ex
 	systemd_dounit "${FILESDIR}/${PN}.service"
 	systemd_dotmpfilesd "${FILESDIR}/${PN}.tmpfiles.conf"
 }
