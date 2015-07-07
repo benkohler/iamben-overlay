@@ -23,7 +23,6 @@ HOMEPAGE="https://github.com/tbursztyka/connman-ui"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="net-misc/connman
