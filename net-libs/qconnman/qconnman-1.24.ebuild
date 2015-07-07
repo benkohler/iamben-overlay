@@ -22,4 +22,3 @@ src_compile() {
 	eqmake4 PREFIX="${ED}/usr"
 	emake
 }
-

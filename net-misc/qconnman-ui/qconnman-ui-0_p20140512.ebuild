@@ -22,5 +22,5 @@ DEPEND="dev-qt/qtcore:4
 RDEPEND="${DEPEND}"
 
 src_configure() {
-	eqmake4 PREFIX=${ED}/usr
+	eqmake4 PREFIX="${ED}/usr"
 }
