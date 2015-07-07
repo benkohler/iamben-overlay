@@ -16,8 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="dev-libs/qtcore:4
-	dev-libs/qtgui:4
+DEPEND="dev-qt/qtcore:4
+	dev-qt/qtgui:4
 	net-libs/qconnman"
 RDEPEND="${DEPEND}"
 
