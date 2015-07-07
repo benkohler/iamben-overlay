@@ -5,7 +5,7 @@
 EAPI=5
 inherit qmake-utils vcs-snapshot
 
-DESCRIPTION=""
+DESCRIPTION="Qt connman library"
 HOMEPAGE="https://bitbucket.org/devonit/qconnman/"
 SRC_URI="https://bitbucket.org/devonit/${PN}/get/v${PV}.tar.bz2 -> ${P}.tar.bz2"
 
