@@ -7,16 +7,18 @@ inherit qmake-utils vcs-snapshot
 
 COMMIT="b54504dfd26d8e8cf100d1d4ea527a1e01190531"
 
-DESCRIPTION="A ConnMan management interface that is used on O.S. Systems products"
+DESCRIPTION="A QT4 ConnMan management interface that is used on O.S. Systems products"
 HOMEPAGE="https://github.com/OSSystems/qconnman-ui"
 SRC_URI="https://github.com/OSSystems/qconnman-ui/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
-LICENSE=""
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="net-libs/qconnman"
+DEPEND="dev-libs/qtcore:4
+	dev-libs/qtgui:4
+	net-libs/qconnman"
 RDEPEND="${DEPEND}"
 
 src_configure() {
