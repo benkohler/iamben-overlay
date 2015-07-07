@@ -19,7 +19,8 @@ IUSE=""
 DEPEND="dev-qt/qtcore:4
 	dev-qt/qtgui:4
 	net-libs/qconnman"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	net-misc/connman"
 
 src_configure() {
 	eqmake4 PREFIX="${ED}/usr"

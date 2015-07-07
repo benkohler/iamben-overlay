@@ -26,11 +26,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="net-misc/connman
-	>=dev-libs/glib-2.28:2
+DEPEND=">=dev-libs/glib-2.28:2
 	x11-libs/gtk+:3
 	>=sys-apps/dbus-1.4"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	net-misc/connman"
 
 src_prepare() {
 	eautoreconf

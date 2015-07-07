@@ -14,9 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="net-misc/connman
-	sys-apps/dbus"
-RDEPEND="${DEPEND}"
+DEPEND="dev-qt/qtcore:4
+	dev-qt/qtdbus:4
+	dev-qt/qtgui:4"
+RDEPEND="${DEPEND}
+	net-misc/connman"
 
 src_compile() {
 	eqmake4 PREFIX="${ED}/usr"
