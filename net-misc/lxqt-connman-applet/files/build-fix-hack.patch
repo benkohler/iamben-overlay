@@ -1,0 +1,11 @@
+diff -ur lxqt-connman-applet-0_p20150716/CMakeLists.txt lxqt-connman-applet-0_p20150716.new/CMakeLists.txt
+--- lxqt-connman-applet-0_p20150716/CMakeLists.txt	2015-07-18 08:42:46.717058060 -0500
++++ lxqt-connman-applet-0_p20150716.new/CMakeLists.txt	2015-07-18 08:43:26.453208516 -0500
+@@ -9,6 +9,7 @@
+ find_package(Qt5Svg REQUIRED)
+ find_package(Qt5LinguistTools REQUIRED QUIET)
+ 
++include(${LXQT_USE_FILE})
+ include(LXQtTranslate)
+ 
+ if(NOT CMAKE_BUILD_TYPE)
