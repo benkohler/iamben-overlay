@@ -1,0 +1,54 @@
+From d01e7d31b82ba4d7d16f1686ec2c9a3a57a40016 Mon Sep 17 00:00:00 2001
+From: Christian Surlykke <christian@surlykke.dk>
+Date: Thu, 16 Jul 2015 10:26:25 +0200
+Subject: [PATCH] Fix #6
+
+---
+ CMakeLists.txt                 |  3 +--
+ lxqt-connman-applet.desktop.in | 15 +++++++--------
+ 2 files changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d68ce73..4d59556 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,7 +71,6 @@ qt5_add_dbus_interface(DBUS_GENERATED net.connman.Manager.xml net.connman.Manage
+ qt5_add_dbus_interface(DBUS_GENERATED net.connman.Service.xml net.connman.Service)
+ qt5_add_dbus_interface(DBUS_GENERATED net.connman.Technology.xml net.connman.Technology)
+ 
+-message(INFO "DBUS_GENERATED: ${DBUS_GENERATED}")
+ 
+ include_directories(
+     ${CMAKE_CURRENT_SOURCE_DIR}
+@@ -112,5 +111,5 @@ target_link_libraries(${PROJECT_NAME}
+ 
+ install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+ install(FILES   ${CONFIG_FILES}    DESTINATION ${APP_SHARE_DIR})
+-install(FILES   ${DESKTOP_FILES}   DESTINATION share/applications)
++install(FILES   ${DESKTOP_FILES}   DESTINATION ${LXQT_ETC_XDG_DIR}/autostart)
+ 
+diff --git a/lxqt-connman-applet.desktop.in b/lxqt-connman-applet.desktop.in
+index 3843d42..710ae4f 100644
+--- a/lxqt-connman-applet.desktop.in
++++ b/lxqt-connman-applet.desktop.in
+@@ -1,12 +1,11 @@
+ [Desktop Entry]
+ Type=Application
+-Name=Network Management
+-GenericName=Configure network
+-Exec=lxqt-connman-applet
++Name=LXQt ConnMan applet
++GenericName=Network Management
++Comment=LXQt panel applet to handle ConnMan
+ Icon=preferences-system-network
+-Categories=Settings;DesktopSettings;Qt;LXQt;
++TryExec=lxqt-connman-applet
++Exec=lxqt-connman-applet
++Categories=Network;
+ OnlyShowIn=LXQt;
+-X-LXQt-Need-Tray=true
+-X-LXQt-Module=true
+-
+-TRANSLATIONS_DIR=translations
++X-LXQt-Need-Tray=true
+\ No newline at end of file

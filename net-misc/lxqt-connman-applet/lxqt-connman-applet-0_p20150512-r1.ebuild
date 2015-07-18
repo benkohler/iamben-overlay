@@ -5,7 +5,7 @@
 EAPI=5
 inherit cmake-utils eutils vcs-snapshot
 
-COMMIT="d01e7d31b82ba4d7d16f1686ec2c9a3a57a40016"
+COMMIT="00c4cf39d60e9326719adc818b4a00841d2305b9"
 
 DESCRIPTION="LXQt system-tray applet for connman"
 HOMEPAGE="https://github.com/surlykke/lxqt-connman-applet"
@@ -23,10 +23,9 @@ RDEPEND="dev-qt/qtcore:5
 	dev-qt/qtwidgets:5
 	lxqt-base/liblxqt"
 DEPEND="${RDEPEND}
-	dev-qt/linguist-tools:5
-	>=dev-util/cmake-3.0.2"
+	dev-qt/linguist-tools:5"
 
 src_prepare() {
-	epatch "${FILESDIR}"/build-fix-hack.patch
+	epatch "${FILESDIR}"/desktop-file-fixes.patch
 	cmake-utils_src_prepare
 }
