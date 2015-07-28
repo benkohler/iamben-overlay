@@ -15,7 +15,7 @@ IUSE=""
 
 DEPEND=">=virtual/mysql-4.1
 	>=dev-lang/perl-5.8
-	>www-servers/apache-2.4[apache2_modules_alias,apache2_modules_authn_core,apache2_modules_authn_core,apache2_modules_authz_core,apache2_modules_authz_host,apache2_modules_authz_user,apache_modules_dir,apache2_modules_include,apache2_modules_mime,apache2_modules_socache_shmcb,apache2_modules_unixd]
+	>www-servers/apache-2.4[apache2_modules_alias,apache2_modules_authn_core,apache2_modules_authn_core,apache2_modules_authz_core,apache2_modules_authz_host,apache2_modules_authz_user,apache2_modules_dir,apache2_modules_include,apache2_modules_mime,apache2_modules_socache_shmcb,apache2_modules_unixd]
 	>=www-apache/mod_perl-1.29
 	>=dev-lang/php-4.3.2[zip,apache2,gd]
 	>=dev-perl/XML-Simple-2.12
