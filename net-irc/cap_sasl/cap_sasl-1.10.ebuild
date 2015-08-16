@@ -32,12 +32,14 @@ src_install() {
 
 pkg_postinst() {
 	if [[ -z ${REPLACING_VERSIONS} ]]; then
-		elog "To install the script for your user: "
-		elog "   mkdir -p ~/.irssi/scripts/"
-		elog "   ln -s /usr/share/${PN}/${PN}.pl ~/.irssi/scripts/"
-		elog "Then from irssi run: "
-		elog "   /script load ${PN}"
+		elog "To install the script for your user and set it to autoload: "
+		elog "   mkdir -p ~/.irssi/scripts/autorun/"
+		elog "   ln -s /usr/share/${PN}/${PN}.pl ~/.irssi/scripts/autorun/"
 		elog ""
-		elog "More information on irssi script usage at http://scripts.irssi.org/"
+		elog "Usage from irssi:"
+		elog "   /sasl set <network> <user> <password> PLAIN"
+		elog ""
+		elog "For advanced configuration see:"
+		elog "   https://freenode.net/sasl/sasl-irssi.shtml"
 	fi
 }
