@@ -26,6 +26,5 @@ src_prepare() {
 
 src_install() {
 	default
-	exeinto /usr/bin
-	doexe connman_ncurses
+	dobin connman_ncurses
 }
