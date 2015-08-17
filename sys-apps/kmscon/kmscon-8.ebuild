@@ -21,7 +21,7 @@ HOMEPAGE="http://www.freedesktop.org/wiki/Software/kmscon"
 
 LICENSE="MIT LGPL-2.1 BSD-2"
 SLOT="0"
-IUSE="debug doc +drm +fbdev +gles2 multiseat +optimizations +pango pixman static-libs +unicode"
+IUSE="debug doc +drm +fbdev +gles2 +optimizations +pango pixman static-libs systemd +unicode"
 
 COMMON_DEPEND="
 	>=virtual/udev-172
@@ -30,7 +30,7 @@ COMMON_DEPEND="
 	drm? ( x11-libs/libdrm
 		>=media-libs/mesa-8.0.3[egl,gbm] )
 	gles2? ( >=media-libs/mesa-8.0.3[gles2] )
-	multiseat? ( sys-apps/systemd )
+	systemd? ( sys-apps/systemd )
 	pango? ( x11-libs/pango dev-libs/glib:2 )
 	pixman? ( x11-libs/pixman )"
 RDEPEND="${COMMON_DEPEND}
