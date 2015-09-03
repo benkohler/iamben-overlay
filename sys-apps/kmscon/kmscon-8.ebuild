@@ -127,7 +127,7 @@ src_configure() {
 		$(use_enable static-libs static) \
 		$(use_enable debug) \
 		$(use_enable optimizations) \
-		$(use_enable multiseat multi-seat) \
+		$(use_enable systemd multi-seat) \
 		--htmldir=/usr/share/doc/${PF}/html \
 		--with-video=${VIDEO} \
 		--with-fonts=${FONTS} \
