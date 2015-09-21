@@ -4,22 +4,25 @@
 
 EAPI="4"
 
-inherit gnome2-utils cmake-utils
+inherit versionator gnome2-utils cmake-utils
+
+MY_PV_MAIN=$(get_version_component_range 1-3)
+MY_PV_RC=$(get_version_component_range 4)
+MY_PV="${MY_PV_MAIN}-${MY_PV_RC//rc/rcgit.}"
 
 if [[ ${PV} != 9999 ]]; then
-	SRC_URI="https://github.com/FreeRDP/Remmina/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	SRC_URI="https://github.com/FreeRDP/Remmina/archive/v${MY_PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="amd64 ~x86"
 else
 	inherit git-2
 	SRC_URI=""
-	EGIT_BRANCH="next"
 	EGIT_REPO_URI="git://github.com/FreeRDP/Remmina.git
 		https://github.com/FreeRDP/Remmina.git"
 	KEYWORDS=""
 fi
 
 DESCRIPTION="A GTK+ RDP, VNC, XDMCP and SSH client"
-HOMEPAGE="http://remmina.sourceforge.net/"
+HOMEPAGE="http://freerdp.github.io/Remmina/"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -31,10 +34,14 @@ RDEPEND="
 	>=net-libs/libvncserver-0.9.8.2
 	x11-libs/libxkbfile
 	x11-themes/gnome-icon-theme
+	x11-libs/gdk-pixbuf
+	x11-libs/libX11
 	avahi? ( net-dns/avahi[gtk3] )
 	ayatana? ( dev-libs/libappindicator )
 	crypt? ( dev-libs/libgcrypt:0 )
-	freerdp? ( >=net-misc/freerdp-9999 )
+	freerdp? (
+		>=net-misc/freerdp-1.2
+	)
 	gnome-keyring? ( gnome-base/libgnome-keyring )
 	ssh? ( net-libs/libssh[sftp] )
 	telepathy? ( net-libs/telepathy-glib )
@@ -50,9 +57,8 @@ RDEPEND+="
 "
 
 DOCS=( README )
-PATCHES=( "${FILESDIR}/remmina-external_tools.patch" )
 
-S="${WORKDIR}/Remmina-${PV}"
+S="${WORKDIR}/Remmina-${MY_PV}"
 
 src_configure() {
 	local mycmakeargs=(
@@ -67,7 +73,6 @@ src_configure() {
 		$(cmake-utils_use_with telepathy TELEPATHY)
 		$(cmake-utils_use_with vte VTE)
 		-DGTK_VERSION=3
-		-DHAVE_PTHREAD=ON
 	)
 	cmake-utils_src_configure
 }
