@@ -26,7 +26,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 src_prepare () {
 	sed -i -e 's/^#setpath/setpath/' ${PN}rc
-	[[ ${EPYTHON} == python3.3 ]] && epatch "${FILESDIR}/${PN}-py3.3-fix.patch"
+	[[ ${EPYTHON} == python3* ]] && epatch "${FILESDIR}/${PN}-python3-fix.patch"
 }
 
 src_install() {
