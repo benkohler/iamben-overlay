@@ -9,8 +9,8 @@ inherit eutils gnome2-utils pax-utils systemd
 DESCRIPTION="Dropbox daemon (pretends to be GUI-less)"
 HOMEPAGE="http://dropbox.com/"
 SRC_URI="
-	x86? ( http://dl-web.dropbox.com/u/17/dropbox-lnx.x86-${PV}.tar.gz )
-	amd64? ( http://dl-web.dropbox.com/u/17/dropbox-lnx.x86_64-${PV}.tar.gz )"
+	x86? ( https://dl-web.dropbox.com/u/17/dropbox-lnx.x86-${PV}.tar.gz )
+	amd64? ( https://dl-web.dropbox.com/u/17/dropbox-lnx.x86_64-${PV}.tar.gz )"
 
 LICENSE="CC-BY-ND-3.0 FTL MIT LGPL-2 openssl dropbox"
 SLOT="0"
@@ -67,11 +67,12 @@ src_unpack() {
 
 src_prepare() {
 	local target=(
-		cffi-0.8.6-py2.7-*.egg
-		dropbox_sqlite_ext-0.0-py2.7.egg
-		futures-2.1.3-py2.7.egg
+		cffi-1.1.0-py2.7-*.egg
+		futures-3.0.2-py2.7.egg
+		mock-1.0.1-py2.7.egg
+		psutil-3.1.1-py2.7-*.egg
 		requests-1.2.3-py2.7.egg
-		setuptools-12.3-py2.7.egg
+		setuptools-17.0-py2.7.egg
 	)
 
 	rm -vf libbz2* libpopt.so.0 libpng12.so.0 || die
