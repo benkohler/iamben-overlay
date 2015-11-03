@@ -17,7 +17,7 @@ IUSE=""
 
 DEPEND="dev-libs/json-c
 	>=sys-apps/dbus-1.4
-	sys-libs/ncurses"
+	sys-libs/ncurses:0"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
