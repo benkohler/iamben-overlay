@@ -20,3 +20,7 @@ IUSE=""
 
 DEPEND="${PYTHON_DEPS}"
 RDEPEND="${DEPEND}"
+
+python_install() {
+	distutils-r1_python_install --install-scripts="/usr/sbin"
+}
