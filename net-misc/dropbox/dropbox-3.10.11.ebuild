@@ -54,11 +54,7 @@ RDEPEND="
 	dev-libs/popt
 	net-misc/wget
 	>=sys-devel/gcc-4.2.0
-	sys-libs/zlib
-	|| (
-		sys-libs/ncurses:5/5
-		sys-libs/ncurses:0/5
-	)"
+	sys-libs/zlib"
 
 src_unpack() {
 	unpack ${A}
@@ -84,6 +80,7 @@ src_prepare() {
 	rm -vf libdrm.so.2 libffi.so.6 libGL.so.1 libX11* || die
 	rm -vf libQt5* libicu* qt.conf || die
 	rm -vf wmctrl || die
+	rm -vf _curses.so
 	if use X ; then
 		mv images/hicolor/16x16/status "${T}" || die
 	else
