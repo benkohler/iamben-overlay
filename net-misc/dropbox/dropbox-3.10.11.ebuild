@@ -112,9 +112,9 @@ src_install() {
 	make_desktop_entry "${PN}" "Dropbox"
 
 #	TODO: do these system services actually work?
-#	newinitd "${FILESDIR}"/dropbox.initd dropbox
-#	newconfd "${FILESDIR}"/dropbox.conf dropbox
-#	systemd_newunit "${FILESDIR}"/dropbox_at.service "dropbox@.service"
+	newinitd "${FILESDIR}"/dropbox.initd dropbox
+	newconfd "${FILESDIR}"/dropbox.conf dropbox
+	systemd_newunit "${FILESDIR}"/dropbox_at.service "dropbox@.service"
 
 	dodoc "${T}"/{README,ACKNOWLEDGEMENTS}
 }
