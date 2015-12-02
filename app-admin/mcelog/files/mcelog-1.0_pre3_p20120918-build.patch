@@ -7,8 +7,8 @@ as argument
 
 always use $(CC) instead of "gcc"
 
---- Makefile
-+++ Makefile
+--- a/Makefile
++++ b/Makefile
 @@ -1,4 +1,11 @@
 -CFLAGS := -g -Os
 +CC ?= gcc
