@@ -38,4 +38,5 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}" install
+	rm -r "${D}"/usr/share/licenses || die failed to rm /usr/share/licenses
 }
