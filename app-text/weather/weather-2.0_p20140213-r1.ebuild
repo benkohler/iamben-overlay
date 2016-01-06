@@ -10,7 +10,7 @@ inherit eutils python-single-r1 vcs-snapshot
 
 COMMIT="49a6ebe7607034a3a51782c3e97fa8d2bf123aeb"
 
-DESCRIPTION="Command-line utility intended to provide quick access to current weather conditions and forecasts"
+DESCRIPTION="CLI utility for quick access to current weather conditions and forecasts"
 HOMEPAGE="http://fungi.yuggoth.org/${PN}"
 SRC_URI="https://www.yuggoth.org/gitweb?p=${PN}.git;a=snapshot;h=${COMMIT};sf=tgz -> ${P}.tar.gz"
 
