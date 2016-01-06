@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="=dev-perl/CryptX-0.021
+RDEPEND=">=dev-perl/CryptX-0.021
 	dev-perl/Crypt-Blowfish
 	dev-perl/crypt-dh
 	dev-perl/Crypt-OpenSSL-Bignum
