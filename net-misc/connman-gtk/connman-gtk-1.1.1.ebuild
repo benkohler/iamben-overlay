@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit autotools
+inherit autotools gnome2-utils
 
 DESCRIPTION="GTK GUI for Connman"
 HOMEPAGE="https://github.com/jgke/connman-gtk"
@@ -30,6 +30,7 @@ DEPEND="${CDEOEND}
 "
 
 src_prepare() {
+	sed -i -e '/^Categories/ s/$/;/' connman-gtk.desktop.in || die
 	eautoreconf
 }
 
@@ -37,3 +38,7 @@ src_configure() {
 	econf \
 		$(use_with openconnect)
 }
+
+pkg_preinst() { gnome2_schemas_savelist; }
+pkg_postinst() { gnome2_schemas_update; }
+pkg_postrm() { gnome2_schemas_update; }
