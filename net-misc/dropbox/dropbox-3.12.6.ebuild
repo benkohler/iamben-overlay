@@ -47,32 +47,39 @@ RDEPEND="
 		x11-misc/wmctrl
 		x11-themes/hicolor-icon-theme
 	)
-	!librsync-bundled? ( net-libs/librsync )
+	!librsync-bundled? ( <net-libs/librsync-2 )
 	selinux? ( sec-policy/selinux-dropbox )
 	app-arch/bzip2
 	dev-lang/python:2.7
 	dev-libs/popt
 	net-misc/wget
 	>=sys-devel/gcc-4.2.0
-	sys-libs/zlib"
+	sys-libs/zlib
+"
 
 src_unpack() {
 	unpack ${A}
-	mkdir -p "${S}"
+	mkdir -p "${S}" || die
 	mv "${WORKDIR}"/.dropbox-dist/* "${S}" || die
 	mv "${S}"/dropbox-lnx.*-${PV}/* "${S}" || die
-	rmdir .dropbox-dist
+	rmdir "${S}"/dropbox-lnx.*-${PV}/ || die
+	rmdir .dropbox-dist || die
 }
 
 src_prepare() {
 	local target=(
-		cffi-1.1.0-py2.7-*.egg
+		cffi-1.2.1-py2.7-*.egg
+		cryptography-1.0-py2.7-*.egg
 		dropbox_sqlite_ext-0.0-py2.7.egg
 		futures-3.0.2-py2.7.egg
+		idna-2.0-py2.7.egg
+		ipaddress-1.0.14-py2.7.egg
 		mock-1.0.1-py2.7.egg
 		psutil-3.1.1-py2.7-*.egg
+		pyasn1-0.1.8-py2.7.egg
 		requests-1.2.3-py2.7.egg
-		setuptools-17.0-py2.7.egg
+		setuptools-18.1-py2.7.egg
+		six-1.9.0-py2.7.egg
 		tornado-4.2-py2.7-*.egg
 	)
 
@@ -80,14 +87,13 @@ src_prepare() {
 	rm -vf libdrm.so.2 libffi.so.6 libGL.so.1 libX11* || die
 	rm -vf libQt5* libicu* qt.conf || die
 	rm -vf wmctrl || die
-	rm -vf _curses.so
 	if use X ; then
 		mv images/hicolor/16x16/status "${T}" || die
 	else
 		rm -vrf PyQt5* *pyqt5* images || die
 	fi
 	if use librsync-bundled ; then
-		patchelf --set-rpath '$ORIGIN' _librsync.so || die
+		patchelf --set-rpath '$ORIGIN' librsyncffi.compiled._librsyncffi.so* || die
 	else
 		rm -vf librsync.so.1 || die
 	fi
@@ -111,7 +117,6 @@ src_install() {
 
 	make_desktop_entry "${PN}" "Dropbox"
 
-#	TODO: do these system services actually work?
 	newinitd "${FILESDIR}"/dropbox.initd dropbox
 	newconfd "${FILESDIR}"/dropbox.conf dropbox
 	systemd_newunit "${FILESDIR}"/dropbox_at.service "dropbox@.service"
