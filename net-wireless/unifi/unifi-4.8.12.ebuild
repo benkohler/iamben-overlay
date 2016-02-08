@@ -21,7 +21,7 @@ RDEPEND=">=dev-db/mongodb-2.0.0
 
 IUSE=""
 
-S="${WORKDIR}/UniFi"
+S="${WORKDIR}/${MY_PN}"
 
 src_install(){
 	dodir /usr/$(get_libdir)/unifi
@@ -36,8 +36,8 @@ src_install(){
 	echo "CONFIG_PROTECT=\"/var/lib/unifi/data/system.properties\"" > 99unifi
 	doenvd 99unifi
 
-	newconfd "${FILESDIR}/${PN}.conf" "${PN}"
-	newinitd "${FILESDIR}/${PN}.init" "${PN}"
+	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
+	newinitd "${FILESDIR}/${PN}.initd" "${PN}"
 
-	systemd_dounit "${FILESDIR}"/${MY_PN}.service
+	systemd_dounit "${FILESDIR}/${PN}.service"
 }
