@@ -18,7 +18,7 @@ IUSE=""
 DEPEND=""
 RDEPEND=">=dev-perl/CryptX-0.021
 	dev-perl/Crypt-Blowfish
-	dev-perl/crypt-dh
+	dev-perl/Crypt-DH
 	dev-perl/Crypt-OpenSSL-Bignum
 	virtual/perl-Math-BigInt
 	virtual/perl-MIME-Base64
