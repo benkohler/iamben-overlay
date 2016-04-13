@@ -10,7 +10,7 @@ MY_PV_RC=$(get_version_component_range 4)
 MY_PV="${MY_PV_MAIN}.${MY_PV_RC//rc/rcgit.}"
 
 if [[ ${PV} != 9999 ]]; then
-	SRC_URI="https://github.com/FreeRDP/Remmina/archive/nosurvey.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/FreeRDP/Remmina/archive/5344e75ecba13808c8c39f2eae44226f86b05b48.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
 else
 	inherit git-2
