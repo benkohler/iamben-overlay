@@ -27,7 +27,6 @@ src_install() {
 	insinto /boot
 	doins ${PN}.efi
 
-	insinto /etc/grub.d/
-	newins "${FILESDIR}"/${PN}-grub.d 39-memtest-bin
-	fperms 755 /etc/grub.d/39-memtest-bin
+	exeinto /etc/grub.d/
+	newexe "${FILESDIR}"/${PN}-grub.d 39-memtest-bin
 }
