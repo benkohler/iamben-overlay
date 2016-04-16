@@ -13,7 +13,6 @@ SRC_URI="http://www.memtest86.com/downloads/memtest86-iso.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 DEPEND="virtual/cdrtools"
 
@@ -21,7 +20,7 @@ S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
-	isoinfo -i Memtest86-6.3.0.iso -x /EFI/BOOT/BOOTX64.EFI\;1 > ${PN}.efi || die
+	isoinfo -i Memtest86-${PV}.iso -x /EFI/BOOT/BOOTX64.EFI\;1 > ${PN}.efi || die
 }
 
 src_install() {
