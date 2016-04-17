@@ -28,5 +28,5 @@ src_install() {
 	doins ${PN}.efi
 
 	exeinto /etc/grub.d/
-	newexe "${FILESDIR}"/${PN}-grub.d 39-memtest-bin
+	newexe "${FILESDIR}"/${PN}-grub.d 39_memtest-bin
 }
