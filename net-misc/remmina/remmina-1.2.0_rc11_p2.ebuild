@@ -8,9 +8,10 @@ inherit versionator gnome2-utils cmake-utils
 MY_PV_MAIN=$(get_version_component_range 1-3)
 MY_PV_RC=$(get_version_component_range 4)
 MY_PV="${MY_PV_MAIN}.${MY_PV_RC//rc/rcgit.}"
+COMMIT="0fb13e17749bd30ac9f6d2bbebc88bbdc65053e1"
 
 if [[ ${PV} != 9999 ]]; then
-	SRC_URI="https://github.com/FreeRDP/Remmina/archive/5344e75ecba13808c8c39f2eae44226f86b05b48.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/FreeRDP/Remmina/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
 else
 	inherit git-2
@@ -25,13 +26,13 @@ HOMEPAGE="http://remmina.org/ https://github.com/FreeRDP/Remmina"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="ayatana crypt debug freerdp libsecret nls ssh telepathy vte zeroconf"
+IUSE="ayatana crypt debug freerdp libsecret nls ssh survey telepathy vte zeroconf"
 REQUIRED_USE="ssh? ( vte )" #546886
 
 RDEPEND="
 	>=dev-libs/glib-2.31.18:2
 	>=net-libs/libvncserver-0.9.8.2
-	net-libs/webkit-gtk:3
+	survey? ( net-libs/webkit-gtk:3 )
 	x11-libs/libxkbfile
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
@@ -39,9 +40,7 @@ RDEPEND="
 	virtual/freedesktop-icon-theme
 	ayatana? ( dev-libs/libappindicator:3 )
 	crypt? ( dev-libs/libgcrypt:0= )
-	freerdp? (
-		>=net-misc/freerdp-1.2
-	)
+	freerdp? ( >=net-misc/freerdp-1.2 )
 	libsecret? ( app-crypt/libsecret )
 	ssh? ( net-libs/libssh[sftp] )
 	telepathy? ( net-libs/telepathy-glib )
@@ -60,7 +59,7 @@ RDEPEND+="
 
 DOCS=( README.md )
 
-S="${WORKDIR}/Remmina-5344e75ecba13808c8c39f2eae44226f86b05b48"
+S="${WORKDIR}/Remmina-${COMMIT}"
 
 src_configure() {
 	local mycmakeargs=(
@@ -71,6 +70,7 @@ src_configure() {
 		$(cmake-utils_use_with nls GETTEXT)
 		$(cmake-utils_use_with nls TRANSLATIONS)
 		$(cmake-utils_use_with ssh LIBSSH)
+		$(cmake-utils_use_with survey SURVEY)
 		$(cmake-utils_use_with telepathy TELEPATHY)
 		$(cmake-utils_use_with vte VTE)
 		$(cmake-utils_use_with zeroconf AVAHI)
