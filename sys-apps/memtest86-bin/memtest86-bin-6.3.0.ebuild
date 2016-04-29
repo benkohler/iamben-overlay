@@ -21,12 +21,14 @@ S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
-	use efi && \
+	if use efi; then
 		isoinfo -i Memtest86-${PV}.iso -x /EFI/BOOT/BOOTX64.EFI\;1 > ${PN}.efi \
 		|| die
-	use bios && \
+	fi
+	if use bios; then
 		isoinfo -i Memtest86-${PV}.iso -x /ISOLINUX/MEMTEST.\;1 > ${PN}.bios \
 		|| die
+	fi
 }
 
 src_install() {
