@@ -25,7 +25,7 @@ src_unpack() {
 		isoinfo -i Memtest86-${PV}.iso -x /EFI/BOOT/BOOTX64.EFI\;1 > ${PN}.efi \
 		|| die
 	use bios && \
-		isoinfo -i Memtest86-${PV}.iso -x /ISOLINUX/MEMTEST\;1 > ${PN}.bios \
+		isoinfo -i Memtest86-${PV}.iso -x /ISOLINUX/MEMTEST.\;1 > ${PN}.bios \
 		|| die
 }
 
