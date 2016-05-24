@@ -18,6 +18,12 @@ RDEPEND="x11-libs/libICE
 	x11-libs/libX11
 	x11-libs/libXext"
 
+S=${WORKDIR}
+
+src_unpack() { 
+	:
+}
+
 src_install() {
 	newbin ${A} ${PN}
 }
