@@ -25,5 +25,5 @@ src_unpack() {
 }
 
 src_install() {
-	newbin ${A} ${PN}
+	newbin "${DISTDIR}"/${A} ${PN}
 }
