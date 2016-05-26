@@ -8,7 +8,7 @@ DESCRIPTION="RealVNC client"
 HOMEPAGE="http://www.realvnc.com/"
 SRC_URI="https://www.realvnc.com/download/binary/1868/ -> ${P}"
 
-LICENSE=""
+LICENSE="RealVNC"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
@@ -20,10 +20,11 @@ RDEPEND="x11-libs/libICE
 
 S=${WORKDIR}
 
-src_unpack() { 
+src_unpack() {
 	:
 }
 
 src_install() {
 	newbin "${DISTDIR}"/${A} ${PN}
+	make_desktop_entry ${PN} "RealVNC Client" "" "Network"
 }
