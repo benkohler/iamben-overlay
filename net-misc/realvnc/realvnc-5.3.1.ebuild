@@ -28,5 +28,6 @@ src_unpack() {
 
 src_install() {
 	newbin "${DISTDIR}"/${A} ${PN}
-	make_desktop_entry ${PN} "RealVNC Client" "" "Network"
+	make_desktop_entry ${PN} "RealVNC Client" ${PN} "Network"
+	doicon -s scalable ${PN}.svg
 }
