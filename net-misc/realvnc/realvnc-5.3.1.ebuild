@@ -4,6 +4,8 @@
 
 EAPI=6
 
+inherit eutils
+
 DESCRIPTION="RealVNC client"
 HOMEPAGE="http://www.realvnc.com/"
 SRC_URI="https://www.realvnc.com/download/binary/1868/ -> ${P}"
