@@ -39,9 +39,7 @@ RDEPEND="
 	virtual/freedesktop-icon-theme
 	ayatana? ( dev-libs/libappindicator:3 )
 	crypt? ( dev-libs/libgcrypt:0= )
-	freerdp? (
-		>=net-misc/freerdp-1.2
-	)
+	freerdp? ( >=net-misc/freerdp-1.2.1_pre20160419 )
 	libsecret? ( app-crypt/libsecret )
 	spice? ( >=net-misc/spice-gtk-0.31[gtk3] )
 	ssh? ( net-libs/libssh[sftp] )
