@@ -25,8 +25,8 @@ HOMEPAGE="http://remmina.org/ https://github.com/FreeRDP/Remmina"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="ayatana crypt debug freerdp libsecret nls spice ssh survey telepathy vte zeroconf"
-REQUIRED_USE="ssh? ( vte )" #546886
+IUSE="ayatana crypt debug freerdp libsecret nls nx spice ssh survey telepathy vnc vte zeroconf"
+REQUIRED_USE="ssh? ( vte )  nx? ( ssh )" #546886
 
 RDEPEND="
 	>=dev-libs/glib-2.31.18:2
@@ -41,6 +41,7 @@ RDEPEND="
 	crypt? ( dev-libs/libgcrypt:0= )
 	freerdp? ( >=net-misc/freerdp-1.2.1_pre20160419 )
 	libsecret? ( app-crypt/libsecret )
+	nx? ( net-misc/nx )
 	spice? ( >=net-misc/spice-gtk-0.31[gtk3] )
 	ssh? ( net-libs/libssh[sftp] )
 	survey? ( net-libs/webkit-gtk:3 )
@@ -73,6 +74,7 @@ src_configure() {
 		-DWITH_TELEPATHY=$(usex telepathy)
 		-DWITH_TRANSLATIONS=$(usex nls)
 		-DwITH_VTE=$(usex vte)
+		-DWITH_ZLIB=$(usex vnc)
 	)
 	cmake-utils_src_configure
 }
