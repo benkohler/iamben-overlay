@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 inherit versionator gnome2-utils cmake-utils
 
 MY_PV_MAIN=$(get_version_component_range 1-3)
@@ -25,7 +25,7 @@ HOMEPAGE="http://remmina.org/ https://github.com/FreeRDP/Remmina"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="ayatana crypt debug freerdp libsecret nls ssh survey telepathy vte zeroconf"
+IUSE="ayatana crypt debug freerdp libsecret nls spice ssh survey telepathy vte zeroconf"
 REQUIRED_USE="ssh? ( vte )" #546886
 
 RDEPEND="
@@ -43,6 +43,7 @@ RDEPEND="
 		>=net-misc/freerdp-1.2
 	)
 	libsecret? ( app-crypt/libsecret )
+	spice? ( >=net-misc/spice-gtk-0.31[gtk3] )
 	ssh? ( net-libs/libssh[sftp] )
 	telepathy? ( net-libs/telepathy-glib )
 	vte? ( x11-libs/vte:2.91 )
@@ -64,18 +65,19 @@ S="${WORKDIR}/Remmina-${MY_PV}"
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use_with ayatana APPINDICATOR)
-		$(cmake-utils_use_with crypt GCRYPT)
-		$(cmake-utils_use_with freerdp FREERDP)
-		$(cmake-utils_use_with libsecret LIBSECRET)
-		$(cmake-utils_use_with nls GETTEXT)
-		$(cmake-utils_use_with nls TRANSLATIONS)
-		$(cmake-utils_use_with ssh LIBSSH)
-		$(cmake-utils_use_with survey SURVEY)
-		$(cmake-utils_use_with telepathy TELEPATHY)
-		$(cmake-utils_use_with vte VTE)
-		$(cmake-utils_use_with zeroconf AVAHI)
 		-DGTK_VERSION=3
+		-DWITH_APPINDICATOR=$(usex ayatana)
+		-DWITH_AVAHI=$(usex zeroconf)
+		-DWITH_FREERDP=$(usex freerdp)
+		-DWITH_GCRYPT=$(usex crypt)
+		-DWITH_GETTEXT=$(usex nls)
+		-DWITH_LIBSECRET=$(usex libsecret)
+		-DWITH_LIBSSH=$(usex ssh)
+		-DWITH_SPICE=$(usex spice)
+		-DWITH_SURVEY=$(usex survey)
+		-DWITH_TELEPATHY=$(usex telepathy)
+		-DWITH_TRANSLATIONS=$(usex nls)
+		-DwITH_VTE=$(usex vte)
 	)
 	cmake-utils_src_configure
 }
