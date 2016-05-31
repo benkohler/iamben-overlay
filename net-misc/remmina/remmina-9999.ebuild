@@ -31,7 +31,7 @@ REQUIRED_USE="ssh? ( vte )  nx? ( ssh )" #546886
 
 RDEPEND="
 	>=dev-libs/glib-2.31.18:2
-	>=net-libs/libvncserver-0.9.8.2
+	>=net-libs/libvncserver-0.9.8.2[zlib]
 	x11-libs/libxkbfile
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
