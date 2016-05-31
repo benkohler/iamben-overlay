@@ -31,7 +31,7 @@ REQUIRED_USE="ssh? ( vte )" #546886
 RDEPEND="
 	>=dev-libs/glib-2.31.18:2
 	>=net-libs/libvncserver-0.9.8.2
-	survey? ( net-libs/webkit-gtk:3 )
+	x11-base/xorg-server[kdrive]
 	x11-libs/libxkbfile
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
@@ -45,6 +45,7 @@ RDEPEND="
 	libsecret? ( app-crypt/libsecret )
 	spice? ( >=net-misc/spice-gtk-0.31[gtk3] )
 	ssh? ( net-libs/libssh[sftp] )
+	survey? ( net-libs/webkit-gtk:3 )
 	telepathy? ( net-libs/telepathy-glib )
 	vte? ( x11-libs/vte:2.91 )
 	zeroconf? ( net-dns/avahi[gtk3] )
@@ -53,10 +54,6 @@ DEPEND="${RDEPEND}
 	dev-util/intltool
 	virtual/pkgconfig
 	nls? ( sys-devel/gettext )
-"
-RDEPEND+="
-	x11-base/xorg-server[kdrive]
-	!net-misc/remmina-plugins
 "
 
 DOCS=( README.md )
