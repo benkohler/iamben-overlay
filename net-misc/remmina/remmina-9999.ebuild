@@ -29,9 +29,9 @@ SLOT="0"
 IUSE="ayatana crypt debug freerdp libsecret nls nx spice ssh survey telepathy vnc vte xdmcp zeroconf"
 REQUIRED_USE="ssh? ( vte )  nx? ( ssh )" #546886
 
-RDEPEND="
+CDEPEND="
 	>=dev-libs/glib-2.31.18:2
-	>=net-libs/libvncserver-0.9.8.2[zlib]
+	>=net-libs/libvncserver-0.9.8.2
 	x11-libs/libxkbfile
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
@@ -41,19 +41,24 @@ RDEPEND="
 	crypt? ( dev-libs/libgcrypt:0= )
 	freerdp? ( >=net-misc/freerdp-1.2.1_pre20160419 )
 	libsecret? ( app-crypt/libsecret )
-	nx? ( net-misc/nx )
 	spice? ( >=net-misc/spice-gtk-0.31[gtk3] )
 	ssh? ( net-libs/libssh[sftp] )
 	survey? ( net-libs/webkit-gtk:3 )
 	telepathy? ( net-libs/telepathy-glib )
 	vte? ( x11-libs/vte:2.91 )
-	xdmcp? ( || (
-		<x11-base/xorg-server-1.17.4[kdrive]
-		>=x11-base/xorg-server-1.17.4[xephyr]
-	) )
 	zeroconf? ( net-dns/avahi[gtk3] )
 "
-DEPEND="${RDEPEND}
+
+RDEPEND="${CDEPEND}
+	nx? ( net-misc/nx )
+	vnc? ( >=net-libs/libvncserver-0.9.8.2[zlib] )
+	xdmcp? ( || (
+		>=x11-base/xorg-server-1.17.4[xephyr]
+		<x11-base/xorg-server-1.17.4[kdrive]
+	) )
+"
+
+DEPEND="${CDEPEND}
 	dev-util/intltool
 	virtual/pkgconfig
 	nls? ( sys-devel/gettext )
