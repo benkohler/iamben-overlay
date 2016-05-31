@@ -25,13 +25,12 @@ HOMEPAGE="http://remmina.org/ https://github.com/FreeRDP/Remmina"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="ayatana crypt debug freerdp libsecret nls nx spice ssh survey telepathy vnc vte zeroconf"
+IUSE="ayatana crypt debug freerdp libsecret nls nx spice ssh survey telepathy vnc vte xdmcp zeroconf"
 REQUIRED_USE="ssh? ( vte )  nx? ( ssh )" #546886
 
 RDEPEND="
 	>=dev-libs/glib-2.31.18:2
 	>=net-libs/libvncserver-0.9.8.2
-	x11-base/xorg-server[kdrive]
 	x11-libs/libxkbfile
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
@@ -47,6 +46,10 @@ RDEPEND="
 	survey? ( net-libs/webkit-gtk:3 )
 	telepathy? ( net-libs/telepathy-glib )
 	vte? ( x11-libs/vte:2.91 )
+	xdmcp? ( || (
+		<x11-base/xorg-server-1.17.4[kdrive]
+		>=x11-base/xorg-server-1.17.4[xephyr]
+	) )
 	zeroconf? ( net-dns/avahi[gtk3] )
 "
 DEPEND="${RDEPEND}

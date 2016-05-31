@@ -14,6 +14,7 @@
 		<flag name="survey">Enable upstream feedback survey (needs webkit-gtk:3)</flag>
 		<flag name="telepathy">Enable telepathy support</flag>
 		<flag name="vte">Enable virtual terminal support (for SSH sessions)</flag>
+		<flag name="xdmcp">Enable support for XDMCP</flag>
 	</use>
 
 </pkgmetadata>
