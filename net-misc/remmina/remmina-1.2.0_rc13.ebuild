@@ -52,10 +52,7 @@ CDEPEND="
 RDEPEND="${CDEPEND}
 	nx? ( net-misc/nx )
 	vnc? ( >=net-libs/libvncserver-0.9.8.2[zlib] )
-	xdmcp? ( || (
-		>=x11-base/xorg-server-1.17.4[xephyr]
-		<x11-base/xorg-server-1.17.4[kdrive]
-	) )
+	xdmcp? ( >=x11-base/xorg-server-1.17.4[xephyr] )
 "
 
 DEPEND="${CDEPEND}
