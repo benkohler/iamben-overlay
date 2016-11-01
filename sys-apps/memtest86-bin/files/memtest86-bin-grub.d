@@ -8,7 +8,7 @@ if [ -f "${memtest_bios}" ]; then
 	device="$("${grub_probe}" --target=device "${memtest_bios}")"
 	path="$(make_system_path_relative_to_its_root "${memtest_bios}")"
 	cat <<EOF
-if [ "x$grub_platform" = xpc ]; then
+if [ "x\$grub_platform" = xpc ]; then
 	menuentry "MemTest86-BIOS" {
 EOF
 	prepare_grub_to_access_device "${device}" | grub_add_tab
@@ -25,7 +25,7 @@ if [ -f "${memtest_efi}" ]; then
 	device="$("${grub_probe}" --target=device "${memtest_efi}")"
 	path="$(make_system_path_relative_to_its_root "${memtest_efi}")"
 	cat <<EOF
-if [ "x$grub_platform" = xefi ]; then
+if [ "x\$grub_platform" = xefi ]; then
 	menuentry "MemTest86-EFI" {
 EOF
 	prepare_grub_to_access_device "${device}" | grub_add_tab
