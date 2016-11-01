@@ -5,6 +5,7 @@
 memtest_bios=/boot/memtest86-bin.bios
 
 if [ -f "${memtest_bios}" ]; then
+	echo "Found MemTest86-BIOS" >&2
 	device="$("${grub_probe}" --target=device "${memtest_bios}")"
 	path="$(make_system_path_relative_to_its_root "${memtest_bios}")"
 	cat <<EOF
@@ -22,6 +23,7 @@ fi
 memtest_efi=/boot/memtest86-bin.efi
 
 if [ -f "${memtest_efi}" ]; then
+	echo "Found MemTest86-EFI" >&2
 	device="$("${grub_probe}" --target=device "${memtest_efi}")"
 	path="$(make_system_path_relative_to_its_root "${memtest_efi}")"
 	cat <<EOF
