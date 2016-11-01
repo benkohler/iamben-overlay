@@ -10,7 +10,7 @@ DESCRIPTION="Stand alone memory testing software for x86 computers"
 HOMEPAGE="http://www.memtest86.com/"
 SRC_URI="http://www.memtest86.com/downloads/memtest86-iso.tar.gz -> ${P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="PassMark-EULA"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+bios +efi"
