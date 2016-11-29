@@ -18,8 +18,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="${PYTHON_DEPS}"
-RDEPEND="${DEPEND}"
+DEPEND="${PYTHON_DEPS}
+	dev-python/setuptools[${PYTHON_USEDEP}]"
+RDEPEND="${PYTHON_DEPS}"
 
 python_install() {
 	distutils-r1_python_install --install-scripts="/usr/sbin"
