@@ -8,13 +8,16 @@ inherit eutils
 
 DESCRIPTION="RealVNC client"
 HOMEPAGE="http://www.realvnc.com/"
-SRC_URI="https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x64.gz -> ${P}.gz"
+SRC_URI="
+	amd64? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x64.gz )
+	x86? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x86.gz )
+"
 
 MY_PN=${PN%-client-bin}
 
 LICENSE="RealVNC"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RESTRICT="mirror"
