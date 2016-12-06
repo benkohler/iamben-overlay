@@ -26,7 +26,7 @@ S="${WORKDIR}/${MY_PN}"
 
 pkg_setup() {
 	enewgroup unifi
-	enewuser unifi -1 /bin/false /dev/null unifi
+	enewuser unifi
 }
 
 src_install() {
