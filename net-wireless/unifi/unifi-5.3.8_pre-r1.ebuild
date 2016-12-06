@@ -42,7 +42,7 @@ src_install() {
 	echo "CONFIG_PROTECT=\"/var/lib/unifi/data/system.properties\"" > 99unifi
 	doenvd 99unifi
 
-	fowners unifi:unifi /var/log/unifi /var/lib/unifi
+	fowners -R unifi:unifi /var/log/unifi /var/lib/unifi
 
 	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
 	newinitd "${FILESDIR}/${PN}.initd-r1" "${PN}"
