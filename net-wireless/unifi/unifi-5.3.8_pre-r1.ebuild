@@ -48,5 +48,5 @@ src_install() {
 	newinitd "${FILESDIR}/${PN}.initd-r1" "${PN}"
 
 	systemd_dounit "${FILESDIR}/${PN}.service"
-	systemd_install_serviced "${FILESDIR}${PN}.service.conf"
+	systemd_install_serviced "${FILESDIR}/${PN}.service.conf"
 }
