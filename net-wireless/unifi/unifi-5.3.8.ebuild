@@ -9,7 +9,7 @@ MY_PN="UniFi"
 
 DESCRIPTION="Management Controller for UniFi APs"
 HOMEPAGE="https://www.ubnt.com/download/unifi"
-SRC_URI="http://dl.ubnt.com/unifi/5.3.8-d66ec0b93d/${MY_PN}.unix.zip -> ${P}.zip"
+SRC_URI="http://dl.ubnt.com/unifi/5.3.8/${MY_PN}.unix.zip -> ${P}.zip"
 
 LICENSE="GPL-3"
 SLOT="0"
