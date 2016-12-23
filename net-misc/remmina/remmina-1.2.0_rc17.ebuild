@@ -15,7 +15,7 @@ SRC_URI="https://github.com/FreeRDP/Remmina/archive/v${MY_PV}.tar.gz -> ${P}.tar
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="ayatana crypt freerdp gnome-keyring nls spice ssh telepathy webkit zeroconf"
+IUSE="ayatana crypt freerdp gnome-keyring nls spice ssh telepathy zeroconf"
 
 RDEPEND="
 	>=dev-libs/glib-2.31.18:2
@@ -27,13 +27,12 @@ RDEPEND="
 	virtual/freedesktop-icon-theme
 	ayatana? ( dev-libs/libappindicator:3 )
 	crypt? ( dev-libs/libgcrypt:0= )
-	freerdp? ( >=net-misc/freerdp-2 )
+	freerdp? ( >=net-misc/freerdp-2.0.0_pre20161219 )
 	gnome-keyring? ( app-crypt/libsecret )
 	spice? ( net-misc/spice-gtk[gtk3] )
 	ssh? ( net-libs/libssh[sftp]
 		x11-libs/vte:2.91 )
 	telepathy? ( net-libs/telepathy-glib )
-	webkit? ( net-libs/webkit-gtk:4 )
 	zeroconf? ( net-dns/avahi[gtk3] )
 "
 DEPEND="${RDEPEND}
@@ -41,10 +40,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	nls? ( sys-devel/gettext )
 "
-RDEPEND+="
-	!net-misc/remmina-plugins
-"
-
 DOCS=( README.md )
 
 S="${WORKDIR}/Remmina-${MY_PV}"
@@ -61,7 +56,6 @@ src_configure() {
 		-DWITH_LIBSSH=$(usex ssh)
 		-DWITH_VTE=$(usex ssh)
 		-DWITH_TELEPATHY=$(usex telepathy)
-		-DWITH_SURVEY=$(usex webkit)
 		-DWITH_AVAHI=$(usex zeroconf)
 		-DGTK_VERSION=3
 	)
