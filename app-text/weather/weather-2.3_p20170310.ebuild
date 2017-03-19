@@ -5,11 +5,13 @@ EAPI=6
 
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
-inherit eutils python-single-r1
+inherit eutils python-single-r1 vcs-snapshot
+
+COMMIT="2a84a53f4aac0175f75b77e3a73d5a68b6e20ac6"
 
 DESCRIPTION="CLI utility for quick access to current weather conditions and forecasts"
 HOMEPAGE="http://fungi.yuggoth.org/${PN}"
-SRC_URI="${HOMEPAGE}/src/${P}.tar.xz"
+SRC_URI="https://www.yuggoth.org/gitweb?p=${PN}.git;a=snapshot;h=${COMMIT};sf=tgz -> ${P}.tar.gz"
 
 LICENSE="ISC"
 SLOT="0"
