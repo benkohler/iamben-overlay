@@ -72,6 +72,7 @@ video_enable() {
 
 src_prepare() {
 	eapply_user
+	sed -i -e 's/\[libsystemd-daemon libsystemd-login\]/\[libsystemd\]/' configure.ac
 	eautoreconf
 }
 
