@@ -28,7 +28,8 @@ RDEPEND=">=dev-libs/libqtxdg-1.3.0
 	kde-frameworks/kwindowsystem:5[X]
 	x11-libs/libXScrnSaver"
 DEPEND="${RDEPEND}
-	dev-qt/linguist-tools:5"
+	dev-qt/linguist-tools:5
+	dev-util/lxqt-build-tools"
 
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
