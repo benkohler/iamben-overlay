@@ -12,15 +12,15 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
 
-IUSE="bluetooth debug doc examples +ethernet iptables iwd l2tp nftables \
-ofono openvpn openconnect pptp policykit tools vpnc wispr wpa_supplicant \
-networkmanager"
+IUSE="${IUSE} bluetooth debug doc examples +ethernet iptables iwd l2tp nftables"
+IUSE="${IUSE} ofono openvpn openconnect pptp policykit tools vpnc wifi wispr networkmanager"
 
-REQUIRED_USE="|| ( iptables nftables ) ?? ( iwd wpa_supplicant )"
+REQUIRED_USE="|| ( iptables nftables )"
 RDEPEND=">=dev-libs/glib-2.16
 	>=sys-apps/dbus-1.2.24
 	iptables? ( >=net-firewall/iptables-1.4.8 )
 	bluetooth? ( net-wireless/bluez )
+	iwd? ( net-wireless/iwd )
 	l2tp? ( net-dialup/xl2tpd )
 	nftables? (
 		>=net-libs/libnftnl-1.0.4
@@ -31,8 +31,7 @@ RDEPEND=">=dev-libs/glib-2.16
 	policykit? ( sys-auth/polkit )
 	pptp? ( net-dialup/pptpclient )
 	vpnc? ( net-vpn/vpnc )
-	iwd? ( net-wireless/iwd )
-	wpa_supplicant?	 ( >=net-wireless/wpa_supplicant-2.0[dbus] )
+	wifi? ( >=net-wireless/wpa_supplicant-2.0[dbus] )
 	wispr? ( net-libs/gnutls )"
 
 DEPEND="${RDEPEND}
@@ -59,8 +58,8 @@ src_configure() {
 		--enable-loopback=builtin \
 		$(use_enable examples test) \
 		$(use_enable ethernet ethernet builtin) \
+		$(use_enable wifi wifi builtin) \
 		$(use_enable iwd iwd builtin) \
-		$(use_enable wpa_supplicant wifi builtin) \
 		$(use_enable bluetooth bluetooth builtin) \
 		$(use_enable l2tp l2tp builtin) \
 		$(use_enable ofono ofono builtin) \
