@@ -74,7 +74,6 @@ src_configure() {
 		$(use_enable networkmanager nmcompat) \
 		--with-firewall=$(usex iptables "iptables" "nftables" ) \
 		--disable-iospm \
-		--disable-iwd \
 		--disable-hh2serial-gps
 }
 
