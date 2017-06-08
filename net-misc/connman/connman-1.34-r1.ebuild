@@ -59,7 +59,7 @@ src_configure() {
 		$(use_enable examples test) \
 		$(use_enable ethernet ethernet builtin) \
 		$(use_enable wifi wifi builtin) \
-		$(use_enable iwd iwd) \
+		$(use_enable iwd iwd builtin) \
 		$(use_enable bluetooth bluetooth builtin) \
 		$(use_enable l2tp l2tp builtin) \
 		$(use_enable ofono ofono builtin) \
