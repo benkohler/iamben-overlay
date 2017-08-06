@@ -36,4 +36,6 @@ src_install() {
 
 	exeinto /etc/grub.d/
 	newexe "${FILESDIR}"/${PN}-grub.d 39_memtest86-bin
+
+	dodoc MemTest86_User_Guide_UEFI.pdf
 }
