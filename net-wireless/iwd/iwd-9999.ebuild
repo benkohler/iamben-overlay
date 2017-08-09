@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
-inherit autotools git-r3 systemd
+inherit autotools git-r3 linux-info systemd
 
 DESCRIPTION="Wireless daemon for linux"
 HOMEPAGE="https://git.kernel.org/pub/scm/network/wireless/iwd.git/"
@@ -16,6 +16,27 @@ RDEPEND="sys-apps/dbus"
 
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
+
+CONFIG_CHECK="
+	~VLAN_8021Q
+	~CRYPTO_USER_API_AKCIPHER
+	~CRYPTO_USER_API_SKCIPHER
+	~CRYPTO_USER_API_HASH
+	~CRYPTO_RSA
+	~CRYPTO_MD4
+	~CRYPTO_SHA1
+	~CRYPTO_SHA256
+	~CRYPTO_ECB
+	~CRYPTO_CMAC
+	~KEY_DH_OPERATIONS
+	~ASYMMETRIC_KEY_TYPE
+	~ASYMMETRIC_PUBLIC_KEY_SUBTYPE
+	~X509_CERTIFICATE_PARSER
+	~PKCS7_MESSAGE_PARSER
+"
+pkg_setup() {
+	check_extra_config
+}
 
 src_unpack() {
 	git-r3_src_unpack
@@ -34,7 +55,7 @@ src_configure() {
 
 src_install() {
 	default
-	keepdir /var/lib/${PN}
+	dodir /var/lib/${PN}
 	systemd_dounit "${FILESDIR}/${PN}.service"
 	exeinto /usr/share/iwd/scripts/
 	doexe test/*
