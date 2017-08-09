@@ -29,7 +29,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --sysconfdir=/etc/iwd
+	econf --sysconfdir=/etc/iwd --localstatedir=/var
 }
 
 src_install() {
