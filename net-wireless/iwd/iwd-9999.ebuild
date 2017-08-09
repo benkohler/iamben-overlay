@@ -28,6 +28,10 @@ src_prepare() {
 	eautoreconf
 }
 
+src_configure() {
+	econf --sysconfdir=/etc/iwd
+}
+
 src_install() {
 	default
 	systemd_dounit "${FILESDIR}/${PN}.service"
