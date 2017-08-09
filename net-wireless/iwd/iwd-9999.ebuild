@@ -34,5 +34,6 @@ src_configure() {
 
 src_install() {
 	default
+	keepdir /var/lib/${PN}
 	systemd_dounit "${FILESDIR}/${PN}.service"
 }
