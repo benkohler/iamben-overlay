@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
-inherit autotools git-r3
+inherit autotools git-r3 systemd
 
 DESCRIPTION="Wireless daemon for linux"
 HOMEPAGE="https://git.kernel.org/pub/scm/network/wireless/iwd.git/"
@@ -26,4 +26,9 @@ src_prepare() {
 	eapply "${FILESDIR}/iwd-find-pkg-config.patch"
 	default
 	eautoreconf
+}
+
+src_install() {
+	default
+	systemd_dounit "${FILESDIR}/${PN}.service"
 }
