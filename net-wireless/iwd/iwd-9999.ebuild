@@ -36,5 +36,6 @@ src_install() {
 	default
 	keepdir /var/lib/${PN}
 	systemd_dounit "${FILESDIR}/${PN}.service"
+	docompress -x /usr/share/doc/${PF}/test
 	dodoc -r test
 }
