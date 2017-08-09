@@ -36,6 +36,6 @@ src_install() {
 	default
 	keepdir /var/lib/${PN}
 	systemd_dounit "${FILESDIR}/${PN}.service"
-	insinto /usr/share/iwd/scripts/
-	doins test/*
+	exeinto /usr/share/iwd/scripts/
+	doexe test/*
 }
