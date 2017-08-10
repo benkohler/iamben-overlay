@@ -23,6 +23,7 @@ RESTRICT="mirror"
 
 DEPEND=""
 RDEPEND="x11-libs/libICE
+	x11-libs/libSM
 	x11-libs/libX11
 	x11-libs/libXext"
 
