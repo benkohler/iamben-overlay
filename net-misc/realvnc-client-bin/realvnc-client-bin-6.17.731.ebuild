@@ -8,8 +8,8 @@ inherit eutils
 DESCRIPTION="RealVNC client"
 HOMEPAGE="http://www.realvnc.com/"
 SRC_URI="
-	amd64? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x64.gz )
-	x86? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x86.gz )
+	amd64? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x64 )
+	x86? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x86 )
 "
 
 MY_PN=${PN%-client-bin}
