@@ -12,7 +12,7 @@ SRC_URI="
 	x86? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x86 )
 "
 
-MY_PN=${PN%-client-bin}
+MY_PN=${PN%-bin}
 
 LICENSE="RealVNC"
 SLOT="0"
