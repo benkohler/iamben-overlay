@@ -29,8 +29,7 @@ RDEPEND="x11-libs/libICE
 S=${WORKDIR}
 
 src_install() {
-	use amd64 && newbin VNC-Viewer-${PV}-Linux-x64 ${MY_PN}
-	use x86 && newbin VNC-Viewer-${PV}-Linux-x86 ${MY_PN}
+	newbin ${DISTDIR}/${A} ${MY_PN}
 	make_desktop_entry ${MY_PN} "RealVNC Client" ${MY_PN} "Network"
 	doicon -s scalable "${FILESDIR}"/${MY_PN}.svg
 }
