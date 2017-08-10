@@ -30,7 +30,7 @@ RDEPEND="x11-libs/libICE
 S=${WORKDIR}
 
 src_install() {
-	newbin ${DISTDIR}/${A} ${MY_PN}
+	newbin "${DISTDIR}/${A}" ${MY_PN}
 	make_desktop_entry ${MY_PN} "RealVNC Client" ${MY_PN} "Network"
 	doicon -s scalable "${FILESDIR}"/${MY_PN}.svg
 }
