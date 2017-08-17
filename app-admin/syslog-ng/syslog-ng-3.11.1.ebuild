@@ -32,7 +32,7 @@ RDEPEND="
 	dev-libs/libpcre
 	!libressl? ( dev-libs/openssl:0= )
 	libressl? ( dev-libs/libressl:0= )
-	>=dev-libs/eventlog-0.2.12
+	!dev-libs/eventlog
 	>=dev-libs/glib-2.10.1:2"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
