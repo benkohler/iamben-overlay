@@ -51,8 +51,7 @@ src_prepare() {
 	use python && python_fix_shebang .
 
 	if use !json ; then
-		sed -i -e '1 s/cim //' scl/Makefile.am || die
-		eautoreconf
+		rm -r scl/cim || die "failed to rm -r scl/cim"
 	fi
 
 	for f in "${FILESDIR}"/*logrotate*.in ; do
