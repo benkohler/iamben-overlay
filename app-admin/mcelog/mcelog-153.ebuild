@@ -24,7 +24,7 @@ RESTRICT="test"
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != buildonly ]]; then
 		local CONFIG_CHECK="~X86_MCE"
-		kernel_is -ge 4 12 && CONFIG_CHECK+="~X86_MCELOG_LEGACY"
+		kernel_is -ge 4 12 && CONFIG_CHECK+=" ~X86_MCELOG_LEGACY"
 		check_extra_config
 	fi
 }
