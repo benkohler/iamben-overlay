@@ -16,8 +16,6 @@ IUSE="selinux"
 
 RDEPEND="selinux? ( sec-policy/selinux-mcelog )"
 
-CONFIG_CHECK="~X86_MCE ~X86_MCELOG_LEGACY"
-
 # TODO: add mce-inject to the tree to support test phase
 RESTRICT="test"
 
