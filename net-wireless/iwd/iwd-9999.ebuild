@@ -44,7 +44,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	eapply "${FILESDIR}/iwd-find-pkg-config.patch"
 	default
 	eautoreconf
 }
