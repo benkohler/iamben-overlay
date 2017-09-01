@@ -56,7 +56,7 @@ src_install() {
 	default
 	dodir /var/lib/${PN}
 
-	newinitd "${FILESDIR}/iwd.initd iwd"
+	newinitd "${FILESDIR}/iwd.initd" iwd
 	systemd_dounit "${FILESDIR}/${PN}.service"
 
 	exeinto /usr/share/iwd/scripts/
