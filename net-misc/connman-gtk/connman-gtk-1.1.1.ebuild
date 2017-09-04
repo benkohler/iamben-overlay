@@ -1,7 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
 inherit autotools gnome2-utils
 
@@ -17,7 +17,7 @@ IUSE="openconnect"
 CDEPEND="
 	>=dev-libs/glib-2.0:2
 	>=x11-libs/gtk+-3.10:3
-	openconnect? ( >=net-misc/openconnect-5.99 )
+	openconnect? ( >=net-vpn/openconnect-5.99 )
 "
 RDEPEND="${CDEPEND}
 	net-misc/connman
@@ -30,6 +30,7 @@ DEPEND="${CDEOEND}
 
 src_prepare() {
 	sed -i -e '/^Categories/ s/$/;/' connman-gtk.desktop.in || die
+	eapply_user
 	eautoreconf
 }
 
