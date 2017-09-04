@@ -1,7 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 
 inherit autotools vcs-snapshot
 COMMIT="3c34b2ee62d2e188090d20e7ed2fd94bab9c47f2"
@@ -21,6 +21,7 @@ DEPEND="dev-libs/json-c
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	default
 	eautoreconf
 }
 
