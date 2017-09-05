@@ -92,7 +92,7 @@ src_configure() {
 		video_enable drm3d
 	fi
 
-	# Font rendering backends 
+	# Font rendering backends
 
 	if use unicode; then
 		fonts_enable unifont
