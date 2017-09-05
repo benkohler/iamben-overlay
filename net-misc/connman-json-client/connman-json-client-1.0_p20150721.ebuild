@@ -12,7 +12,7 @@ SRC_URI="https://github.com/eurogiciel-oss/${PN}/archive/${COMMIT}.tar.gz -> ${P
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE=""
 
 DEPEND="dev-libs/json-c
