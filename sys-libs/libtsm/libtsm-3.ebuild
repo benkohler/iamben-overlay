@@ -4,8 +4,8 @@
 EAPI=6
 
 DESCRIPTION="Terminal Emulator State Machine"
-HOMEPAGE="http://cgit.freedesktop.org/~dvdhrm/libtsm"
-SRC_URI="http://www.freedesktop.org/software/kmscon/releases/${P}.tar.xz"
+HOMEPAGE="https://cgit.freedesktop.org/~dvdhrm/libtsm"
+SRC_URI="https://www.freedesktop.org/software/kmscon/releases/${P}.tar.xz"
 
 LICENSE="LGPL-2.1 MIT"
 SLOT="0"
