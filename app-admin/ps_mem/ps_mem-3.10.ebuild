@@ -3,10 +3,10 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 inherit distutils-r1 vcs-snapshot
 
-COMMIT="65986a2fe8ab876fe955bda224635daf8ca81bca"
+COMMIT="3c532988939e1808687676dfd83f078bc58c11da"
 
 DESCRIPTION="Memory usage analyzer"
 HOMEPAGE="https://github.com/pixelb/${PN}"
