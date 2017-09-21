@@ -32,6 +32,6 @@ src_install() {
 	into /usr/sbin
 	dosbin usr/sbin/${PN}
 
-	newinitd "${FILESDIR}"/${PN}.initd
+	newinitd "${FILESDIR}"/${PN}.initd ${PN}
 	systemd-dounit "${FILESDIR}"/${PN}.service
 }
