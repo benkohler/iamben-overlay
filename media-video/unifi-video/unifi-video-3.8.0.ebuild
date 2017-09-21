@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit systemd
+inherit systemd user
 
 DESCRIPTION="UniFi Video Server"
 HOMEPAGE="https://www.ubnt.com/download/unifi-video/"
@@ -16,10 +16,15 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="dev-db/mongodb
+	dev-java/commons-daemon
 	sys-libs/libcap
 	virtual/jre"
 
 S=${WORKDIR}
+
+pkg_setup() {
+	enewuser unifi-video
+}
 
 src_unpack() {
 	default
