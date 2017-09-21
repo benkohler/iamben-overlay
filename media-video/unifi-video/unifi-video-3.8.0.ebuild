@@ -29,9 +29,9 @@ src_unpack() {
 src_install() {
 	insinto /usr/$(get_libdir)
 	doins -r usr/lib/*
-	into /usr/sbin
+	into /usr
 	dosbin usr/sbin/${PN}
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
-	systemd-dounit "${FILESDIR}"/${PN}.service
+	systemd_dounit "${FILESDIR}"/${PN}.service
 }
