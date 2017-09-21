@@ -16,7 +16,15 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="dev-db/mongodb
+	sys-libs/libcap
 	virtual/jre"
+
+S=${WORKDIR}
+
+src_unpack() {
+	default
+	unpack data.tar.gz
+}
 
 src_install() {
 	insinto /usr/$(get_libdir)
