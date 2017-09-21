@@ -23,7 +23,7 @@ S=${WORKDIR}
 
 src_unpack() {
 	default
-	unpack data.tar.gz
+	unpack "${WORKDIR}"/data.tar.gz
 }
 
 src_install() {
