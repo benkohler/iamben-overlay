@@ -24,6 +24,7 @@ S=${WORKDIR}
 
 pkg_setup() {
 	enewuser unifi-video
+	enewgroup unifi-video
 }
 
 src_unpack() {
