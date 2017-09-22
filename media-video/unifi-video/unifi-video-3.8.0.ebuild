@@ -32,6 +32,11 @@ src_unpack() {
 	unpack "${WORKDIR}"/data.tar.gz
 }
 
+src_prepare() {
+	eapply "${FILESDIR}"/commons-daemon-move.patch
+	default
+}
+
 src_install() {
 	insinto /usr/$(get_libdir)
 	doins -r usr/lib/*
