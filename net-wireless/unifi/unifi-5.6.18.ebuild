@@ -6,7 +6,7 @@ inherit multilib systemd user
 
 MY_PN="UniFi"
 # for stable candidates set RC_SUFFIX="-xxxxxxxxxx"
-RC_SUFFIX="-cce3ac9f91"
+RC_SUFFIX="-8261dc5066"
 
 DESCRIPTION="Management Controller for UniFi APs"
 HOMEPAGE="https://www.ubnt.com/download/unifi"
