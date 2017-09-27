@@ -22,6 +22,8 @@ RDEPEND=">=dev-db/mongodb-2.0.0
 
 IUSE=""
 
+QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
+
 S="${WORKDIR}/UniFi"
 
 pkg_setup() {
