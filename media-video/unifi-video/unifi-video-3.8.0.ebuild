@@ -44,17 +44,32 @@ src_prepare() {
 }
 
 src_install() {
-	dataroot=/usr/$(get_libdir)/${PN}
-
-	insinto ${dataroot}
+	static_dir="/usr/$(get_libdir)/${PN}"
+	#install static data
+	insinto ${static_dir}
 	doins -r usr/lib/${PN}/*
-	fperms -R +x ${dataroot}/bin
-	dodir ${dataroot}/logs
-	fowners unifi-video:unifi-video ${dataroot}/logs
+	fperms -R +x ${static_dir}/bin
+
+	#prepare runtime-data dirs which live in /var but are symlinked from static
+	#data dir, and are writable by non-root user
+	dodir /var/log/${PN}
+	fowners ${PN}:${PN} /var/log/${PN}
+	dosym ../../../../var/log/${PN} ${static_dir}/logs
+
+	dodir /var/lib/${PN}/work
+	fowners ${PN}:${PN} /var/lib/${PN}/work
+	dosym ../../../../var/lib/${PN}/work ${static_dir}/work
+
+	keepdir /var/lib/${PN}/data
+	fowners ${PN}:${PN} /var/lib/${PN}/data
+	dosym ../../../../var/lib/${PN}/data ${static_dir}/data
+
+	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+	doenvd "${T}"/99${PN}
 
 	into /usr
 	dosbin usr/sbin/${PN}
-	dosym ../../../bin/mongod ${dataroot}/bin/mongod
+	dosym ../../../bin/mongod ${static_dir}/bin/mongod
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
 	systemd_dounit "${FILESDIR}"/${PN}.service
