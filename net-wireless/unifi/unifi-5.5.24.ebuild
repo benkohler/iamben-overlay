@@ -2,60 +2,57 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit multilib systemd user
 
-MY_PN="UniFi"
+inherit systemd user
+
 # for stable candidates set RC_SUFFIX="-xxxxxxxxxx"
 RC_SUFFIX="-2ffbc5dc86"
 
 DESCRIPTION="Management Controller for UniFi APs"
 HOMEPAGE="https://www.ubnt.com/download/unifi"
-SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/${MY_PN}.unix.zip -> ${P}.zip"
+SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
+IUSE=""
 RESTRICT="mirror"
 
 DEPEND=""
-RDEPEND=">=dev-db/mongodb-2.0.0
-	>=virtual/jre-1.7.0"
+RDEPEND="dev-db/mongodb
+	virtual/jre"
 
-IUSE=""
-
-S="${WORKDIR}/${MY_PN}"
+S=${WORKDIR}/UniFi
+QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
 
 pkg_setup() {
-	enewuser unifi
-	enewgroup unifi
+	enewuser ${PN}
+	enewgroup ${PN}
 }
 
 src_install(){
-	#dir with static data
-	unifi_static="/usr/$(get_libdir)/unifi"
+	static_dir="/usr/$(get_libdir)/${PN}"
 	#install static data
-	dodir ${unifi_static}
-	insinto ${unifi_static}
+	insinto ${static_dir}
 	doins -r *
 	#prepare runtime-data dirs which live in /var but are symlinked from static
-	#data dir, and are writable by unifi user
-	dodir /var/log/unifi
-	fowners unifi:unifi /var/log/unifi
-	dosym ../../../../var/log/unifi ${unifi_static}/logs
+	#data dir, and are writable by non-root user
+	dodir /var/log/${PN}
+	fowners ${PN}:${PN} /var/log/${PN}
+	dosym ../../../var/log/${PN} ${static_dir}/logs
 
-	dodir /var/lib/unifi/work
-	fowners unifi:unifi /var/lib/unifi/work
-	dosym ../../../../var/lib/unifi/work ${unifi_static}/work
+	dodir /var/lib/${PN}/work
+	fowners ${PN}:${PN} /var/lib/${PN}/work
+	dosym ../../../var/lib/${PN}/work ${static_dir}/work
 
-	keepdir /var/lib/unifi/data
-	fowners unifi:unifi /var/lib/unifi/data
-	dosym ../../../../var/lib/unifi/data ${unifi_static}/data
+	keepdir /var/lib/${PN}/data
+	fowners ${PN}:${PN} /var/lib/${PN}/data
+	dosym ../../../var/lib/${PN}/data ${static_dir}/data
 
-	echo "CONFIG_PROTECT=\"/var/lib/unifi/data/system.properties\"" > 99unifi
-	doenvd 99unifi
+	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+	doenvd "${T}"/99${PN}
 
-	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
-	newinitd "${FILESDIR}/${PN}.initd" "${PN}"
-
-	systemd_newunit "${FILESDIR}/${PN}-r1.service" ${PN}.service
+	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+	systemd_dounit "${FILESDIR}"/${PN}.service
 }
