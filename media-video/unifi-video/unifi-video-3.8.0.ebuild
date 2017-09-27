@@ -34,6 +34,11 @@ src_unpack() {
 
 src_prepare() {
 	eapply "${FILESDIR}"/commons-daemon-move.patch
+	sed -i usr/sbin/${PN} \
+		-e '/require_root$/d' \
+		-e '/update_limits$/d' \
+		-e '/ulimit/d' \
+		-e '/coredump_filter/d'
 	default
 }
 

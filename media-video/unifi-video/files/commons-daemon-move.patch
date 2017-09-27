@@ -10,3 +10,4 @@ diff -ur work/usr/sbin/unifi-video work.new/usr/sbin/unifi-video
   -pidfile ${PIDFILE} \
   -procname ${NAME} \
   ${JSVC_EXTRA_OPTS} \
+
