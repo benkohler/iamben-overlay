@@ -38,10 +38,17 @@ src_prepare() {
 }
 
 src_install() {
-	insinto /usr/$(get_libdir)
-	doins -r usr/lib/*
+	dataroot=/usr/$(get_libdir)/${PN}
+
+	insinto ${dataroot}
+	doins -r usr/lib/${PN}/*
+	fperms -R +x ${dataroot}/bin
+	dodir ${dataroot}/logs
+	fowners unifi-video:unifi-video ${dataroot}/logs
+
 	into /usr
 	dosbin usr/sbin/${PN}
+	dosym ../../../bin/mongod ${dataroot}/bin/mongod
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
 	systemd_dounit "${FILESDIR}"/${PN}.service
