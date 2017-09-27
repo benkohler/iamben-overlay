@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit multilib systemd user
+
+inherit systemd user
 
 # for stable candidates set RC_SUFFIX="-xxxxxxxxxx"
 RC_SUFFIX="-8261dc5066"
@@ -13,18 +14,16 @@ SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
+IUSE=""
 RESTRICT="mirror"
 
 DEPEND=""
-RDEPEND=">=dev-db/mongodb-2.0.0
-	>=virtual/jre-1.7.0"
+RDEPEND="dev-db/mongodb
+	virtual/jre"
 
-IUSE=""
-
+S=${WORKDIR}/UniFi
 QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
-
-S="${WORKDIR}/UniFi"
 
 pkg_setup() {
 	enewuser ${PN}
@@ -33,7 +32,6 @@ pkg_setup() {
 
 src_install(){
 	static_dir="/usr/$(get_libdir)/${PN}"
-	#dir with static data
 	#install static data
 	insinto ${static_dir}
 	doins -r *
@@ -51,11 +49,10 @@ src_install(){
 	fowners ${PN}:${PN} /var/lib/${PN}/data
 	dosym ../../../var/lib/${PN}/data ${static_dir}/data
 
-	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > 99${PN}
-	doenvd 99${PN}
+	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+	doenvd "${T}"/99${PN}
 
-	newconfd "${FILESDIR}/${PN}.confd" "${PN}"
-	newinitd "${FILESDIR}/${PN}.initd" "${PN}"
-
-	systemd_newunit "${FILESDIR}/${PN}-r1.service" ${PN}.service
+	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+	systemd_dounit "${FILESDIR}"/${PN}.service
 }

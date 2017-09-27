@@ -11,8 +11,9 @@ SRC_URI="https://dl.ubnt.com/firmwares/ufv/v${PV}/unifi-video.Ubuntu16.04_amd64.
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND=""
 RDEPEND="dev-db/mongodb
@@ -72,5 +73,6 @@ src_install() {
 	dosym ../../../bin/mongod ${static_dir}/bin/mongod
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+	newconfd "${FILESDIR}"/${PN}.confd ${PN}
 	systemd_dounit "${FILESDIR}"/${PN}.service
 }
