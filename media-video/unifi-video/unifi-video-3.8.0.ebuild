@@ -54,15 +54,15 @@ src_install() {
 	#data dir, and are writable by non-root user
 	dodir /var/log/${PN}
 	fowners ${PN}:${PN} /var/log/${PN}
-	dosym ../../../../var/log/${PN} ${static_dir}/logs
+	dosym ../../../var/log/${PN} ${static_dir}/logs
 
 	dodir /var/lib/${PN}/work
 	fowners ${PN}:${PN} /var/lib/${PN}/work
-	dosym ../../../../var/lib/${PN}/work ${static_dir}/work
+	dosym ../../../var/lib/${PN}/work ${static_dir}/work
 
 	keepdir /var/lib/${PN}/data
 	fowners ${PN}:${PN} /var/lib/${PN}/data
-	dosym ../../../../var/lib/${PN}/data ${static_dir}/data
+	dosym ../../../var/lib/${PN}/data ${static_dir}/data
 
 	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
 	doenvd "${T}"/99${PN}
