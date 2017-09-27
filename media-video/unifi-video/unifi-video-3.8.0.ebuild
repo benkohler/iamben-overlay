@@ -21,6 +21,7 @@ RDEPEND="dev-db/mongodb
 	virtual/jre"
 
 S=${WORKDIR}
+QA_PREBUILT="/usr/lib*/unifi-video/lib/*.so /usr/lib*/unifi-video/bin/*"
 
 pkg_setup() {
 	enewuser unifi-video
