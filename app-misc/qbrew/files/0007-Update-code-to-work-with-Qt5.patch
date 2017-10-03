@@ -1,0 +1,279 @@
+From: "Dr. Tobias Quathamer" <toddy@debian.org>
+Date: Mon, 11 Jan 2016 12:10:12 +0100
+Subject: Update code to work with Qt5
+
+---
+ qbrew.pro            |  2 ++
+ src/configstate.h    |  2 +-
+ src/databasetool.cpp |  8 ++++----
+ src/grainmodel.cpp   |  3 ++-
+ src/hopmodel.cpp     |  3 ++-
+ src/main.cpp         |  4 ++--
+ src/miscmodel.cpp    |  3 ++-
+ src/qbrew.cpp        | 12 ++++++------
+ src/resource.h       |  4 ++--
+ src/stylemodel.cpp   |  3 ++-
+ src/view.cpp         |  6 +++---
+ 11 files changed, 28 insertions(+), 22 deletions(-)
+
+diff --git a/qbrew.pro b/qbrew.pro
+index 02f437a..af0632f 100755
+--- a/qbrew.pro
++++ b/qbrew.pro
+@@ -7,6 +7,8 @@ TARGET = qbrew
+ TEMPLATE = app
+ CONFIG += qt warn_on
+ 
++QT += widgets printsupport
++
+ MOC_DIR = build
+ OBJECTS_DIR = build
+ RCC_DIR = build
+diff --git a/src/configstate.h b/src/configstate.h
+index 400e355..c729023 100644
+--- a/src/configstate.h
++++ b/src/configstate.h
+@@ -38,7 +38,7 @@
+ #include "resource.h"
+ 
+ struct WinConfigState {
+-#if defined (Q_WS_MAC)
++#if defined (Q_OS_MAC)
+    WinConfigState() : statusbar(true) { ; }
+ #else
+    WinConfigState() : statusbar(false) { ; }
+diff --git a/src/databasetool.cpp b/src/databasetool.cpp
+index c2d06bd..80d5b90 100644
+--- a/src/databasetool.cpp
++++ b/src/databasetool.cpp
+@@ -65,7 +65,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
+ 
+     grainpage.view->verticalHeader()->setDefaultSectionSize(mh);
+     grainpage.view->verticalHeader()->hide();
+-    grainpage.view->horizontalHeader()->setClickable(true);
++    grainpage.view->horizontalHeader()->setSectionsClickable(true);
+     grainpage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     grainpage.view->setColumnWidth(GrainModel::NAME, 20*mw);
+@@ -88,7 +88,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
+ 
+     hoppage.view->verticalHeader()->setDefaultSectionSize(mh);
+     hoppage.view->verticalHeader()->hide();
+-    hoppage.view->horizontalHeader()->setClickable(true);
++    hoppage.view->horizontalHeader()->setSectionsClickable(true);
+     hoppage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     hoppage.view->setColumnHidden(HopModel::WEIGHT, true);
+@@ -110,7 +110,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
+ 
+     miscpage.view->verticalHeader()->setDefaultSectionSize(mh);
+     miscpage.view->verticalHeader()->hide();
+-    miscpage.view->horizontalHeader()->setClickable(true);
++    miscpage.view->horizontalHeader()->setSectionsClickable(true);
+     miscpage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     miscpage.view->setColumnHidden(MiscModel::QUANTITY, true);
+@@ -131,7 +131,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
+ 
+     stylepage.view->verticalHeader()->setDefaultSectionSize(mh);
+     stylepage.view->verticalHeader()->hide();
+-    stylepage.view->horizontalHeader()->setClickable(true);
++    stylepage.view->horizontalHeader()->setSectionsClickable(true);
+     stylepage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     stylepage.view->setColumnWidth(StyleModel::NAME, 20*mw);
+diff --git a/src/grainmodel.cpp b/src/grainmodel.cpp
+index 78f0269..0b57340 100644
+--- a/src/grainmodel.cpp
++++ b/src/grainmodel.cpp
+@@ -35,10 +35,11 @@ GrainModel::~GrainModel(){}
+ // flush()
+ // -------
+ // Reset the model
++// The reset() method is obsolete with Qt5.
+ 
+ void GrainModel::flush()
+ {
+-    reset();
++//     reset();
+ }
+ 
+ //////////////////////////////////////////////////////////////////////////////
+diff --git a/src/hopmodel.cpp b/src/hopmodel.cpp
+index fe3d1f1..fd13e04 100644
+--- a/src/hopmodel.cpp
++++ b/src/hopmodel.cpp
+@@ -31,10 +31,11 @@ HopModel::~HopModel() {}
+ // flush()
+ // -------
+ // Reset the model
++// The reset() method is obsolete with Qt5.
+ 
+ void HopModel::flush()
+ {
+-    reset();
++//     reset();
+ }
+ 
+ //////////////////////////////////////////////////////////////////////////////
+diff --git a/src/main.cpp b/src/main.cpp
+index aa9b267..0699ad7 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -40,7 +40,7 @@
+ #include <QTextStream>
+ #include <QTranslator>
+ 
+-#if defined(Q_WS_MACX)
++#if defined(Q_OS_MAC)
+ extern void qt_mac_set_menubar_icons(bool enable);
+ #endif
+ 
+@@ -130,7 +130,7 @@ int main(int argc, char **argv)
+     app.setApplicationName(PACKAGE);
+     app.setOrganizationName(TITLE);
+ 
+-#if defined(Q_WS_MACX)
++#if defined(Q_OS_MAC)
+     // disable icons on Mac menus (as is customary)
+     qt_mac_set_menubar_icons(false);
+ #endif
+diff --git a/src/miscmodel.cpp b/src/miscmodel.cpp
+index d2ffde5..d7c75f9 100644
+--- a/src/miscmodel.cpp
++++ b/src/miscmodel.cpp
+@@ -31,10 +31,11 @@ MiscModel::~MiscModel() {}
+ // flush()
+ // -------
+ // Reset the model
++// The reset() method is obsolete with Qt5.
+ 
+ void MiscModel::flush()
+ {
+-    reset();
++//    reset();
+ }
+ 
+ //////////////////////////////////////////////////////////////////////////////
+diff --git a/src/qbrew.cpp b/src/qbrew.cpp
+index 88aed0d..a1b36d2 100755
+--- a/src/qbrew.cpp
++++ b/src/qbrew.cpp
+@@ -7,7 +7,7 @@
+   Please see the header file for copyright and license information.
+ ***************************************************************************/
+ 
+-#include <QtGui>
++#include <QtWidgets>
+ 
+ #include "alcoholtool.h"
+ #include "configure.h"
+@@ -73,7 +73,7 @@ void QBrew::initialize(const QString &filename)
+     // setup UI
+     ui.setupUi(this);
+     initActions();
+-#if defined (Q_WS_MAC)
++#if defined (Q_OS_MAC)
+     // initial defaults for mac
+     setUnifiedTitleAndToolBarOnMac(false);
+     ui.maintoolbar->setVisible(false);
+@@ -1248,7 +1248,7 @@ QString QBrew::dataBase()
+     // TODO: can QDesktopServices help us here?
+     QString base = qApp->applicationDirPath();
+ 
+-#if defined(Q_WS_X11)
++#if defined(Q_OS_UNIX)
+     if (QRegExp("qbrew/?$").indexIn(base) != -1) {
+         // we have our own application directory (it ends in 'qbrew')
+         base += "/";
+@@ -1260,7 +1260,7 @@ QString QBrew::dataBase()
+         base += "/";
+     }
+ 
+-#elif defined(Q_WS_MAC)
++#elif defined(Q_OS_MAC)
+     if (QRegExp("Contents/MacOS/?$").indexIn(base) != -1) {
+         // we're pointing inside an application bundle
+         base += "/../Resources/";
+@@ -1284,7 +1284,7 @@ QString QBrew::docBase()
+ {
+     QString base = qApp->applicationDirPath();
+ 
+-#if defined(Q_WS_X11)
++#if defined(Q_OS_UNIX)
+     if (QRegExp("qbrew/?$").indexIn(base) != -1) {
+         // we have our own application directory (it ends in 'qbrew')
+         base += "/doc/";
+@@ -1296,7 +1296,7 @@ QString QBrew::docBase()
+         base += "/doc/";
+     }
+ 
+-#elif defined(Q_WS_MAC)
++#elif defined(Q_OS_MAC)
+     if (QRegExp("Contents/MacOS/?$").indexIn(base) != -1) {
+         // we're pointing inside an application bundle
+         base += "/../Resources/en.lproj/";
+diff --git a/src/resource.h b/src/resource.h
+index 98e76cb..6044160 100644
+--- a/src/resource.h
++++ b/src/resource.h
+@@ -40,9 +40,9 @@
+ #define VERSION "0.4.1"
+ 
+ // some stuff to differentiate between platforms
+-#if defined(Q_WS_X11)
++#if defined(Q_OS_UNIX)
+ #define QDIR_HOME   QDir::homePath()
+-#elif defined(Q_WS_MACX)
++#elif defined(Q_OS_MAC)
+ #define QDIR_HOME   QDir::homePath()
+ #else
+ #define QDIR_HOME   QDir::currentPath()
+diff --git a/src/stylemodel.cpp b/src/stylemodel.cpp
+index be53317..389b756 100644
+--- a/src/stylemodel.cpp
++++ b/src/stylemodel.cpp
+@@ -31,10 +31,11 @@ StyleModel::~StyleModel(){}
+ // flush()
+ // -------
+ // Reset the model
++// The reset() method is obsolete with Qt5.
+ 
+ void StyleModel::flush()
+ {
+-    reset();
++//    reset();
+ }
+ 
+ //////////////////////////////////////////////////////////////////////////////
+diff --git a/src/view.cpp b/src/view.cpp
+index b520e88..56e41f8 100644
+--- a/src/view.cpp
++++ b/src/view.cpp
+@@ -72,7 +72,7 @@ View::View(QWidget *parent, Recipe *recipe)
+ 
+     grainpage.view->verticalHeader()->setDefaultSectionSize(mh);
+     grainpage.view->verticalHeader()->hide();
+-    grainpage.view->horizontalHeader()->setClickable(true);
++    grainpage.view->horizontalHeader()->setSectionsClickable(true);
+     grainpage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     grainpage.view->setColumnWidth(GrainModel::NAME, 20*mw);
+@@ -94,7 +94,7 @@ View::View(QWidget *parent, Recipe *recipe)
+ 
+     hoppage.view->verticalHeader()->setDefaultSectionSize(mh);
+     hoppage.view->verticalHeader()->hide();
+-    hoppage.view->horizontalHeader()->setClickable(true);
++    hoppage.view->horizontalHeader()->setSectionsClickable(true);
+     hoppage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     hoppage.view->setColumnWidth(HopModel::NAME, 20*mw);
+@@ -115,7 +115,7 @@ View::View(QWidget *parent, Recipe *recipe)
+ 
+     miscpage.view->verticalHeader()->setDefaultSectionSize(mh);
+     miscpage.view->verticalHeader()->hide();
+-    miscpage.view->horizontalHeader()->setClickable(true);
++    miscpage.view->horizontalHeader()->setSectionsClickable(true);
+     miscpage.view->horizontalHeader()->setHighlightSections(false);
+ 
+     miscpage.view->setColumnWidth(MiscModel::NAME, 20*mw);
