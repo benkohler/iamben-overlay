@@ -3,7 +3,7 @@
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
-inherit autotools python-single-r1 eutils multilib systemd versionator
+inherit python-single-r1 eutils multilib systemd versionator
 
 MY_PV=${PV/_/}
 MY_PV_MM=$(get_version_component_range 1-2)
