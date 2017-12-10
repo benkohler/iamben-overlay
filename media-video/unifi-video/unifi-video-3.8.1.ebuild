@@ -40,7 +40,7 @@ src_prepare() {
 		-e '/require_root$/d' \
 		-e '/update_limits$/d' \
 		-e '/ulimit/d' \
-		-e '/coredump_filter/d'
+		-e '/coredump_filter/d' || die
 	default
 }
 
