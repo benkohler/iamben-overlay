@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
-DEPEND="dev-libs/json-c
+DEPEND="dev-libs/json-c:0=
 	>=sys-apps/dbus-1.4
 	sys-libs/ncurses:0"
 RDEPEND="${DEPEND}"
