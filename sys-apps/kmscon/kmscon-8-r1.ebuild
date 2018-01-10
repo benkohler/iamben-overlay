@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -72,6 +72,7 @@ video_enable() {
 
 src_prepare() {
 	eapply "${FILESDIR}/kmscon-sysmacros-fix.patch"
+	eapply "${FILESDIR}/kmscon-SIGUNUSED.patch"
 	eapply_user
 	sed -i -e 's/\[libsystemd-daemon libsystemd-login\]/\[libsystemd\]/' configure.ac
 	eautoreconf
