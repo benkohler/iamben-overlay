@@ -21,7 +21,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND=""
-RDEPEND="media-libs/libpng:1.2
+RDEPEND="media-libs/libpng:/16
 	dev-libs/glib:2
 	sys-libs/zlib
 	x11-libs/cairo
