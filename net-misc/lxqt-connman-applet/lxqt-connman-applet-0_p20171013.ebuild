@@ -1,10 +1,10 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 inherit cmake-utils vcs-snapshot
 
-COMMIT="43653768c94a64ca3541ee9f0768b5232644a8d3"
+COMMIT="940493ce509bb2784738d547cc27df677b4835a2"
 
 DESCRIPTION="LXQt system-tray applet for connman"
 HOMEPAGE="https://github.com/surlykke/lxqt-connman-applet"
