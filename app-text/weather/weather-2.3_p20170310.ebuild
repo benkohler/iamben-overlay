@@ -5,7 +5,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 
-inherit eutils python-single-r1 vcs-snapshot
+inherit python-single-r1 vcs-snapshot
 
 COMMIT="2a84a53f4aac0175f75b77e3a73d5a68b6e20ac6"
 

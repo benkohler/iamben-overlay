@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit eutils toolchain-funcs
+inherit toolchain-funcs
 
 DESCRIPTION="An IRC and ICB client that runs under most UNIX platforms"
 SRC_URI="http://ircii.warped.com//${P}.tar.bz2

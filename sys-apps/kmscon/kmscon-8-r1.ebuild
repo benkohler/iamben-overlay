@@ -6,7 +6,7 @@ EAPI=6
 SRC_URI="https://www.freedesktop.org/software/${PN}/releases/${P}.tar.xz"
 KEYWORDS="amd64 x86"
 
-inherit eutils autotools systemd flag-o-matic
+inherit autotools systemd flag-o-matic
 
 DESCRIPTION="KMS/DRM based virtual Console Emulator"
 HOMEPAGE="https://www.freedesktop.org/wiki/Software/kmscon"

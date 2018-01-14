@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit eutils unpacker
+inherit desktop unpacker
 
 MY_PN="BeerSmith"
 
