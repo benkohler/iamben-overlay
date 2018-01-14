@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit eutils
+inherit desktop
 
 DESCRIPTION="RealVNC client"
 HOMEPAGE="http://www.realvnc.com/"

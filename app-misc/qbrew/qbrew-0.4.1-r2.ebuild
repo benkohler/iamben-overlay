@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit qmake-utils eutils
+inherit qmake-utils desktop
 
 DESCRIPTION="Homebrewer's recipe calculator"
 HOMEPAGE="http://www.usermode.org/code.html"
