@@ -19,7 +19,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND=""
-RDEPEND="<dev-db/mongodb-3.6
+RDEPEND="dev-db/mongodb
 	virtual/jre"
 
 S=${WORKDIR}/UniFi
