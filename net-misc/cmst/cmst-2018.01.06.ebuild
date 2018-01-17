@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -23,7 +23,7 @@ RDEPEND="${DEPEND}
 	net-misc/connman
 "
 
-S="${WORKDIR}/${PN}-${PV//./-}"
+S="${WORKDIR}/${PN}-${P}"
 
 src_configure() {
 	export USE_LIBPATH="${EPREFIX}/usr/$(get_libdir)/${PN}"
