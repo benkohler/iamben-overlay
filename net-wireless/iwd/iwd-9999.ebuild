@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -19,7 +19,6 @@ DEPEND="${RDEPEND}
 
 CONFIG_CHECK="
 	~VLAN_8021Q
-	~CRYPTO_USER_API_AKCIPHER
 	~CRYPTO_USER_API_SKCIPHER
 	~CRYPTO_USER_API_HASH
 	~CRYPTO_RSA
