@@ -13,7 +13,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="+client +monitor"
 
-RDEPEND="sys-apps/dbus"
+RDEPEND="sys-apps/dbus
+	client? ( sys-libs/readline:0= )"
 
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
