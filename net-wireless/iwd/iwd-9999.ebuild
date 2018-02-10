@@ -11,6 +11,7 @@ EGIT_REPO_URI="https://git.kernel.org/pub/scm/network/wireless/iwd.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
+IUSE="+client +monitor"
 
 RDEPEND="sys-apps/dbus"
 
@@ -48,7 +49,9 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --sysconfdir=/etc/iwd --localstatedir=/var
+	econf --sysconfdir=/etc/iwd --localstatedir=/var \
+		$(use_enable client) \
+		$(use_enable monitor)
 }
 
 src_install() {
