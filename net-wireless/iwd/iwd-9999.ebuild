@@ -52,7 +52,8 @@ src_prepare() {
 src_configure() {
 	econf --sysconfdir=/etc/iwd --localstatedir=/var \
 		$(use_enable client) \
-		$(use_enable monitor)
+		$(use_enable monitor) \
+		--disable-systemd-service
 }
 
 src_install() {
