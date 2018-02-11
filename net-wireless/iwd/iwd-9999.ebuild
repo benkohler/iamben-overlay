@@ -53,12 +53,8 @@ src_configure() {
 	econf --sysconfdir=/etc/iwd --localstatedir=/var \
 		$(use_enable client) \
 		$(use_enable monitor) \
-		--disable-systemd-service
-}
-
-src_compile() {
-	default
-	sed -e 's#@libexecdir@#/usr/libexec#' src/iwd.service.in > iwd.service
+		--enable-systemd-service \
+		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 }
 
 src_install() {
@@ -66,7 +62,6 @@ src_install() {
 	dodir /var/lib/${PN}
 
 	newinitd "${FILESDIR}/iwd.initd" iwd
-	systemd_dounit ${PN}.service
 
 	exeinto /usr/share/iwd/scripts/
 	doexe test/*
