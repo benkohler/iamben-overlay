@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -23,8 +23,8 @@ RDEPEND=">=dev-libs/glib-2.16
 	iwd? ( net-wireless/iwd )
 	l2tp? ( net-dialup/xl2tpd )
 	nftables? (
-		>=net-libs/libnftnl-1.0.4
-		>=net-libs/libmnl-1.0.0 )
+		>=net-libs/libnftnl-1.0.4:0=
+		>=net-libs/libmnl-1.0.0:0= )
 	ofono? ( net-misc/ofono )
 	openconnect? ( net-vpn/openconnect )
 	openvpn? ( net-vpn/openvpn )
