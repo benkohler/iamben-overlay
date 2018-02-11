@@ -56,12 +56,17 @@ src_configure() {
 		--disable-systemd-service
 }
 
+src_compile() {
+	default
+	sed -e 's#@libexecdir@#/usr/libexec#' src/iwd.service.in > iwd.service
+}
+
 src_install() {
 	default
 	dodir /var/lib/${PN}
 
 	newinitd "${FILESDIR}/iwd.initd" iwd
-	systemd_dounit "${FILESDIR}/${PN}.service"
+	systemd_dounit ${PN}.service
 
 	exeinto /usr/share/iwd/scripts/
 	doexe test/*
