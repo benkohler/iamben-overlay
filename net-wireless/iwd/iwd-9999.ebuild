@@ -56,6 +56,7 @@ src_unpack() {
 
 src_prepare() {
 	default
+	eapply "${FILESDIR}"/iwd-fix-makefile-dep.patch
 	eautoreconf
 }
 
