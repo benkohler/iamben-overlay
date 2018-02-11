@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit linux-info systemd
+inherit autotools linux-info systemd
 
 if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://git.kernel.org/pub/scm/network/wireless/iwd.git"
-	inherit git-r3 autotools
+	inherit git-r3
 else
 	SRC_URI="https://www.kernel.org/pub/linux/network/wireless/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
@@ -56,7 +56,7 @@ src_unpack() {
 
 src_prepare() {
 	default
-	[[ ${PV} == "9999" ]] && eautoreconf
+	eautoreconf
 }
 
 src_configure() {
