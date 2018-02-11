@@ -2,15 +2,21 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit autotools git-r3 linux-info systemd
+inherit linux-info systemd
+
+if [[ ${PV} == 9999 ]]; then
+	EGIT_REPO_URI="https://git.kernel.org/pub/scm/network/wireless/iwd.git"
+	inherit git-r3 autotools
+else
+	SRC_URI="https://www.kernel.org/pub/linux/network/wireless/${P}.tar.xz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 DESCRIPTION="Wireless daemon for linux"
 HOMEPAGE="https://git.kernel.org/pub/scm/network/wireless/iwd.git/"
-EGIT_REPO_URI="https://git.kernel.org/pub/scm/network/wireless/iwd.git"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
 IUSE="+client +monitor"
 
 RDEPEND="sys-apps/dbus
@@ -40,13 +46,17 @@ pkg_setup() {
 }
 
 src_unpack() {
-	git-r3_src_unpack
-	git clone git://git.kernel.org/pub/scm/libs/ell/ell.git "${WORKDIR}"/ell
+	if [[ ${PV} == "9999" ]] ; then
+		git-r3_src_unpack
+		git clone git://git.kernel.org/pub/scm/libs/ell/ell.git "${WORKDIR}"/ell
+	else
+		default
+	fi
 }
 
 src_prepare() {
 	default
-	eautoreconf
+	[[ ${PV} == "9999" ]] && eautoreconf
 }
 
 src_configure() {
@@ -59,10 +69,12 @@ src_configure() {
 
 src_install() {
 	default
-	dodir /var/lib/${PN}
+	keepdir /var/lib/${PN}
 
 	newinitd "${FILESDIR}/iwd.initd" iwd
 
-	exeinto /usr/share/iwd/scripts/
-	doexe test/*
+	if [[ ${PV} == "9999" ]] ; then
+		exeinto /usr/share/iwd/scripts/
+		doexe test/*
+	fi
 }
