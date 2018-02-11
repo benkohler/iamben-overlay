@@ -2,15 +2,21 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit autotools linux-info systemd
+inherit linux-info systemd
+
+if [[ ${PV} == 9999 ]]; then
+	EGIT_REPO_URI="https://git.kernel.org/pub/scm/network/wireless/iwd.git"
+	inherit git-r3 autotools
+else
+	SRC_URI="https://www.kernel.org/pub/linux/network/wireless/${P}.tar.xz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 DESCRIPTION="Wireless daemon for linux"
 HOMEPAGE="https://git.kernel.org/pub/scm/network/wireless/iwd.git/"
-SRC_URI="https://www.kernel.org/pub/linux/network/wireless/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 IUSE="+client +monitor"
 
 RDEPEND="sys-apps/dbus
@@ -39,22 +45,36 @@ pkg_setup() {
 	check_extra_config
 }
 
+src_unpack() {
+	if [[ ${PV} == "9999" ]] ; then
+		git-r3_src_unpack
+		git clone git://git.kernel.org/pub/scm/libs/ell/ell.git "${WORKDIR}"/ell
+	else
+		default
+	fi
+}
+
 src_prepare() {
 	default
-	eautoreconf
+	[[ ${PV} == "9999" ]] && eautoreconf
 }
 
 src_configure() {
 	econf --sysconfdir=/etc/iwd --localstatedir=/var \
 		$(use_enable client) \
 		$(use_enable monitor) \
-		--disable-systemd-service
+		--enable-systemd-service \
+		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 }
 
 src_install() {
 	default
-	dodir /var/lib/${PN}
+	keepdir /var/lib/${PN}
 
 	newinitd "${FILESDIR}/iwd.initd" iwd
-	systemd_dounit "${FILESDIR}/${PN}.service"
+
+	if [[ ${PV} == "9999" ]] ; then
+		exeinto /usr/share/iwd/scripts/
+		doexe test/*
+	fi
 }
