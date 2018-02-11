@@ -64,7 +64,7 @@ src_configure() {
 		$(use_enable client) \
 		$(use_enable monitor) \
 		--enable-systemd-service \
-		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
+		--with-systemd-unitdir="$(systemd_get_systemunitdir)"
 }
 
 src_install() {
