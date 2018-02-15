@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -18,6 +18,7 @@ IUSE="ayatana crypt rdp gnome-keyring nls spice ssh telepathy vnc zeroconf"
 
 CDEPEND="
 	dev-libs/glib:2
+	dev-libs/openssl:0=
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
 	x11-libs/libX11
