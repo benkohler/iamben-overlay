@@ -15,6 +15,8 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+S="${WORKDIR}"
+
 src_unpack(){
 	echo 'alias upd="emerge -uDNav world --newrepo --changed-deps"' >> \
 		aliases.sh
