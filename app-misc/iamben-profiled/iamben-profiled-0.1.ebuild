@@ -20,6 +20,7 @@ S="${WORKDIR}"
 src_unpack(){
 	echo 'alias upd="emerge -uDNav world --newrepo --changed-deps"' >> \
 		aliases.sh
+	echo 'alias mt="qlop -tHvg"' >> aliases.sh
 }
 
 src_install() {
