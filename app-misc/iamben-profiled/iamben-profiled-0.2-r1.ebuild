@@ -17,14 +17,7 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"
 
-src_unpack(){
-	echo 'alias upd="emerge -uDNav world --newrepo --changed-deps"' >> \
-		aliases.sh
-	echo 'alias mt="qlop -tHvg"' >> aliases.sh
-	echo 'alias tail-emerge-logs="tail -f $(find $(portageq envvar PORTAGE_TMPDIR)/ -name build.log))"' >> aliases.sh
-}
-
 src_install() {
 	exeinto /etc/profile.d
-	doexe *
+	doexe "${FILESDIR}/aliases.sh"
 }
