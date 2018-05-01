@@ -35,6 +35,11 @@ src_install(){
 	#install static data
 	insinto ${static_dir}
 	doins -r *
+
+	#wrapper to work around mongodb-3.6 compat issue
+	exeinto ${static_dir}/bin/
+	newexe "${FILESDIR}"/mongod-wrapper mongod
+
 	#prepare runtime-data dirs which live in /var but are symlinked from static
 	#data dir, and are writable by non-root user
 	dodir /var/log/${PN}
