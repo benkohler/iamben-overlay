@@ -1,10 +1,13 @@
---- connman-1.35/src/tethering.c
-+++ connman-1.35/src/tethering.c
-@@ -35,8 +35,8 @@ 
+diff -ur connman-1.36/src/tethering.c connman-1.36.new/src/tethering.c
+--- connman-1.36/src/tethering.c	2018-05-14 15:58:15.423941005 -0500
++++ connman-1.36.new/src/tethering.c	2018-05-14 15:59:07.880645700 -0500
+@@ -33,10 +33,10 @@
+ #include <net/if.h>
  #include <string.h>
  #include <fcntl.h>
- #include <linux/if_tun.h>
 -#include <netinet/in.h>
+ #include <linux/sockios.h>
+ #include <linux/if_tun.h>
  #include <linux/if_bridge.h>
 +#include <netinet/in.h>
  
