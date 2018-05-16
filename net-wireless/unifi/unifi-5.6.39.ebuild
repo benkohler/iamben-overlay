@@ -6,7 +6,7 @@ EAPI=6
 inherit systemd user
 
 # for stable candidates set RC_SUFFIX="-xxxxxxxxxx"
-RC_SUFFIX="-b1546ad2e8"
+RC_SUFFIX="-7b9a227a14"
 
 DESCRIPTION="Management Controller for UniFi APs"
 HOMEPAGE="https://www.ubnt.com/download/unifi"
