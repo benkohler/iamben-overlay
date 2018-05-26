@@ -6,7 +6,7 @@ EAPI=6
 PYTHON_COMPAT=( python{2_7,3_5,3_6} )
 inherit distutils-r1
 
-DESCRIPTION="Memory usage analyzer"
+DESCRIPTION="A utility to report core memory usage per program"
 HOMEPAGE="https://github.com/pixelb/${PN}"
 SRC_URI="https://github.com/pixelb/${PN}/archive/v${PV}.tar.gz"
 
