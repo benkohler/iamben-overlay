@@ -4,8 +4,9 @@
 
 pidfile="/run/iwd.pid"
 command="/usr/libexec/iwd"
-start_stop_daemon_args="-b -m -p ${pidfile}"
+command_background="yes"
 
 depend() {
 	need dbus
+	keyword -shutdown
 }
