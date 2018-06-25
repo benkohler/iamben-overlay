@@ -17,7 +17,7 @@ HOMEPAGE="https://git.kernel.org/pub/scm/network/wireless/iwd.git/"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+client +monitor"
+IUSE="+client +monitor cpu_flags_x86_aes cpu_flags_x86_ssse3"
 
 RDEPEND="sys-apps/dbus
 	client? ( sys-libs/readline:0= )"
@@ -25,23 +25,40 @@ RDEPEND="sys-apps/dbus
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
-CONFIG_CHECK="
-	~VLAN_8021Q
-	~CRYPTO_USER_API_SKCIPHER
-	~CRYPTO_USER_API_HASH
-	~CRYPTO_RSA
-	~CRYPTO_MD4
-	~CRYPTO_SHA1
-	~CRYPTO_SHA256
-	~CRYPTO_ECB
-	~CRYPTO_CMAC
-	~KEY_DH_OPERATIONS
-	~ASYMMETRIC_KEY_TYPE
-	~ASYMMETRIC_PUBLIC_KEY_SUBTYPE
-	~X509_CERTIFICATE_PARSER
-	~PKCS7_MESSAGE_PARSER
-"
-pkg_setup() {
+pkg_pretend() {
+	CONFIG_CHECK="
+		~CRYPTO_USER_API_SKCIPHER
+		~CRYPTO_USER_API_HASH
+		~CRYPTO_RSA
+		~CRYPTO_AES
+		~CRYPTO_MD4
+		~CRYPTO_ECB
+		~CRYPTO_CMAC
+		~CRYPTO_DES
+		~KEY_DH_OPERATIONS
+		~ASYMMETRIC_KEY_TYPE
+		~ASYMMETRIC_PUBLIC_KEY_SUBTYPE
+		~X509_CERTIFICATE_PARSER
+		~PKCS7_MESSAGE_PARSER
+	"
+	if use amd64;then
+		CONFIG_CHECK="${CONFIG_CHECK} ~CRYPTO_AES_X86_64 ~CRYPTO_DES3_EDE_X86_64"
+		WARNING_CRYPTO_AES_X86_64="CRYPTO_AES_X86_64: enable for increased performance"
+		WARNING_CRYPTO_DES3_EDE_X86_64="CRYPTO_DES3_EDE_X86_64: enable for increased performance"
+	fi
+
+	if use cpu_flags_x86_aes;then
+		CONFIG_CHECK="${CONFIG_CHECK} ~CRYPTO_AES_NI_INTEL"
+		WARNING_CRYPTO_AES_NI_INTEL="CRYPTO_AES_NI_INTEL: enable for increased performance"
+	fi
+
+	if use cpu_flags_x86_ssse3; then
+		CONFIG_CHECK="${CONFIG_CHECK} ~CRYPTO_SHA1_SSSE3 ~CRYPTO_SHA256_SSSE3 ~CRYPTO_SHA512_SSSE3"
+		WARNING_CRYPTO_SHA1_SSSE3="CRYPTO_SHA1_SSSE3: enable for increased performance"
+		WARNING_CRYPTO_SHA256_SSSE3="CRYPTO_SHA256_SSSE3: enable for increased performance"
+		WARNING_CRYPTO_SHA512_SSSE3="CRYPTO_SHA512_SSSE3: enable for increased performance"
+	fi
+
 	check_extra_config
 }
 
