@@ -19,6 +19,7 @@ RESTRICT="mirror"
 DEPEND=""
 RDEPEND="dev-db/mongodb
 	dev-java/commons-daemon
+	sys-apps/lsb-release
 	sys-libs/libcap
 	virtual/jre"
 
