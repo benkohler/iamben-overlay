@@ -1,0 +1,605 @@
+From f35654af3f2a22e4e5a424281101f4ec1823f8fd Mon Sep 17 00:00:00 2001
+From: Conrad Kostecki <conrad@kostecki.com>
+Date: Tue, 26 Jun 2018 19:40:28 +0200
+Subject: [PATCH] net-wireless/unifi: eBuilds reworked
+
+Closes: https://bugs.gentoo.org/634518
+Package-Manager: Portage-2.3.40, Repoman-2.3.9
+---
+ net-wireless/unifi/files/mongod-wrapper     |  9 ++-
+ net-wireless/unifi/files/unifi.confd        |  6 +-
+ net-wireless/unifi/files/unifi.initd        | 23 ++++---
+ net-wireless/unifi/files/unifi.service      |  8 +--
+ net-wireless/unifi/files/unifi.service.conf |  4 --
+ net-wireless/unifi/metadata.xml             | 15 ++++-
+ net-wireless/unifi/unifi-5.6.39.ebuild      | 97 ++++++++++++++++-------------
+ net-wireless/unifi/unifi-5.7.28.ebuild      | 97 ++++++++++++++++-------------
+ net-wireless/unifi/unifi-5.8.23.ebuild      | 88 ++++++++++++++------------
+ net-wireless/unifi/unifi-5.9.4.ebuild       | 87 ++++++++++++++------------
+ 10 files changed, 245 insertions(+), 189 deletions(-)
+ delete mode 100644 net-wireless/unifi/files/unifi.service.conf
+
+diff --git a/net-wireless/unifi/files/mongod-wrapper b/net-wireless/unifi/files/mongod-wrapper
+index f2eb2a437520..21637de50a0f 100755
+--- a/net-wireless/unifi/files/mongod-wrapper
++++ b/net-wireless/unifi/files/mongod-wrapper
+@@ -1,3 +1,6 @@
+-#!/bin/bash
+-cleaned_args=$(echo $* | sed -e 's/--nohttpinterface//')
+-/usr/bin/mongod ${cleaned_args}
++#!/bin/sh
++
++# Remove --nohttpinterface argument, since it does not exist on MongoDB >= 3.6.x anymore
++# See https://community.ubnt.com/t5/UniFi-Routing-Switching/MongoDB-3-6/td-p/2195435
++remove_nohttpinterface_arg=$(echo $* | sed -e 's/--nohttpinterface//')
++/usr/bin/mongod ${remove_nohttpinterface_arg}
+diff --git a/net-wireless/unifi/files/unifi.confd b/net-wireless/unifi/files/unifi.confd
+index 78a59910ac49..580c18d332b7 100644
+--- a/net-wireless/unifi/files/unifi.confd
++++ b/net-wireless/unifi/files/unifi.confd
+@@ -1,6 +1,6 @@
+ # Copyright 1999-2018 Gentoo Foundation
+ # Distributed under the terms of the GNU General Public License v2
+ 
+-# /etc/conf.d/unifi.conf
+-
+-#JAVA_HOME="/usr"
++# Specifies the path of an used Java runtime,
++# if it's not set, the system default is being used.
++# JAVA_HOME=""
+diff --git a/net-wireless/unifi/files/unifi.initd b/net-wireless/unifi/files/unifi.initd
+index 7aded2123df5..959aa58a42ce 100644
+--- a/net-wireless/unifi/files/unifi.initd
++++ b/net-wireless/unifi/files/unifi.initd
+@@ -2,22 +2,25 @@
+ # Copyright 1999-2018 Gentoo Foundation
+ # Distributed under the terms of the GNU General Public License v2
+ 
+-PID_FILE="/run/unifi.pid"
+-DAEMON="${JAVA_HOME-/usr}"/bin/java
++ACE_LIB="lib/ace.jar"
++DAEMON="${JAVA_HOME-/etc/java-config-2/current-system-vm}"/bin/java
++JAVA_OPTS="-Dorg.xerial.snappy.tempdir=/usr/lib/unifi/tmp"
++UNIFI_GROUP="unifi"
+ UNIFI_PATH="/usr/lib/unifi"
++UNIFI_USER="unifi"
++
++depend() {
++	need net
++}
+ 
+ start() {
+-	ebegin "Starting unifi"
+-	cd "${UNIFI_PATH}"
+-	start-stop-daemon --start --quiet -b \
+-	--pidfile "${PID_FILE}" -m \
+-	--exec ${DAEMON} -- -jar lib/ace.jar start
++	ebegin "Starting UniFi Controller"
++	cd "${UNIFI_PATH}" && start-stop-daemon --start --quiet --background --user ${UNIFI_USER} --group ${UNIFI_GROUP} --chdir ${UNIFI_PATH} --exec ${DAEMON} -- ${JAVA_OPTS} -jar ${ACE_LIB} start
+ 	eend $?
+-	#--user nobody --group nobody \
+ }
+ 
+ stop() {
+-	ebegin "Stopping unifi"
+-	start-stop-daemon --quiet --stop -R 20 --pidfile "${PID_FILE}"
++	ebegin "Stopping UniFi Controller"
++	start-stop-daemon --start --quiet --background --user ${UNIFI_USER} --group ${UNIFI_GROUP} --chdir ${UNIFI_PATH} --exec ${DAEMON} -- ${JAVA_OPTS} -jar ${ACE_LIB} stop
+ 	eend $?
+ }
+diff --git a/net-wireless/unifi/files/unifi.service b/net-wireless/unifi/files/unifi.service
+index 11385a0e913b..cee05d4d1536 100644
+--- a/net-wireless/unifi/files/unifi.service
++++ b/net-wireless/unifi/files/unifi.service
+@@ -1,14 +1,14 @@
+ [Unit]
+ Description=UniFi Controller
+-Requires=network.target
+-After=network.target
++After=network-online.target
+ 
+ [Service]
+-ExecStart=/usr/bin/java -jar /usr/lib/unifi/lib/ace.jar start
+-ExecStop=/usr/bin/java -jar /usr/lib/unifi/lib/ace.jar stop
++Type=simple
+ User=unifi
+ Group=unifi
+ WorkingDirectory=/usr/lib/unifi
++ExecStart=/usr/bin/java -Dorg.xerial.snappy.tempdir=/usr/lib/unifi/tmp -jar /usr/lib/unifi/lib/ace.jar start
++ExecStop=/usr/bin/java -Dorg.xerial.snappy.tempdir=/usr/lib/unifi/tmp -jar /usr/lib/unifi/lib/ace.jar stop
+ 
+ [Install]
+ WantedBy=network.target
+diff --git a/net-wireless/unifi/files/unifi.service.conf b/net-wireless/unifi/files/unifi.service.conf
+deleted file mode 100644
+index 0ef221d3b734..000000000000
+--- a/net-wireless/unifi/files/unifi.service.conf
++++ /dev/null
+@@ -1,4 +0,0 @@
+-[Service] 
+-RuntimeDirectory=unifi
+-User=unifi
+-Group=unifi
+diff --git a/net-wireless/unifi/metadata.xml b/net-wireless/unifi/metadata.xml
+index ee9a82ac4170..57ba2066974e 100644
+--- a/net-wireless/unifi/metadata.xml
++++ b/net-wireless/unifi/metadata.xml
+@@ -5,5 +5,18 @@
+ 		<email>bkohler@gentoo.org</email>
+ 		<name>Ben Kohler</name>
+ 	</maintainer>
++	<maintainer type="person">
++		<email>ck+gentoo@bl4ckb0x.de</email>
++		<name>Conrad Kostecki</name>
++	</maintainer>
++	<maintainer type="project">
++		<email>proxy-maint@gentoo.org</email>
++		<name>Proxy Maintainers</name>
++	</maintainer>
++	<longdescription>
++		UniFi is a management controller software for Ubiquiti UniFi APs.
++		It's purpose is to configure and monitor all those APs.
++		Also all kind of statistics are collected, which can be accessed through UniFi.
++		There is also an internal RADIUS server, which can be used for WPA2-Enterprise.
++	</longdescription>
+ </pkgmetadata>
+-
+diff --git a/net-wireless/unifi/unifi-5.6.39.ebuild b/net-wireless/unifi/unifi-5.6.39.ebuild
+index cd3ade4f06f4..e29f1cfaaff9 100644
+--- a/net-wireless/unifi/unifi-5.6.39.ebuild
++++ b/net-wireless/unifi/unifi-5.6.39.ebuild
+@@ -3,56 +3,69 @@
+ 
+ EAPI=6
+ 
+-inherit systemd user
+-
+-# for stable candidates set RC_SUFFIX="-xxxxxxxxxx"
++# Used, when it's an unstable, beta or release candidate
+ RC_SUFFIX=""
+ 
+-DESCRIPTION="Management Controller for UniFi APs"
+-HOMEPAGE="https://www.ubnt.com/download/unifi"
+-SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
++inherit systemd user
+ 
+-LICENSE="GPL-3"
+-SLOT="0"
+-KEYWORDS="~amd64"
+-IUSE=""
+-RESTRICT="mirror"
++DESCRIPTION="A Management Controller for Ubiquiti Networks UniFi APs"
++HOMEPAGE="https://www.ubnt.com"
++SRC_URI="https://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
++
++KEYWORDS="~amd64 ~x86"
++LICENSE="Apache-1.0 Apache-2.0 BSD-1 BSD-2 BSD CDDL EPL-1.0 GPL-2 LGPL-2.1 LGPL-3 MIT ubiquiti"
++SLOT="0/5.6"
+ 
+-DEPEND=""
+ RDEPEND="dev-db/mongodb
+-	virtual/jre"
++	dev-java/tomcat-native
++	virtual/jre:1.8"
++
++DEPEND="app-arch/unzip"
+ 
+-S=${WORKDIR}/UniFi
+-QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
++RESTRICT="bindist mirror"
++
++S="${WORKDIR}/UniFi"
++
++DOCS=( "readme.txt" )
++
++QA_PREBUILT="usr/lib/unifi/lib/native/Linux/x86_64/*.so"
+ 
+ pkg_setup() {
+-	enewuser ${PN}
+-	enewgroup ${PN}
++	enewgroup unifi
++	enewuser unifi -1 -1 /var/lib/unifi unifi
++}
++
++src_prepare() {
++	# Remove unneeded files Linux, Mac and Windows
++	rm -r lib/native/Linux/{aarch64,armv7} lib/native/{Mac,Windows} || die
++
++	default
+ }
+ 
+-src_install(){
+-	static_dir="/usr/$(get_libdir)/${PN}"
+-	#install static data
+-	insinto ${static_dir}
+-	doins -r *
+-	#prepare runtime-data dirs which live in /var but are symlinked from static
+-	#data dir, and are writable by non-root user
+-	dodir /var/log/${PN}
+-	fowners ${PN}:${PN} /var/log/${PN}
+-	dosym ../../../var/log/${PN} ${static_dir}/logs
+-
+-	dodir /var/lib/${PN}/work
+-	fowners ${PN}:${PN} /var/lib/${PN}/work
+-	dosym ../../../var/lib/${PN}/work ${static_dir}/work
+-
+-	keepdir /var/lib/${PN}/data
+-	fowners ${PN}:${PN} /var/lib/${PN}/data
+-	dosym ../../../var/lib/${PN}/data ${static_dir}/data
+-
+-	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+-	doenvd "${T}"/99${PN}
+-
+-	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+-	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+-	systemd_dounit "${FILESDIR}"/${PN}.service
++src_install() {
++	# Install MongoDB wrapper script, to avoid problems with >= 3.6.0
++	# See https://community.ubnt.com/t5/UniFi-Routing-Switching/MongoDB-3-6/td-p/2195435
++	exeinto /usr/lib/unifi/bin
++	newexe "${FILESDIR}"/mongod-wrapper mongod
++
++	insinto /usr/lib/unifi
++	doins -r dl lib webapps
++
++	diropts -o unifi -g unifi
++	keepdir /var/lib/unifi/{conf,data,run,tmp,work} /var/log/unifi
++
++	for symlink in conf data run tmp work; do
++		dosym ../../../var/lib/unifi/${symlink} /usr/lib/unifi/${symlink}
++	done
++	dosym ../../../var/log/unifi /usr/lib/unifi/logs
++
++	newinitd "${FILESDIR}"/unifi.initd unifi
++	systemd_dounit "${FILESDIR}"/unifi.service
++
++	newconfd "${FILESDIR}"/unifi.confd unifi
++
++	echo 'CONFIG_PROTECT="/var/lib/unifi"' > "${T}"/99unifi || die
++	doenvd "${T}"/99unifi
++
++	einstalldocs
+ }
+diff --git a/net-wireless/unifi/unifi-5.7.28.ebuild b/net-wireless/unifi/unifi-5.7.28.ebuild
+index 0e23b1ca6d59..04953de49c4c 100644
+--- a/net-wireless/unifi/unifi-5.7.28.ebuild
++++ b/net-wireless/unifi/unifi-5.7.28.ebuild
+@@ -3,56 +3,69 @@
+ 
+ EAPI=6
+ 
+-inherit systemd user
++# Used, when it's an unstable, beta or release candidate
++RC_SUFFIX="5c442c6b54"
+ 
+-# for not-stable releases set RC_SUFFIX="-xxxxxxxxxx"
+-RC_SUFFIX="-5c442c6b54"
++inherit systemd user
+ 
+-DESCRIPTION="Management Controller for UniFi APs"
+-HOMEPAGE="https://www.ubnt.com/download/unifi"
+-SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
++DESCRIPTION="A Management Controller for Ubiquiti Networks UniFi APs"
++HOMEPAGE="https://www.ubnt.com"
++SRC_URI="https://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
+ 
+-LICENSE="GPL-3"
+-SLOT="0"
+-KEYWORDS="~amd64"
+-IUSE=""
+-RESTRICT="mirror"
++KEYWORDS="~amd64 ~x86"
++LICENSE="Apache-1.0 Apache-2.0 BSD-1 BSD-2 BSD CDDL EPL-1.0 GPL-2 LGPL-2.1 LGPL-3 MIT ubiquiti"
++SLOT="0/5.7"
+ 
+-DEPEND=""
+ RDEPEND="dev-db/mongodb
+-	virtual/jre"
++	dev-java/tomcat-native
++	virtual/jre:1.8"
++
++DEPEND="app-arch/unzip"
++
++RESTRICT="bindist mirror"
+ 
+-S=${WORKDIR}/UniFi
+-QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
++S="${WORKDIR}/UniFi"
++
++DOCS=( "readme.txt" )
++
++QA_PREBUILT="usr/lib/unifi/lib/native/Linux/x86_64/*.so"
+ 
+ pkg_setup() {
+-	enewuser ${PN}
+-	enewgroup ${PN}
++	enewgroup unifi
++	enewuser unifi -1 -1 /var/lib/unifi unifi
++}
++
++src_prepare() {
++	# Remove unneeded files Linux, Mac and Windows
++	rm -r lib/native/Linux/{aarch64,armv7} lib/native/{Mac,Windows} || die
++
++	default
+ }
+ 
+-src_install(){
+-	static_dir="/usr/$(get_libdir)/${PN}"
+-	#install static data
+-	insinto ${static_dir}
+-	doins -r *
+-	#prepare runtime-data dirs which live in /var but are symlinked from static
+-	#data dir, and are writable by non-root user
+-	dodir /var/log/${PN}
+-	fowners ${PN}:${PN} /var/log/${PN}
+-	dosym ../../../var/log/${PN} ${static_dir}/logs
+-
+-	dodir /var/lib/${PN}/work
+-	fowners ${PN}:${PN} /var/lib/${PN}/work
+-	dosym ../../../var/lib/${PN}/work ${static_dir}/work
+-
+-	keepdir /var/lib/${PN}/data
+-	fowners ${PN}:${PN} /var/lib/${PN}/data
+-	dosym ../../../var/lib/${PN}/data ${static_dir}/data
+-
+-	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+-	doenvd "${T}"/99${PN}
+-
+-	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+-	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+-	systemd_dounit "${FILESDIR}"/${PN}.service
++src_install() {
++	# Install MongoDB wrapper script, to avoid problems with >= 3.6.0
++	# See https://community.ubnt.com/t5/UniFi-Routing-Switching/MongoDB-3-6/td-p/2195435
++	exeinto /usr/lib/unifi/bin
++	newexe "${FILESDIR}"/mongod-wrapper mongod
++
++	insinto /usr/lib/unifi
++	doins -r dl lib webapps
++
++	diropts -o unifi -g unifi
++	keepdir /var/lib/unifi/{conf,data,run,tmp,work} /var/log/unifi
++
++	for symlink in conf data run tmp work; do
++		dosym ../../../var/lib/unifi/${symlink} /usr/lib/unifi/${symlink}
++	done
++	dosym ../../../var/log/unifi /usr/lib/unifi/logs
++
++	newinitd "${FILESDIR}"/unifi.initd unifi
++	systemd_dounit "${FILESDIR}"/unifi.service
++
++	newconfd "${FILESDIR}"/unifi.confd unifi
++
++	echo 'CONFIG_PROTECT="/var/lib/unifi"' > "${T}"/99unifi || die
++	doenvd "${T}"/99unifi
++
++	einstalldocs
+ }
+diff --git a/net-wireless/unifi/unifi-5.8.23.ebuild b/net-wireless/unifi/unifi-5.8.23.ebuild
+index ea971a293b13..d0bd1c77f6df 100644
+--- a/net-wireless/unifi/unifi-5.8.23.ebuild
++++ b/net-wireless/unifi/unifi-5.8.23.ebuild
+@@ -3,61 +3,69 @@
+ 
+ EAPI=6
+ 
+-inherit systemd user
++# Used, when it's an unstable, beta or release candidate
++RC_SUFFIX="d5a5bbfda4"
+ 
+-# for not-stable releases set RC_SUFFIX="-xxxxxxxxxx"
+-RC_SUFFIX=""
++inherit systemd user
+ 
+-DESCRIPTION="Management Controller for UniFi APs"
+-HOMEPAGE="https://www.ubnt.com/download/unifi"
+-SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
++DESCRIPTION="A Management Controller for Ubiquiti Networks UniFi APs"
++HOMEPAGE="https://www.ubnt.com"
++SRC_URI="https://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
+ 
+-LICENSE="GPL-3"
+-SLOT="0"
+-KEYWORDS="~amd64"
+-IUSE=""
+-RESTRICT="mirror"
++KEYWORDS="~amd64 ~x86"
++LICENSE="Apache-1.0 Apache-2.0 BSD-1 BSD-2 BSD CDDL EPL-1.0 GPL-2 LGPL-2.1 LGPL-3 MIT ubiquiti"
++SLOT="0/5.8"
+ 
+-DEPEND=""
+ RDEPEND="dev-db/mongodb
+-	virtual/jre"
++	dev-java/tomcat-native
++	virtual/jre:1.8"
++
++DEPEND="app-arch/unzip"
++
++RESTRICT="bindist mirror"
++
++S="${WORKDIR}/UniFi"
+ 
+-S=${WORKDIR}/UniFi
+-QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
++DOCS=( "readme.txt" )
++
++QA_PREBUILT="usr/lib/unifi/lib/native/Linux/x86_64/*.so"
+ 
+ pkg_setup() {
+-	enewuser ${PN}
+-	enewgroup ${PN}
++	enewgroup unifi
++	enewuser unifi -1 -1 /var/lib/unifi unifi
+ }
+ 
+-src_install(){
+-	static_dir="/usr/$(get_libdir)/${PN}"
+-	#install static data
+-	insinto ${static_dir}
+-	doins -r *
++src_prepare() {
++	# Remove unneeded files Linux, Mac and Windows
++	rm -r lib/native/Linux/{aarch64,armv7} lib/native/{Mac,Windows} || die
++
++	default
++}
+ 
+-	#wrapper to work around mongodb-3.6 compat issue
+-	exeinto ${static_dir}/bin/
++src_install() {
++	# Install MongoDB wrapper script, to avoid problems with >= 3.6.0
++	# See https://community.ubnt.com/t5/UniFi-Routing-Switching/MongoDB-3-6/td-p/2195435
++	exeinto /usr/lib/unifi/bin
+ 	newexe "${FILESDIR}"/mongod-wrapper mongod
+ 
+-	#prepare runtime-data dirs which live in /var but are symlinked from static
+-	#data dir, and are writable by non-root user
+-	dodir /var/log/${PN}
+-	fowners ${PN}:${PN} /var/log/${PN}
+-	dosym ../../../var/log/${PN} ${static_dir}/logs
++	insinto /usr/lib/unifi
++	doins -r dl lib webapps
++
++	diropts -o unifi -g unifi
++	keepdir /var/lib/unifi/{conf,data,run,tmp,work} /var/log/unifi
++
++	for symlink in conf data run tmp work; do
++		dosym ../../../var/lib/unifi/${symlink} /usr/lib/unifi/${symlink}
++	done
++	dosym ../../../var/log/unifi /usr/lib/unifi/logs
+ 
+-	dodir /var/lib/${PN}/work
+-	fowners ${PN}:${PN} /var/lib/${PN}/work
+-	dosym ../../../var/lib/${PN}/work ${static_dir}/work
++	newinitd "${FILESDIR}"/unifi.initd unifi
++	systemd_dounit "${FILESDIR}"/unifi.service
+ 
+-	keepdir /var/lib/${PN}/data
+-	fowners ${PN}:${PN} /var/lib/${PN}/data
+-	dosym ../../../var/lib/${PN}/data ${static_dir}/data
++	newconfd "${FILESDIR}"/unifi.confd unifi
+ 
+-	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+-	doenvd "${T}"/99${PN}
++	echo 'CONFIG_PROTECT="/var/lib/unifi"' > "${T}"/99unifi || die
++	doenvd "${T}"/99unifi
+ 
+-	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+-	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+-	systemd_dounit "${FILESDIR}"/${PN}.service
++	einstalldocs
+ }
+diff --git a/net-wireless/unifi/unifi-5.9.4.ebuild b/net-wireless/unifi/unifi-5.9.4.ebuild
+index b51420746ef7..5a117e75daea 100644
+--- a/net-wireless/unifi/unifi-5.9.4.ebuild
++++ b/net-wireless/unifi/unifi-5.9.4.ebuild
+@@ -3,61 +3,68 @@
+ 
+ EAPI=6
+ 
+-inherit systemd user
++# Used, when it's an unstable, beta or release candidate
++RC_SUFFIX="b647df56b7"
+ 
+-# for not-stable releases set RC_SUFFIX="-xxxxxxxxxx"
+-RC_SUFFIX="-b647df56b7"
++inherit systemd user
+ 
+-DESCRIPTION="Management Controller for UniFi APs"
+-HOMEPAGE="https://www.ubnt.com/download/unifi"
+-SRC_URI="http://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
++DESCRIPTION="A Management Controller for Ubiquiti Networks UniFi APs"
++HOMEPAGE="https://www.ubnt.com"
++SRC_URI="https://dl.ubnt.com/unifi/${PV}${RC_SUFFIX}/UniFi.unix.zip -> ${P}.zip"
+ 
+-LICENSE="GPL-3"
+-SLOT="0"
+-#KEYWORDS="~amd64"
+-IUSE=""
+-RESTRICT="mirror"
++LICENSE="Apache-1.0 Apache-2.0 BSD-1 BSD-2 BSD CDDL EPL-1.0 GPL-2 LGPL-2.1 LGPL-3 MIT ubiquiti"
++SLOT="0/5.9"
+ 
+-DEPEND=""
+ RDEPEND="dev-db/mongodb
+-	virtual/jre"
++	dev-java/tomcat-native
++	virtual/jre:1.8"
++
++DEPEND="app-arch/unzip"
++
++RESTRICT="bindist mirror"
++
++S="${WORKDIR}/UniFi"
+ 
+-S=${WORKDIR}/UniFi
+-QA_PREBUILT="/usr/lib64/unifi/lib/native/*"
++DOCS=( "readme.txt" )
++
++QA_PREBUILT="usr/lib/unifi/lib/native/Linux/x86_64/*.so"
+ 
+ pkg_setup() {
+-	enewuser ${PN}
+-	enewgroup ${PN}
++	enewgroup unifi
++	enewuser unifi -1 -1 /var/lib/unifi unifi
+ }
+ 
+-src_install(){
+-	static_dir="/usr/$(get_libdir)/${PN}"
+-	#install static data
+-	insinto ${static_dir}
+-	doins -r *
++src_prepare() {
++	# Remove unneeded files Linux, Mac and Windows
++	rm -r lib/native/Linux/{aarch64,armv7} lib/native/{Mac,Windows} || die
++
++	default
++}
+ 
+-	#wrapper to work around mongodb-3.6 compat issue
+-	exeinto ${static_dir}/bin/
++src_install() {
++	# Install MongoDB wrapper script, to avoid problems with >= 3.6.0
++	# See https://community.ubnt.com/t5/UniFi-Routing-Switching/MongoDB-3-6/td-p/2195435
++	exeinto /usr/lib/unifi/bin
+ 	newexe "${FILESDIR}"/mongod-wrapper mongod
+ 
+-	#prepare runtime-data dirs which live in /var but are symlinked from static
+-	#data dir, and are writable by non-root user
+-	dodir /var/log/${PN}
+-	fowners ${PN}:${PN} /var/log/${PN}
+-	dosym ../../../var/log/${PN} ${static_dir}/logs
++	insinto /usr/lib/unifi
++	doins -r dl lib webapps
++
++	diropts -o unifi -g unifi
++	keepdir /var/lib/unifi/{conf,data,run,tmp,work} /var/log/unifi
++
++	for symlink in conf data run tmp work; do
++		dosym ../../../var/lib/unifi/${symlink} /usr/lib/unifi/${symlink}
++	done
++	dosym ../../../var/log/unifi /usr/lib/unifi/logs
+ 
+-	dodir /var/lib/${PN}/work
+-	fowners ${PN}:${PN} /var/lib/${PN}/work
+-	dosym ../../../var/lib/${PN}/work ${static_dir}/work
++	newinitd "${FILESDIR}"/unifi.initd unifi
++	systemd_dounit "${FILESDIR}"/unifi.service
+ 
+-	keepdir /var/lib/${PN}/data
+-	fowners ${PN}:${PN} /var/lib/${PN}/data
+-	dosym ../../../var/lib/${PN}/data ${static_dir}/data
++	newconfd "${FILESDIR}"/unifi.confd unifi
+ 
+-	echo "CONFIG_PROTECT=\"/var/lib/${PN}/data/system.properties\"" > "${T}"/99${PN}
+-	doenvd "${T}"/99${PN}
++	echo 'CONFIG_PROTECT="/var/lib/unifi"' > "${T}"/99unifi || die
++	doenvd "${T}"/99unifi
+ 
+-	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+-	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+-	systemd_dounit "${FILESDIR}"/${PN}.service
++	einstalldocs
+ }

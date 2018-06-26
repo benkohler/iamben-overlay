@@ -45,7 +45,7 @@ src_install() {
 	# Install MongoDB wrapper script, to avoid problems with >= 3.6.0
 	# See https://community.ubnt.com/t5/UniFi-Routing-Switching/MongoDB-3-6/td-p/2195435
 	exeinto /usr/lib/unifi/bin
-	doexe "${FILESDIR}"/mongod
+	newexe "${FILESDIR}"/mongod-wrapper mongod
 
 	insinto /usr/lib/unifi
 	doins -r dl lib webapps
@@ -60,6 +60,8 @@ src_install() {
 
 	newinitd "${FILESDIR}"/unifi.initd unifi
 	systemd_dounit "${FILESDIR}"/unifi.service
+
+	newconfd "${FILESDIR}"/unifi.confd unifi
 
 	echo 'CONFIG_PROTECT="/var/lib/unifi"' > "${T}"/99unifi || die
 	doenvd "${T}"/99unifi

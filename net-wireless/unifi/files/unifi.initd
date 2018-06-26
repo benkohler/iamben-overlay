@@ -3,7 +3,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 ACE_LIB="lib/ace.jar"
-DAEMON="${JAVA_HOME-/usr}"/bin/java
+DAEMON="${JAVA_HOME-/etc/java-config-2/current-system-vm}"/bin/java
 JAVA_OPTS="-Dorg.xerial.snappy.tempdir=/usr/lib/unifi/tmp"
 UNIFI_GROUP="unifi"
 UNIFI_PATH="/usr/lib/unifi"
