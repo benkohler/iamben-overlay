@@ -5,9 +5,10 @@ EAPI=6
 
 inherit systemd user
 
+MY_PV="${PV/_beta/-beta.}"
 DESCRIPTION="UniFi Video Server"
 HOMEPAGE="https://www.ubnt.com/download/unifi-video/"
-SRC_URI="https://dl.ubnt.com/firmwares/ufv/v${PV}/unifi-video.Ubuntu16.04_amd64.v${PV}.deb"
+SRC_URI="https://dl.ubnt.com/firmwares/ufv/v${MY_PV}/unifi-video.Ubuntu16.04_amd64.v${MY_PV}.deb"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -51,6 +52,10 @@ src_install() {
 	doins -r usr/lib/${PN}/*
 	fperms -R +x ${static_dir}/bin
 
+	#wrapper to work around mongodb-3.6 compat issue
+	exeinto ${static_dir}/bin/
+	newexe "${FILESDIR}"/mongod-wrapper mongod
+
 	#prepare runtime-data dirs which live in /var but are symlinked from static
 	#data dir, and are writable by non-root user
 	dodir /var/log/${PN}
@@ -70,7 +75,6 @@ src_install() {
 
 	into /usr
 	dosbin usr/sbin/${PN}
-	dosym ../../../bin/mongod ${static_dir}/bin/mongod
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
 	newconfd "${FILESDIR}"/${PN}.confd ${PN}
