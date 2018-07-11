@@ -5,7 +5,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit python-single-r1 vcs-snapshot
+inherit desktop python-single-r1 vcs-snapshot
 
 MY_COMMIT="0ed9b5e4a0e1f03c83c4589cabf410cac66cd11d"
 
@@ -33,4 +33,6 @@ src_install() {
 	python_fix_shebang ${PN}
 	dobin ${PN}
 	dodoc README.rst
+
+	make_desktop_entry ${PN} ${PN} ${PN} Network
 }
