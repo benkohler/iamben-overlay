@@ -5,10 +5,14 @@ EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit python-single-r1 git-r3
+inherit python-single-r1 vcs-snapshot
+
+MY_COMMIT="0ed9b5e4a0e1f03c83c4589cabf410cac66cd11d"
 
 DESCRIPTION="Desktop notification integration for connman"
 HOMEPAGE="https://gitlab.com/wavexx/connman-notify/"
+SRC_URI="https://gitlab.com/wavexx/connman-notify/repository/${MY_COMMIT}/archive.tar.bz2 -> ${P}.tar.bz2"
+
 EGIT_REPO_URI="https://gitlab.com/wavexx/connman-notify.git"
 
 LICENSE="GPL-2"
