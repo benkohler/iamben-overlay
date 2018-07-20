@@ -5,7 +5,7 @@ EAPI=6
 
 if [[ ${PV} == *9999* ]]; then
 	SRC_ECLASS="git-r3"
-	EGIT_REPO_URI="git://anongit.gentoo.org/proj/catalyst.git"
+	EGIT_REPO_URI="https://anongit.gentoo.org/git/proj/catalyst.git"
 	EGIT_BRANCH="master"
 else
 	SRC_URI="mirror://gentoo/${P}.tar.bz2
