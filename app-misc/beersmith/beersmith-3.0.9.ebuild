@@ -57,6 +57,6 @@ src_install() {
 
 	for size in 16 24 32 48 64 128 ; do
 		insinto /usr/share/icons/hicolor/${size}x${size}/apps
-		doins usr/share/icons/hicolor/${size}x${size}/apps/${PN}.png
+		doins usr/share/icons/hicolor/${size}x${size}/apps/${PN}${MJ_VER}.png
 	done
 }
