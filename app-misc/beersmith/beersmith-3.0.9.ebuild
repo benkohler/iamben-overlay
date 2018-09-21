@@ -1,15 +1,16 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit desktop unpacker
 
 MY_PN="BeerSmith"
+MJ_VER="$(ver_cut 1)"
 
 DESCRIPTION="BeerSmith Home Brewing Software"
 HOMEPAGE="http://www.beersmith.com/"
-SRC_URI="https://s3.amazonaws.com/beersmith-3/BeerSmith-16.04-${PV}amd64.deb"
+SRC_URI="https://s3.amazonaws.com/beersmith-${MJ_VER}/BeerSmith-16.04-${PV}amd64.deb"
 
 LICENSE="${MY_PN}
 	GPL-2"
@@ -36,17 +37,17 @@ RDEPEND="media-libs/libpng:1.2
 	"
 
 S="${WORKDIR}"
-QA_PREBUILT="opt/bin/beersmith2"
+QA_PREBUILT="opt/bin/beersmith${MJ_VER}"
 
 src_install() {
 	into /opt
-	dobin usr/bin/beersmith3
+	dobin usr/bin/beersmith${MJ_VER}
 
-	insinto /usr/share/${MY_PN}3
-	doins -r usr/share/${MY_PN}3/{*.bsmx,*.xml,*.bsopt,Reports,Updates,help}
+	insinto /usr/share/${MY_PN}${MJ_VER}
+	doins -r usr/share/${MY_PN}${MJ_VER}/{*.bsmx,*.xml,*.bsopt,Reports,Updates,help}
 
-	insinto /usr/share/${MY_PN}3/icons
-	doins usr/share/${MY_PN}3/icons/*.{gif,png}
+	insinto /usr/share/${MY_PN}${MJ_VER}/icons
+	doins usr/share/${MY_PN}${MJ_VER}/icons/*.{gif,png}
 
 	sed -i \
 		-e 's#/usr/bin/##' \
