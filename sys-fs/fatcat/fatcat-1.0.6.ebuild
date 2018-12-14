@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 src_install() {
-	default
+	cmake-utils_src_install
 	doman man/${PN}.1
 	dodoc docs/*.md
 }
