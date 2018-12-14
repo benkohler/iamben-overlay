@@ -20,7 +20,7 @@ S=${WORKDIR}
 
 src_unpack() {
 	default
-	fatcat memtest86-usb.img -O 1048576 -r /EFI/BOOT/BOOTX64.efi > ${PN}.efi
+	fatcat memtest86-usb.img -O 1048576 -r /EFI/BOOT/BOOTX64.efi > ${PN}.efi || die
 }
 
 src_install() {
