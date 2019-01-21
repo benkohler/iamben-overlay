@@ -34,6 +34,7 @@ if [[ ${PV} != 9999 ]]; then
 else
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/esnowberg/grub2-sparc.git"
+	EGIT_BRANCH="sparc-next-v6"
 	KEYWORDS="~sparc"
 fi
 
