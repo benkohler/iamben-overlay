@@ -135,7 +135,8 @@ QA_EXECSTACK="usr/bin/grub*-emu* usr/lib/grub/*"
 QA_WX_LOAD="usr/lib/grub/*"
 QA_MULTILIB_PATHS="usr/lib/grub/.*"
 
-PATCHES=( grub-sparc-m64.patch grub-sparc-no-pie.patch ) 
+PATCHES=( "${FILESDIR}"/grub-sparc-m64.patch
+	"${FILESDIR}"/grub-sparc-no-pie.patch )
 
 src_unpack() {
 	if [[ ${PV} == 9999 ]]; then
