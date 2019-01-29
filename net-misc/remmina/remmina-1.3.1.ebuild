@@ -51,8 +51,10 @@ DOCS=( AUTHORS CHANGELOG.md README.md THANKS.md )
 S="${WORKDIR}/${MY_P}"
 
 src_configure() {
+	local CMAKE_BUILD_TYPE
+	CMAKE_BUILD_TYPE=$(usex debug Debug Release)
+
 	local mycmakeargs=(
-		-DCMAKE_BUILD_TYPE=$(usex debug Debug Release)
 		-DWITH_APPINDICATOR=$(usex ayatana)
 		-DWITH_GCRYPT=$(usex crypt)
 		-DWITH_EXAMPLES=$(usex examples)
