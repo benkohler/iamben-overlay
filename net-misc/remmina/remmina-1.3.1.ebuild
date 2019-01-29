@@ -52,7 +52,7 @@ S="${WORKDIR}/${MY_P}"
 
 src_configure() {
 	local mycmakeargs=(
-		-DCMAKE_BUILD_TYPEE=$(usex debug Debug Release)
+		-DCMAKE_BUILD_TYPE=$(usex debug Debug Release)
 		-DWITH_APPINDICATOR=$(usex ayatana)
 		-DWITH_GCRYPT=$(usex crypt)
 		-DWITH_EXAMPLES=$(usex examples)
