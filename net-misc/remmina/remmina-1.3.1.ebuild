@@ -14,7 +14,7 @@ SRC_URI="https://gitlab.com/Remmina/Remmina/-/archive/v${PV}/${MY_P}.tar.gz"
 LICENSE="GPL-2+-with-openssl-exception"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="ayatana crypt examples gnome-keyring libressl nls spice ssh rdp telepathy vnc zeroconf"
+IUSE="ayatana crypt debug examples gnome-keyring libressl nls spice ssh rdp telepathy vnc zeroconf"
 
 CDEPEND="
 	dev-libs/glib:2
@@ -52,6 +52,7 @@ S="${WORKDIR}/${MY_P}"
 
 src_configure() {
 	local mycmakeargs=(
+		-DCMAKE_BUILD_TYPEE=$(usex debug Debug Release)
 		-DWITH_APPINDICATOR=$(usex ayatana)
 		-DWITH_GCRYPT=$(usex crypt)
 		-DWITH_EXAMPLES=$(usex examples)
