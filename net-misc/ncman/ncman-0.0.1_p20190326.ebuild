@@ -4,7 +4,7 @@
 EAPI=6
 
 inherit meson vcs-snapshot
-COMMIT="bca0dc0a835f8a267be28d32b49775a50543d081"
+COMMIT="21a55145ddbc5d085e91352586875abe92cff73b"
 
 DESCRIPTION="An ncurses UI for connman, forked from connman-json-client"
 HOMEPAGE="https://github.com/l4rzy/ncman"
@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-PATCHES=( "${FILESDIR}"/ncman-install-binary.patch )
+PATCHES=( "${FILESDIR}"/ncman-ncursesw.patch )
 
 RDEPEND="dev-libs/json-c:0=
 	>=sys-apps/dbus-1.4

@@ -1,0 +1,16 @@
+diff -ur ncman-0.0.1_p20190326/meson.build ncman-0.0.1_p20190326.new/meson.build
+--- ncman-0.0.1_p20190326/meson.build	2019-03-27 12:22:17.743665520 -0500
++++ ncman-0.0.1_p20190326.new/meson.build	2019-03-27 12:22:49.805706828 -0500
+@@ -11,10 +11,10 @@
+ ## libs
+ dbus =		  dependency('dbus-1')
+ json =		  dependency('json-c')
+-ncurses =	  dependency('ncurses')
++ncursesw =	  dependency('ncursesw')
+ formw =		  dependency('formw')
+ menuw =		  dependency('menuw')
+-build_dependencies = [dbus, ncurses, json, formw, menuw]
++build_dependencies = [dbus, ncursesw, json, formw, menuw]
+ 
+ ## flags
+ flags = [
