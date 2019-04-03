@@ -15,8 +15,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-PATCHES=( "${FILESDIR}"/ncman-ncursesw.patch )
-
 RDEPEND="dev-libs/json-c:0=
 	>=sys-apps/dbus-1.4
 	sys-libs/ncurses:0="
