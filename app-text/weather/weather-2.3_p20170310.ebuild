@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -10,12 +10,12 @@ inherit python-single-r1 vcs-snapshot
 COMMIT="2a84a53f4aac0175f75b77e3a73d5a68b6e20ac6"
 
 DESCRIPTION="CLI utility for quick access to current weather conditions and forecasts"
-HOMEPAGE="http://fungi.yuggoth.org/${PN}"
+HOMEPAGE="http://fungi.yuggoth.org/weather"
 SRC_URI="https://www.yuggoth.org/gitweb?p=${PN}.git;a=snapshot;h=${COMMIT};sf=tgz -> ${P}.tar.gz"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="x86 amd64"
+KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND="${PYTHON_DEPS}"
