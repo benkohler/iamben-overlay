@@ -52,6 +52,12 @@ DOCS=( AUTHORS CHANGELOG.md README.md THANKS.md )
 
 S="${WORKDIR}/${MY_P}"
 
+src_prepare() {
+	default
+	sed -i -e '/^find_program(PROG_UPDATE_DESKTOP_DATABASE/d' \
+		data/desktop/CMakeLists.txt || die
+}
+
 src_configure() {
 	local mycmakeargs=(
 		-DWITH_APPINDICATOR=$(usex ayatana)
