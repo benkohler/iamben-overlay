@@ -3,18 +3,19 @@
 
 EAPI=6
 
-inherit cmake-utils eutils gnome2-utils xdg-utils
+inherit cmake-utils eutils gnome2-utils vcs-snapshot xdg-utils
 
 MY_P="${PN^}-v${PV}"
+COMMIT="d3cfd641333b45ffb160dab2080fda3f4bbb8d68"
 
 DESCRIPTION="A GTK+ RDP, SPICE, VNC, XDMCP and SSH client"
 HOMEPAGE="https://remmina.org/"
-SRC_URI="https://gitlab.com/Remmina/Remmina/-/archive/v${PV}/${MY_P}.tar.gz"
+SRC_URI="https://gitlab.com/Remmina/Remmina/-/archive/master/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2+-with-openssl-exception"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="ayatana crypt examples gnome-keyring kwallet libressl nls spice ssh rdp telepathy vnc zeroconf"
+IUSE="ayatana crypt examples gnome-keyring kwallet libressl nls spice ssh rdp telepathy vnc webkit zeroconf"
 
 CDEPEND="
 	dev-libs/glib:2
@@ -37,6 +38,7 @@ CDEPEND="
 		x11-libs/vte:2.91 )
 	telepathy? ( net-libs/telepathy-glib )
 	vnc? ( net-libs/libvncserver[jpeg] )
+	webkit? ( net-libs/webkit-gtk:4 )
 	zeroconf? ( net-dns/avahi[gtk3] )
 "
 DEPEND="${CDEPEND}
@@ -49,14 +51,6 @@ RDEPEND="${CDEPEND}
 "
 
 DOCS=( AUTHORS CHANGELOG.md README.md THANKS.md )
-
-S="${WORKDIR}/${MY_P}"
-
-src_prepare() {
-	default
-	sed -i -e '/^find_program(PROG_UPDATE_DESKTOP_DATABASE/d' \
-		data/desktop/CMakeLists.txt || die
-}
 
 src_configure() {
 	local mycmakeargs=(
@@ -73,7 +67,10 @@ src_configure() {
 		-DWITH_VTE=$(usex ssh)
 		-DWITH_TELEPATHY=$(usex telepathy)
 		-DWITH_LIBVNCSERVER=$(usex vnc)
+		-DWITH_WWW=$(usex webkit)
 		-DWITH_AVAHI=$(usex zeroconf)
+		-DWITH_ICON_CACHE=OFF
+		-DWITH_UPDATE_DESKTOP_DB=OFF
 	)
 	cmake-utils_src_configure
 }
