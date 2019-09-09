@@ -1,0 +1,14 @@
+DEFINED_PHASES=install prepare setup unpack
+DEPEND=python_single_target_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_single_target_python3_5? ( dev-lang/python:3.5 ) python_single_target_python3_6? ( dev-lang/python:3.6 ) python_single_target_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_5(-)?,python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_jython2_7(-),-python_single_target_pypy(-),-python_single_target_pypy3(-),python_single_target_python2_7(+)?,python_single_target_python3_5(+)?,python_single_target_python3_6(+)?,python_single_target_python3_7(+)?]
+DESCRIPTION=CLI utility for quick access to current weather conditions and forecasts
+EAPI=6
+HOMEPAGE=http://fungi.yuggoth.org/weather
+IUSE=python_targets_python2_7 python_targets_python3_5 python_targets_python3_6 python_targets_python3_7 python_single_target_python2_7 python_single_target_python3_5 python_single_target_python3_6 python_single_target_python3_7
+KEYWORDS=amd64 x86
+LICENSE=ISC
+RDEPEND=python_single_target_python2_7? ( >=dev-lang/python-2.7.5-r2:2.7 ) python_single_target_python3_5? ( dev-lang/python:3.5 ) python_single_target_python3_6? ( dev-lang/python:3.6 ) python_single_target_python3_7? ( dev-lang/python:3.7 ) >=dev-lang/python-exec-2:=[python_targets_python2_7(-)?,python_targets_python3_5(-)?,python_targets_python3_6(-)?,python_targets_python3_7(-)?,-python_single_target_jython2_7(-),-python_single_target_pypy(-),-python_single_target_pypy3(-),python_single_target_python2_7(+)?,python_single_target_python3_5(+)?,python_single_target_python3_6(+)?,python_single_target_python3_7(+)?]
+REQUIRED_USE=^^ ( python_single_target_python2_7 python_single_target_python3_5 python_single_target_python3_6 python_single_target_python3_7 ) python_single_target_python2_7? ( python_targets_python2_7 ) python_single_target_python3_5? ( python_targets_python3_5 ) python_single_target_python3_6? ( python_targets_python3_6 ) python_single_target_python3_7? ( python_targets_python3_7 )
+SLOT=0
+SRC_URI=https://www.yuggoth.org/gitweb?p=weather.git;a=snapshot;h=2a84a53f4aac0175f75b77e3a73d5a68b6e20ac6;sf=tgz -> weather-2.3_p20170310.tar.gz
+_eclasses_=multilib	1d91b03d42ab6308b5f4f6b598ed110e	python-single-r1	3a0fc81f484bfdbd9c2b7448015a36e4	python-utils-r1	08e17157a6807add7db1f8d01e7e391f	toolchain-funcs	a3a237ef6c0c58546bf23b2c382f9e56	vcs-snapshot	b1abf460a493fc59ebb25de0df3f09dd
+_md5_=115dda82197268c50f99ca31ffa8e7b0

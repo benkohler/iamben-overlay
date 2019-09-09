@@ -1,0 +1,12 @@
+DEFINED_PHASES=install
+DESCRIPTION=RealVNC client
+EAPI=6
+HOMEPAGE=http://www.realvnc.com/
+KEYWORDS=~amd64 ~x86
+LICENSE=RealVNC
+RDEPEND=x11-libs/libX11 x11-libs/libXext
+RESTRICT=mirror
+SLOT=0
+SRC_URI=amd64? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.19.325-Linux-x64 ) x86? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.19.325-Linux-x86 )
+_eclasses_=desktop	b1d22ac8bdd4679ab79c71aca235009d
+_md5_=6c05efb3c619e99d9f65b9676e8a60d1

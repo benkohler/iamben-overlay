@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python3_{5,6,7} )
 PYTHON_REQ_USE='threads(+),xml(+)'
 
-inherit python-single-r1 waf-utils multilib-minimal linux-info systemd pam
+inherit python-single-r1 waf-utils multilib-minimal linux-info tmpfiles pam
 
 MY_PV="${PV/_rc/rc}"
 MY_P="${PN}-${MY_PV}"
@@ -267,6 +267,8 @@ multilib_src_install() {
 		# Install init script and conf.d file
 		newinitd "${CONFDIR}/samba4.initd-r1" samba
 		newconfd "${CONFDIR}/samba4.confd" samba
+
+		newtmpfiles packaging/systemd/samba.conf.tmp samba.conf
 	fi
 
 	if use pam && use winbind ; then

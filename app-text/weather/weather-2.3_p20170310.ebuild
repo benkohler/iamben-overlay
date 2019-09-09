@@ -41,6 +41,5 @@ src_install() {
 	gzip airports places stations zctas zones
 	doins airports.gz places.gz stations.gz zctas.gz zones.gz
 
-	insinto $(python_get_sitedir)
-	doins ${PN}.py
+	cp ${PN}.py $(python_get_sitedir)
 }
