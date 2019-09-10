@@ -69,7 +69,6 @@ CDEPEND="
 	ceph? ( sys-cluster/ceph )
 	cluster? (
 		net-libs/rpcsvc-proto
-		!dev-db/ctdb
 	)
 	cups? ( net-print/cups )
 	debug? ( dev-util/lttng-ust )
