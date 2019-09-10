@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -11,7 +11,7 @@ UPN="tinyproxy"
 
 DESCRIPTION="A fast light-weight HTTP proxy for POSIX operating systems."
 HOMEPAGE="https://github.com/tenchman/tinyproxy-ex"
-SRC_URI="https://github.com/tenchman/${PN}/tarball/${COMMIT} -> ${P}.tar.gz"
+SRC_URI="https://github.com/tenchman/${PN}/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
