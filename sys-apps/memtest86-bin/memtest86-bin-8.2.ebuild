@@ -14,7 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-BDEPEND="sys-fs/fatcat"
+BDEPEND="app-arch/unzip
+	sys-fs/fatcat"
 
 S=${WORKDIR}
 
