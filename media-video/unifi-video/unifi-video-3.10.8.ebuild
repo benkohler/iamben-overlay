@@ -47,7 +47,7 @@ src_prepare() {
 }
 
 src_install() {
-	static_dir="/usr/$(get_libdir)/${PN}"
+	static_dir="/usr/lib/${PN}"
 	#install static data
 	insinto ${static_dir}
 	doins -r usr/lib/${PN}/*
