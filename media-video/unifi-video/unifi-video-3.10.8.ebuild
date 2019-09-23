@@ -52,7 +52,8 @@ src_install() {
 	insinto ${static_dir}
 	doins -r usr/lib/${PN}/*
 	fperms -R +x ${static_dir}/bin
-	fowners -R ${PN}:${PN} ${static_dir}/conf/evostream/
+	fowners -R ${PN}:${PN} ${static_dir}/conf/
+	fowners -R ${PN}:${PN} ${static_dir}/webapps/
 
 	#prepare runtime-data dirs which live in /var but are symlinked from static
 	#data dir, and are writable by non-root user
