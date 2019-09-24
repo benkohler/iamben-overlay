@@ -50,7 +50,7 @@ src_install() {
 	CODEPATH=/usr/lib/${PN}
 	DATAPATH=/var/lib/${PN}
 	LOGPATH=${DATAPATH}/logs
-	VARLOGPATH=/var/log/${NAME}
+	VARLOGPATH=/var/log/${PN}
 
 	insinto /usr/lib
 	doins -r usr/lib/${PN}
