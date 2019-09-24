@@ -66,10 +66,10 @@ src_install() {
 
 	cp "${D}/${CODEPATH}/etc/system.properties" "${D}/${DATAPATH}/system.properties"
 
-	fperms 500 ${CODEPATH}/bin/ubnt.* \
-	fperms 500	${CODEPATH}/bin/evo* \
-	fperms 500	/usr/sbin/${PN} \
-	fperms 500	${CODEPATH}/tools/*
+	fperms 500 ${CODEPATH}/bin/ubnt.*
+	fperms 500 ${CODEPATH}/bin/evo*
+	fperms 500 /usr/sbin/${PN}
+	fperms 500 ${CODEPATH}/tools/*
 	fowners -R ${PN}:${PN} ${CODEPATH}
 	fperms 0400 ${CODEPATH}/lib/*
 
