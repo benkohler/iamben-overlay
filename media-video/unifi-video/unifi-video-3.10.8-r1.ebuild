@@ -20,6 +20,7 @@ DEPEND=""
 RDEPEND="dev-db/mongodb
 	dev-java/commons-daemon
 	sys-apps/lsb-release
+	sys-apps/util-linux
 	sys-libs/libcap
 	virtual/jre:1.8"
 
@@ -47,8 +48,8 @@ src_prepare() {
 }
 
 src_install() {
-	CODEPATH=/usr/lib/${PN}
-	DATAPATH=/var/lib/${PN}
+	export CODEPATH=/usr/lib/${PN}
+	export DATAPATH=/var/lib/${PN}
 	LOGPATH=${DATAPATH}/logs
 	VARLOGPATH=/var/log/${PN}
 
@@ -67,8 +68,6 @@ src_install() {
 
 	dosym ${DATAPATH} ${CODEPATH}/data
 
-	cp "${D}/${CODEPATH}/etc/system.properties" "${D}/${DATAPATH}/system.properties"
-
 	fperms 500 ${CODEPATH}/bin/ubnt.avtool
 	fperms 500 ${CODEPATH}/bin/evostreamms
 	fperms 500 /usr/sbin/${PN}
@@ -84,4 +83,11 @@ src_install() {
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
 	systemd_dounit "${FILESDIR}"/${PN}.service
+}
+
+pkg_postinst() {
+	if [[ ! -f ${DATAPATH}/system.properties ]]; then
+		cp ${CODEPATH}/etc/system.properties ${DATAPATH}/system.properties
+		echo uuid=$(uuidgen) >> ${DATAPATH}/system.properties
+	fi
 }
