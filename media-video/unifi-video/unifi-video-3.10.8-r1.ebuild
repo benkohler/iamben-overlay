@@ -52,8 +52,11 @@ src_install() {
 	LOGPATH=${DATAPATH}/logs
 	VARLOGPATH=/var/log/${PN}
 
+	rm .${CODEPATH}/bin/ubnt.updater
+	rm .${CODEPATH}/tools/updater
+
 	insinto /usr/lib
-	doins -r usr/lib/${PN}
+	doins -r .${CODEPATH}
 	into /usr
 	dosbin usr/sbin/unifi-video
 
@@ -66,12 +69,13 @@ src_install() {
 
 	cp "${D}/${CODEPATH}/etc/system.properties" "${D}/${DATAPATH}/system.properties"
 
-	fperms 500 ${CODEPATH}/bin/ubnt.*
-	fperms 500 ${CODEPATH}/bin/evo*
+	fperms 500 ${CODEPATH}/bin/ubnt.avtool
+	fperms 500 ${CODEPATH}/bin/evostreamms
 	fperms 500 /usr/sbin/${PN}
-	fperms 500 ${CODEPATH}/tools/*
+	fperms 500 ${CODEPATH}/tools/ufvtools
 	fowners -R ${PN}:${PN} ${CODEPATH}
-	fperms 0400 ${CODEPATH}/lib/*
+	fperms -R 0400 ${CODEPATH}/lib/
+	fperms 500 ${CODEPATH}/lib/
 
 	echo "CONFIG_PROTECT=\"${DATAPATH}/system.properties\"" > "${T}"/99${PN}
 	doenvd "${T}"/99${PN}
