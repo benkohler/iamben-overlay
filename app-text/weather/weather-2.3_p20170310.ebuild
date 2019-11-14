@@ -41,5 +41,5 @@ src_install() {
 	gzip airports places stations zctas zones
 	doins airports.gz places.gz stations.gz zctas.gz zones.gz
 
-	cp ${PN}.py $(python_get_sitedir)
+	cp ${PN}.py ${D}/$(python_get_sitedir)
 }
