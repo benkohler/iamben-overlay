@@ -1,11 +1,11 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_{5,6,7} )
+PYTHON_COMPAT=( python3_{6,7} )
 PYTHON_REQ_USE='threads(+),xml(+)'
 
-inherit python-single-r1 waf-utils multilib-minimal linux-info tmpfiles pam
+inherit linux-info multilib-minimal pam python-single-r1 tmpfiles waf-utils
 
 MY_PV="${PV/_rc/rc}"
 MY_P="${PN}-${MY_PV}"
@@ -23,8 +23,8 @@ LICENSE="GPL-3"
 
 SLOT="0"
 
-IUSE="acl addc addns ads ceph client cluster cups debug dmapi fam gnutls gpg
-iprint json ldap pam profiling-data python quota selinux syslog system-heimdal
+IUSE="acl addc addns ads ceph client cluster cups debug dmapi fam gpg iprint 
+json ldap pam profiling-data python quota selinux syslog system-heimdal 
 +system-mitkrb5 systemd test winbind zeroconf"
 
 MULTILIB_WRAPPED_HEADERS=(
@@ -44,23 +44,25 @@ CDEPEND="
 	dev-lang/perl:=
 	dev-libs/libaio[${MULTILIB_USEDEP}]
 	dev-libs/libbsd[${MULTILIB_USEDEP}]
+	dev-libs/libgcrypt:0
 	dev-libs/iniparser:0
 	dev-libs/popt[${MULTILIB_USEDEP}]
 	dev-python/subunit[${PYTHON_USEDEP},${MULTILIB_USEDEP}]
 	>=dev-util/cmocka-1.1.1[${MULTILIB_USEDEP}]
+	>=net-libs/gnutls-3.2.0
 	net-libs/libnsl:=[${MULTILIB_USEDEP}]
 	sys-apps/attr[${MULTILIB_USEDEP}]
-	>=sys-libs/ldb-1.5.5[ldap(+)?,python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
-	<sys-libs/ldb-1.6.0[ldap(+)?,python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
+	>=sys-libs/ldb-2.0.8[ldap(+)?,python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
+	<sys-libs/ldb-2.2.0[ldap(+)?,python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
 	sys-libs/libcap
 	sys-libs/ncurses:0=[${MULTILIB_USEDEP}]
 	sys-libs/readline:0=
-	>=sys-libs/talloc-2.1.16[python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
-	>=sys-libs/tdb-1.3.18[python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
-	>=sys-libs/tevent-0.9.39[python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
+	>=sys-libs/talloc-2.2.0[python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
+	>=sys-libs/tdb-1.4.2[python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
+	>=sys-libs/tevent-0.10.0[python?,${PYTHON_USEDEP},${MULTILIB_USEDEP}]
 	sys-libs/zlib[${MULTILIB_USEDEP}]
 	virtual/libiconv
-	pam? ( virtual/pam )
+	pam? ( sys-libs/pam )
 	acl? ( virtual/acl )
 	addns? (
 		net-dns/bind-tools[gssapi]
@@ -69,21 +71,19 @@ CDEPEND="
 	ceph? ( sys-cluster/ceph )
 	cluster? (
 		net-libs/rpcsvc-proto
+		!dev-db/ctdb
 	)
 	cups? ( net-print/cups )
 	debug? ( dev-util/lttng-ust )
 	dmapi? ( sys-apps/dmapi )
 	fam? ( virtual/fam )
-	gnutls? (
-		dev-libs/libgcrypt:0
-		>=net-libs/gnutls-1.4.0
-	)
 	gpg? ( app-crypt/gpgme )
 	json? ( dev-libs/jansson )
 	ldap? ( net-nds/openldap[${MULTILIB_USEDEP}] )
 	system-heimdal? ( >=app-crypt/heimdal-1.5[-ssl,${MULTILIB_USEDEP}] )
 	system-mitkrb5? ( >=app-crypt/mit-krb5-1.15.1[${MULTILIB_USEDEP}] )
 	systemd? ( sys-apps/systemd:0= )
+	zeroconf? ( net-dns/avahi )
 "
 DEPEND="${CDEPEND}
 	${PYTHON_DEPS}
@@ -111,9 +111,9 @@ RDEPEND="${CDEPEND}
 "
 
 REQUIRED_USE="
-	addc? ( python gnutls json winbind )
+	addc? ( python json winbind )
 	addns? ( python )
-	ads? ( acl gnutls ldap winbind )
+	ads? ( acl ldap winbind )
 	cluster? ( ads )
 	gpg? ( addc )
 	test? ( python )
@@ -131,7 +131,6 @@ S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.4.0-pam.patch"
-	"${FILESDIR}/${PN}-4.5.1-compile_et_fix.patch"
 	"${FILESDIR}/${PN}-4.9.2-timespec.patch"
 )
 
@@ -216,7 +215,6 @@ multilib_src_configure() {
 		$(multilib_native_use_enable zeroconf avahi)
 		$(multilib_native_usex test '--enable-selftest' '')
 		$(usex system-mitkrb5 "--with-system-mitkrb5 $(multilib_native_usex addc --with-experimental-mit-ad-dc '')" '')
-		$(use_enable gnutls)
 		$(use_with debug lttng)
 		$(use_with ldap)
 		$(use_with profiling-data)
@@ -274,7 +272,7 @@ multilib_src_install() {
 		newpamd "${CONFDIR}/system-auth-winbind.pam" system-auth-winbind
 		# bugs #376853 and #590374
 		insinto /etc/security
-		doins examples/pam_winbind/pam_winbind.conf || die
+		doins examples/pam_winbind/pam_winbind.conf
 	fi
 
 	keepdir /var/cache/samba
