@@ -5,7 +5,7 @@ EAPI=6
 PYTHON_COMPAT=( python3_{6,7} )
 PYTHON_REQ_USE='threads(+),xml(+)'
 
-inherit linux-info multilib-minimal pam python-single-r1 tmpfiles waf-utils
+inherit python-single-r1 waf-utils multilib-minimal linux-info tmpfiles pam
 
 MY_PV="${PV/_rc/rc}"
 MY_P="${PN}-${MY_PV}"
