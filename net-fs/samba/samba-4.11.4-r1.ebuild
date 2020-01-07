@@ -269,6 +269,7 @@ multilib_src_install() {
 		# Preserve functionality for old gentoo-specific unit names
 		dosym nmb.service "$(systemd_get_systemunitdir)/nmbd.service"
 		dosym smb.service "$(systemd_get_systemunitdir)/smbd.service"
+		dosym winbind.service "$(systemd_get_systemunitdir)/winbindd.service"
 
 	fi
 
