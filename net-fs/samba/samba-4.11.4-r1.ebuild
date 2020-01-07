@@ -23,8 +23,8 @@ LICENSE="GPL-3"
 
 SLOT="0"
 
-IUSE="acl addc addns ads ceph client cluster cups debug dmapi fam gpg iprint 
-json ldap pam profiling-data python quota selinux syslog system-heimdal 
+IUSE="acl addc addns ads ceph client cluster cups debug dmapi fam gpg iprint
+json ldap pam profiling-data python quota selinux syslog system-heimdal
 +system-mitkrb5 systemd test winbind zeroconf"
 
 MULTILIB_WRAPPED_HEADERS=(
@@ -266,6 +266,10 @@ multilib_src_install() {
 		newconfd "${CONFDIR}/samba4.confd" samba
 
 		newtmpfiles packaging/systemd/samba.conf.tmp samba.conf
+		# Preserve functionality for old gentoo-specific unit names
+		dosym nmb.service "$(systemd_get_systemunitdir)/nmbd.service"
+		dosym smb.service "$(systemd_get_systemunitdir)/smbd.service"
+
 	fi
 
 	if use pam && use winbind ; then
