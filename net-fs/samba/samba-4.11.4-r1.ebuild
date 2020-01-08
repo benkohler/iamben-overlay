@@ -267,11 +267,12 @@ multilib_src_install() {
 		newconfd "${CONFDIR}/samba4.confd" samba
 
 		systemd_newtmpfilesd packaging/systemd/samba.conf.tmp samba.conf
+		use addc || rm "${D}/$(systemd_get_systemunitdir)/samba.service" || die
+
 		# Preserve functionality for old gentoo-specific unit names
 		dosym nmb.service "$(systemd_get_systemunitdir)/nmbd.service"
 		dosym smb.service "$(systemd_get_systemunitdir)/smbd.service"
 		dosym winbind.service "$(systemd_get_systemunitdir)/winbindd.service"
-
 	fi
 
 	if use pam && use winbind ; then
