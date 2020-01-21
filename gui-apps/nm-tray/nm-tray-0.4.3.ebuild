@@ -28,10 +28,10 @@ RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}"/nm-tray-0.4.3-missing-include-qmetaenum.patch )
 
-#src_configure() {
-#	local mycmakeargs=(
-#		-DNM_TRAY_XDG_AUTOSTART_DIR=/etc/xdg/autostart
-#	)
-#
-#	cmake_src_configure
-#}
+src_configure() {
+	local mycmakeargs=(
+		-DNM_TRAY_XDG_AUTOSTART_DIR=/etc/xdg/autostart
+	)
+
+	cmake_src_configure
+}
