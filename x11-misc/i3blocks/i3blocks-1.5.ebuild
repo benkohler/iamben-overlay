@@ -21,6 +21,8 @@ fi
 SLOT="0"
 LICENSE="GPL-3"
 
+PATCHES=( "${FILESDIR}"/${PN}-disable-bash-completion.patch )
+
 src_prepare() {
 	default
 	eautoreconf
