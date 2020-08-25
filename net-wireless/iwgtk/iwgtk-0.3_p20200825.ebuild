@@ -17,4 +17,5 @@ IUSE=""
 DEPEND="x11-libs/gtk+:3"
 RDEPEND="${DEPEND}
 	net-wireless/iwd"
-BDEPEND=""
+
+S="${WORKDIR}"/${PN}-${COMMIT}
