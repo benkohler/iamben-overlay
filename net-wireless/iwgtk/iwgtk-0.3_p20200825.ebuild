@@ -20,3 +20,7 @@ RDEPEND="${DEPEND}
 	net-wireless/iwd"
 
 S="${WORKDIR}"/${PN}-${COMMIT}
+
+src_install() {
+	emake prefix=/usr install
+}
