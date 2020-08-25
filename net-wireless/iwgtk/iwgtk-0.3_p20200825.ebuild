@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit xdg
 
 COMMIT=07f7f4e798c41eacc53b72f07a729393ab6acb9f
 
