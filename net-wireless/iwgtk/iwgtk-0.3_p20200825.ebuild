@@ -3,9 +3,11 @@
 
 EAPI=7
 
+COMMIT=07f7f4e798c41eacc53b72f07a729393ab6acb9f
+
 DESCRIPTION="Lightweight, graphical wifi management utility for Linux"
 HOMEPAGE="https://github.com/J-Lentz/iwgtk"
-SRC_URI="https://github.com/J-Lentz/iwgtk/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/J-Lentz/iwgtk/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0"
@@ -16,5 +18,3 @@ DEPEND="x11-libs/gtk+:3"
 RDEPEND="${DEPEND}
 	net-wireless/iwd"
 BDEPEND=""
-
-PATCHES=( "${FILESDIR}"/iwgtk-0.3-stdint-include.patch )
