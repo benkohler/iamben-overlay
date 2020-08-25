@@ -16,3 +16,5 @@ DEPEND="x11-libs/gtk+:3"
 RDEPEND="${DEPEND}
 	net-wireless/iwd"
 BDEPEND=""
+
+PATCHES=( "${FILESDIR}"/iwgtk-0.3-stdint-include.patch )

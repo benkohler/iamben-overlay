@@ -1,0 +1,11 @@
+diff -ur a/src/iwgtk.h b/src/iwgtk.h
+--- a/src/iwgtk.h	2020-08-25 13:06:51.731245796 -0500
++++ b/src/iwgtk.h	2020-08-25 13:07:14.367618103 -0500
+@@ -22,6 +22,7 @@
+ 
+ #include <gtk/gtk.h>
+ #include <gio/gio.h>
++#include <stdint.h>
+ 
+ #define VERSION_STRING "iwgtk 0.3"
+ 
