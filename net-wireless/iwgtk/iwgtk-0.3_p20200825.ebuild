@@ -22,5 +22,5 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}"/${PN}-${COMMIT}
 
 src_install() {
-	emake prefix=/usr install
+	emake prefix="${ED}/usr" install
 }
