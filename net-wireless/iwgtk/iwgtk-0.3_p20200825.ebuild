@@ -23,4 +23,5 @@ S="${WORKDIR}"/${PN}-${COMMIT}
 
 src_install() {
 	emake prefix="${ED}/usr" install
+	gunzip "${ED}/usr/share/man/man1/iwgtk.1.gz"
 }
