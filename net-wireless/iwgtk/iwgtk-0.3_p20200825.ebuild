@@ -12,12 +12,22 @@ SRC_URI="https://github.com/J-Lentz/iwgtk/archive/${COMMIT}.tar.gz -> ${P}.tar.g
 
 LICENSE="GPL-3+"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="x11-libs/gtk+:3"
-RDEPEND="${DEPEND}
-	net-wireless/iwd"
+DEPEND="
+	dev-libs/atk:0
+	dev-libs/glib:2
+	x11-libs/cairo:0
+	x11-libs/gdk-pixbuf:2
+	x11-libs/gtk+:3
+	x11-libs/pango:0
+"
+
+RDEPEND="
+	${DEPEND}
+	net-wireless/iwd
+"
 
 S="${WORKDIR}"/${PN}-${COMMIT}
 
