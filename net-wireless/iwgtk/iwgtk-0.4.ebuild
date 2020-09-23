@@ -4,11 +4,9 @@
 EAPI=7
 inherit xdg
 
-COMMIT=07f7f4e798c41eacc53b72f07a729393ab6acb9f
-
 DESCRIPTION="Lightweight, graphical wifi management utility for Linux"
 HOMEPAGE="https://github.com/J-Lentz/iwgtk"
-SRC_URI="https://github.com/J-Lentz/iwgtk/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/J-Lentz/iwgtk/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0"
@@ -28,8 +26,6 @@ RDEPEND="
 	${DEPEND}
 	net-wireless/iwd
 "
-
-S="${WORKDIR}"/${PN}-${COMMIT}
 
 src_prepare() {
 	default
