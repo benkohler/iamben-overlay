@@ -12,7 +12,7 @@ SRC_URI="https://kornelix.net/downloads/downloads/${P}.tar.gz"
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="dvd ffmpeg jpeg2k"
+IUSE=""
 
 # For required dependencies read doc/README, for required tools read
 # data/userguide [INSTALLATION]. xdg-open (x11-misc/xdg-utils) is an
@@ -33,9 +33,6 @@ RDEPEND="
 	media-gfx/dcraw
 	media-libs/exiftool
 	x11-misc/xdg-utils
-	x11-apps/xgamma
-	x11-apps/xhost
-	x11-terms/xterm
 "
 
 S="${WORKDIR}/${PN}"
@@ -59,6 +56,14 @@ src_install() {
 }
 
 pkg_postinst() {
+	optfeature "HEIC file support" media-libs/libheif
+	optfeature "additional RAW file support" media-gfx/rawtherapee
+	optfeature "additional RAW file support" media-gfx/darktable
+	optfeature "video thumbnails & playback" media-video/ffmpeg
+	optfeature "copying images to optical media" app-cdr/dvd+rw-tools
+	optfeature "additional panorama support" media-gfx/hugin
+	optfeature "WEBP file support" media-libs/libwebp
+
 	elog
 	elog "Please read the Help > User Guide for details. The source location is"
 	elog "/usr/share/fotoxx/data/userguide and after running fotoxx a copy will"
