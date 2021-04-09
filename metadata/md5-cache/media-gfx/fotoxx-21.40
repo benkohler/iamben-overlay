@@ -1,0 +1,14 @@
+DEFINED_PHASES=install postinst postrm prepare
+DEPEND=media-libs/clutter media-libs/clutter-gtk media-libs/lcms:2 media-libs/libpng:0 media-libs/tiff:0 media-libs/libchamplain[gtk] virtual/jpeg x11-libs/gtk+:3
+DESCRIPTION=Program for improving image files made with a digital camera
+EAPI=7
+HOMEPAGE=https://kornelix.net/fotoxx20/fotoxx.html
+INHERIT=xdg-utils
+IUSE=dvd ffmpeg jpeg2k
+KEYWORDS=~amd64 ~x86
+LICENSE=GPL-3+
+RDEPEND=media-libs/clutter media-libs/clutter-gtk media-libs/lcms:2 media-libs/libpng:0 media-libs/tiff:0 media-libs/libchamplain[gtk] virtual/jpeg x11-libs/gtk+:3 media-gfx/dcraw media-libs/exiftool x11-misc/xdg-utils x11-apps/xgamma x11-apps/xhost x11-terms/xterm
+SLOT=0
+SRC_URI=https://kornelix.net/downloads/downloads/fotoxx-21.40.tar.gz
+_eclasses_=xdg-utils	ff2ff954e6b17929574eee4efc5152ba
+_md5_=0e6684c23af8e0395f4f24410db85918
