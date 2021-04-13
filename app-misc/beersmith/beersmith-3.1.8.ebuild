@@ -36,17 +36,17 @@ RDEPEND="
 "
 
 S="${WORKDIR}"
-QA_PREBUILT="opt/bin/beersmith${MJ_VER}"
+QA_PREBUILT="opt/bin/beersmith3"
 
 src_install() {
 	into /opt
-	dobin usr/bin/beersmith${MJ_VER}
+	dobin usr/bin/beersmith3
 
-	insinto /usr/share/${MY_PN}${MJ_VER}
-	doins -r usr/share/${MY_PN}${MJ_VER}/{*.bsmx,*.xml,*.bsopt,Reports,Updates,help}
+	insinto /usr/share/BeerSmith3
+	doins -r usr/share/BeerSmith3/{*.bsmx,*.xml,*.bsopt,Reports,Updates,help}
 
-	insinto /usr/share/${MY_PN}${MJ_VER}/icons
-	doins usr/share/${MY_PN}${MJ_VER}/icons/*.{gif,png}
+	insinto /usr/share/BeerSmith3/icons
+	doins usr/share/BeerSmith3/icons/*.{gif,png}
 
 	sed -i \
 		-e 's#/usr/bin/##' \
@@ -56,6 +56,6 @@ src_install() {
 
 	for size in 16 24 32 48 64 128 ; do
 		insinto /usr/share/icons/hicolor/${size}x${size}/apps
-		doins usr/share/icons/hicolor/${size}x${size}/apps/${PN}${MJ_VER}.png
+		doins usr/share/icons/hicolor/${size}x${size}/apps/beersmith3.png
 	done
 }
