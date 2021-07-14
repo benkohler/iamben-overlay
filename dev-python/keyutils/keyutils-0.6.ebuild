@@ -14,6 +14,12 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=""
+DEPEND="dev-python/pip[${PYTHON_USEDEP}]
+	dev-python/wheel[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
 BDEPEND=""
+
+src_prepare() {
+	default
+	sed -i -e '/pytest-runner/d' setup.py || die
+}
