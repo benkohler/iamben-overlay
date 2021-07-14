@@ -14,14 +14,15 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="dev-python/pip[${PYTHON_USEDEP}]
-	dev-python/wheel[${PYTHON_USEDEP}]"
-RDEPEND="${DEPEND}"
-BDEPEND=""
-
 distutils_enable_tests pytest
 
 src_prepare() {
 	default
 	sed -i -e '/pytest-runner/d' setup.py || die
+}
+
+python_test() {
+	ln -s "${S}"/test "${BUILD_DIR}"/test || die
+	cd "${BUILD_DIR}" || die
+	distutils-r1_python_test
 }
