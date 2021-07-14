@@ -7,8 +7,8 @@ PYTHON_COMPAT=( python3_{8,9,10} )
 inherit distutils-r1
 
 DESCRIPTION="A set of python bindings for keyutils"
-HOMEPAGE="https://pypi.org/project/keyutils/"
-SRC_URI="mirror://pypi/k/${PN}/${P}.tar.gz"
+HOMEPAGE="https://github.com/sassoftware/python-keyutils/"
+SRC_URI="https://github.com/sassoftware/python-keyutils/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -18,6 +18,8 @@ DEPEND="dev-python/pip[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}"
 BDEPEND=""
+
+distutils_enable_tests pytest
 
 src_prepare() {
 	default
