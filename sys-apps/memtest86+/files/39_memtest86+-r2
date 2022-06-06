@@ -87,7 +87,7 @@ EOF
         fi
 
         cat <<EOF
-        ${submenu_indentation}linuxefi "${path}"
+        ${submenu_indentation}chainloader "${path}"
 ${submenu_indentation}}
 ${submenu_indentation}fi
 EOF
@@ -112,7 +112,7 @@ EOF
         fi
 
         cat <<EOF
-        ${submenu_indentation}linuxefi "${path}"
+        ${submenu_indentation}chainloader "${path}"
 ${submenu_indentation}}
 ${submenu_indentation}fi
 EOF
