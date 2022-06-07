@@ -7,13 +7,13 @@ inherit mount-boot
 
 MY_PV=${PV/_/-}
 
-DESCRIPTION=""
+DESCRIPTION="Memory tester based on PCMemTest"
 HOMEPAGE="https://www.memtest.org/"
 SRC_URI="https://github.com/memtest86plus/memtest86plus/archive/refs/tags/v${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="bios32 bios64 +boot efi32 efi64 iso32 iso64"
 
 DEPEND=""
@@ -44,21 +44,24 @@ src_compile() {
 	popd
 }
 
+install_memtest_images() {
+	use bios32 && newins build32/memtest.bin memtest32.bios
+	use bios64 && newins build64/memtest.bin memtest64.bios
+	use efi32 && newins build32/memtest.efi memtest.efi32
+	use efi64 && newins build64/memtest.efi memtest.efi64
+}
+
 src_install() {
 	default
 	if use boot; then
 		exeinto /etc/grub.d/
 		newexe "${FILESDIR}"/39_memtest86+-r2 39_memtest86+
 		insinto /boot/memtest86plus
-	else
-		insinto /usr/share/${PN}
+		install_memtest_images
 	fi
-	use bios32 && newins build32/memtest.bin memtest32.bios
-	use bios64 && newins build64/memtest.bin memtest64.bios
-	use efi32 && newins build32/memtest.efi memtest.efi32
-	use efi64 && newins build64/memtest.efi memtest.efi64
 
 	insinto /usr/share/${PN}
+	install_memtest_images
 	use iso32 && newins build32/memtest.iso memtest32.iso
 	use iso64 && newins build64/memtest.iso memtest64.iso
 }
