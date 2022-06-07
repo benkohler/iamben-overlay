@@ -16,17 +16,18 @@ SLOT="0"
 KEYWORDS=""
 IUSE="bios32 bios64 +boot efi32 efi64 iso32 iso64"
 
-DEPEND=""
-RDEPEND=""
+
+ISODEPS="dev-libs/libisoburn sys-fs/dosfstools sys-fs/mtools"
 BDEPEND="
-	iso32? ( dev-libs/libisoburn sys-fs/dosfstools )
-	iso64? ( dev-libs/libisoburn sys-fs/dosfstools )
+	iso32? ( ${ISODEPS} )
+	iso64? ( ${ISODEPS} )
 "
 
 S=${WORKDIR}/memtest86plus-${MY_PV}
 
 src_prepare() {
-	sed -i -e "s#/sbin/mkdosfs#mkfs.vfat#" build{32,64}/Makefile
+	sed -i -e "s#/sbin/mkdosfs#mkfs.vfat#" build{32,64}/Makefile || die
+	sed -i -e "s/^AS = as/AS +=/" -e "/^CC/d" build{32,64}/Makefile || die
 	default
 }
 
