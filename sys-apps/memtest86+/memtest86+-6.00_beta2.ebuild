@@ -17,7 +17,11 @@ KEYWORDS=""
 IUSE="bios32 bios64 +boot efi32 efi64 iso32 iso64"
 
 
-ISODEPS="dev-libs/libisoburn sys-fs/dosfstools sys-fs/mtools"
+ISODEPS="
+	dev-libs/libisoburn
+	sys-fs/dosfstools
+	sys-fs/mtools
+"
 BDEPEND="
 	iso32? ( ${ISODEPS} )
 	iso64? ( ${ISODEPS} )
