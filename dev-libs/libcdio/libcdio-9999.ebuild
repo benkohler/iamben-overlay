@@ -13,11 +13,11 @@ if [ ${PV} == 9999 ]; then
 	EGIT_REPO_URI="https://git.savannah.gnu.org/git/libcdio.git"
 else
 	SRC_URI="mirror://gnu/${PN}/${P}.tar.bz2"
+	KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~riscv sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~x86-solaris"
 fi
 
 LICENSE="GPL-3"
 SLOT="0/19" # subslot is based on SONAME
-KEYWORDS="~alpha amd64 arm arm64 ~hppa ~ia64 ~mips ppc ppc64 ~riscv sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~x86-solaris"
 IUSE="cddb +cxx minimal static-libs test"
 RESTRICT="!test? ( test )"
 
@@ -60,7 +60,6 @@ multilib_src_configure() {
 	fi
 
 	local myeconfargs=(
-		--enable-maintainer-mode
 		$(use_enable cxx)
 		--disable-cpp-progs
 		--disable-example-progs
@@ -69,6 +68,13 @@ multilib_src_configure() {
 		--disable-vcd-info
 		${util_switch}-{cd-drive,cd-info,cdda-player,cd-read,iso-info,iso-read}
 	)
+
+	if [ ${PV} == 9999 ]; then
+		myeconfargs+=( --enable-maintainer-mode )
+	else
+		myeconfargs+=( --disable-maintainer-mode )
+	fi
+
 	# Tests fail if ECONF_SOURCE is not relative
 	ECONF_SOURCE="../${P}" econf "${myeconfargs[@]}"
 }
