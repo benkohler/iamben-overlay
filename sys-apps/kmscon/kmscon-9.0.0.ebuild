@@ -37,7 +37,6 @@ REQUIRED_USE="gles2? ( drm )"
 
 src_prepare() {
 	default
-	eautoreconf
 
 	export CC_FOR_BUILD="$(tc-getBUILD_CC)"
 }
@@ -48,18 +47,18 @@ src_configure() {
 	strip-flags
 
 	local emesonargs=(
-		$(meson_feature debug)
-		$(meson_feature systemd multi-seat)
+		$(meson_use debug)
+		$(meson_feature systemd multi_seat)
 		$(meson_feature fbdev video_fbdev)
 		$(meson_feature drm video_drm2d)
 		$(meson_feature drm video_drm3d)
 		$(meson_feature unicode font_unifont)
 		$(meson_feature pango font_pango)
-		-Drenderer_bbulk=true
+		-Drenderer_bbulk=enabled
 		$(meson_feature gles2 renderer_gltex)
 		$(meson_feature pixman renderer_pixman)
-		-Dsession_dummy=true
-		-Dsession_terminal=true
+		-Dsession_dummy=enabled
+		-Dsession_terminal=enabled
 	)
 
 	meson_src_configure
