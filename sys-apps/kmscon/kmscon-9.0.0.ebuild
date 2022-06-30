@@ -48,16 +48,16 @@ src_configure() {
 	strip-flags
 
 	local emesonargs=(
-		$(meson_use debug)
-		$(meson_use systemd multi-seat)
-		$(meson_use fbdev video_fbdev)
-		$(meson_use drm video_drm2d)
-		$(meson_use drm video_drm3d)
-		$(meson_use unicode font_unifont)
-		$(meson_use pango font_pango)
+		$(meson_feature debug)
+		$(meson_feature systemd multi-seat)
+		$(meson_feature fbdev video_fbdev)
+		$(meson_feature drm video_drm2d)
+		$(meson_feature drm video_drm3d)
+		$(meson_feature unicode font_unifont)
+		$(meson_feature pango font_pango)
 		-Drenderer_bbulk=true
-		$(meson_use gles2 renderer_gltex)
-		$(meson_use pixman renderer_pixman)
+		$(meson_feature gles2 renderer_gltex)
+		$(meson_feature pixman renderer_pixman)
 		-Dsession_dummy=true
 		-Dsession_terminal=true
 	)
