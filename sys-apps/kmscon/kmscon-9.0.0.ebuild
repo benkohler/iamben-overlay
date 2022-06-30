@@ -53,7 +53,7 @@ src_configure() {
 		$(meson_use fbdev video_fbdev)
 		$(meson_use drm video_drm2d)
 		$(meson_use drm video_drm3d)
-		$(meson_use unifont font_unifont)
+		$(meson_use unicode font_unifont)
 		$(meson_use pango font_pango)
 		-Drenderer_bbulk=true
 		$(meson_use gles2 renderer_gltex)
