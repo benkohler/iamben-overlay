@@ -35,9 +35,10 @@ BDEPEND="virtual/pkgconfig
 
 REQUIRED_USE="gles2? ( drm )"
 
+PATCHES=( "${FILESDIR}"/kmscon-9.0.0-systemd-path-fix.patch )
+
 src_prepare() {
 	default
-
 	export CC_FOR_BUILD="$(tc-getBUILD_CC)"
 }
 
@@ -62,17 +63,6 @@ src_configure() {
 	)
 
 	meson_src_configure
-
-}
-
-src_install() {
-	emake DESTDIR="${D}" install
-	systemd_dounit "${S}/docs"/kmscon{,vt@}.service
-
-	insinto /usr/share/${PN}
-	doins -r fblog
-
-	find "${ED}" -name '*.la' -delete || die
 }
 
 pkg_postinst() {
