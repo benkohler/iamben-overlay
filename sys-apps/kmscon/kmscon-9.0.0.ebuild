@@ -48,6 +48,7 @@ src_configure() {
 	strip-flags
 
 	local emesonargs=(
+		$(meson_feature doc docs)
 		$(meson_use debug)
 		$(meson_feature systemd multi_seat)
 		$(meson_feature fbdev video_fbdev)
