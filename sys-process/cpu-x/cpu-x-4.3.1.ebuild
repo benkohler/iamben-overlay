@@ -5,7 +5,7 @@ EAPI=8
 
 MY_PN="CPU-X"
 
-inherit cmake xdg
+inherit cmake gnome2-utils xdg
 
 DESCRIPTION="A Free software that gathers information on CPU, motherboard and more"
 HOMEPAGE="https://x0rg.github.io/CPU-X/"
@@ -13,7 +13,7 @@ SRC_URI="https://github.com/X0rg/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="-* ~amd64"
-IUSE="+bandwidth +dmidecode force-libstatgrab +gtk +libcpuid +libglfw +libpci +ncurses +nls +opencl test"
+IUSE="+bandwidth +dmidecode force-libstatgrab +gtk +libcpuid +libglfw +libpci +ncurses +nls opencl test"
 RESTRICT="primaryuri !test? ( test )"
 
 COMMON_DEPEND="
@@ -72,12 +72,12 @@ src_configure() {
 	cmake_src_configure
 }
 
-pkg_preinst() {
-	xdg_pkg_preinst
+pkg_postinst() {
+	xdg_pkg_postinst
 	gnome2_schemas_update
 }
 
-pkg_postinst() {
-	xdg_pkg_postinst
+pkg_postrm() {
+	xdg_pkg_postrm
 	gnome2_schemas_update
 }
