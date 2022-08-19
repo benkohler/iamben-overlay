@@ -14,7 +14,7 @@ LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="-* ~amd64"
 IUSE="+bandwidth +dmidecode force-libstatgrab +gtk +libcpuid +libglfw +libpci +ncurses +nls opencl test"
-RESTRICT="primaryuri !test? ( test )"
+RESTRICT="!test? ( test )"
 
 COMMON_DEPEND="
 	dev-libs/glib:2
@@ -48,10 +48,6 @@ BDEPEND="
 RDEPEND="${COMMON_DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
-
-src_prepare() {
-	cmake_src_prepare
-}
 
 src_configure() {
 	local mycmakeargs=(
