@@ -14,7 +14,7 @@ LICENSE="BSD-2"
 SLOT="0/15"
 KEYWORDS="~amd64"
 IUSE="static-libs test"
-RESTRICT="primaryuri !test? ( test )"
+RESTRICT="!test? ( test )"
 
 DEPEND="test? ( ${PYTHON_DEPS} )"
 
