@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=(python3_{6..9})
+PYTHON_COMPAT=(python3_{9..11})
 
 inherit autotools python-any-r1
 
@@ -24,7 +24,6 @@ pkg_setup() {
 
 src_prepare() {
 	default
-
 	eautoreconf
 }
 
@@ -32,12 +31,7 @@ src_configure() {
 	econf "$(use_enable static-libs static)"
 }
 
-src_test() {
-	emake test
-}
-
 src_install() {
 	default
-
 	find "${ED}" -name "*.la" -delete || die
 }
