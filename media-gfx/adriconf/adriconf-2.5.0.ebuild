@@ -51,7 +51,7 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DENABLE_UNIT_TESTS="false"
-		-DENABLE_XWAYLAND="$(usex wayland)"
+		-DENABLE_XWAYLAND="true"
 	)
 	cmake_src_configure
 }
