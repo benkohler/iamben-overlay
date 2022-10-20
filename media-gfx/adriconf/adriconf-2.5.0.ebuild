@@ -19,8 +19,6 @@ fi
 LICENSE="GPL-3"
 SLOT="0"
 
-IUSE="wayland"
-
 RDEPEND="
 	dev-cpp/glibmm:2
 	dev-cpp/gtkmm:3.0
@@ -33,7 +31,6 @@ RDEPEND="
 	x11-libs/gtk+:3
 	x11-libs/libdrm
 	x11-libs/libX11
-	wayland? ( media-libs/mesa[egl] )
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
