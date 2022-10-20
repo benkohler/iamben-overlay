@@ -20,12 +20,12 @@ LICENSE="GPL-3"
 SLOT="0"
 
 RDEPEND="
+	dev-cpp/atkmm:0
 	dev-cpp/glibmm:2
 	dev-cpp/gtkmm:3.0
-	dev-cpp/libxmlpp
-	dev-libs/boost:=
 	dev-libs/glib:2
 	dev-libs/libsigc++:2
+	dev-libs/pugixml
 	media-libs/mesa
 	sys-apps/pciutils
 	x11-libs/gtk+:3
