@@ -21,7 +21,7 @@ DEPEND=""
 RDEPEND="
 	app-arch/brotli:0/1
 	dev-libs/glib:2
-	dev-libs/openssl:0/1.1
+	|| ( dev-libs/openssl-compat:1.1.1 dev-libs/openssl:0/1.1 )
 	media-libs/fontconfig
 	media-libs/libpng:0/16
 	net-libs/libpsl:0
