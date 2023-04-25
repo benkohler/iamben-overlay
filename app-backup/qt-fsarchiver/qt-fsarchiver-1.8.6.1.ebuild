@@ -29,7 +29,7 @@ DEPEND="${COMMON_DEPEND}"
 
 S="${WORKDIR}/${PN}"
 
-src_compile() {
+src_configure() {
 	eqmake5
 }
 
