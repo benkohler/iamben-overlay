@@ -23,7 +23,7 @@ COMMON_DEPEND="app-arch/bzip2
 	sys-fs/e2fsprogs
 	sys-libs/zlib"
 RDEPEND="${COMMON_DEPEND}
-	>=app-backup/fsarchiver-${MIN_PV}[lzma,lzo]"
+	app-backup/fsarchiver[lzma,lzo]"
 
 DEPEND="${COMMON_DEPEND}"
 
