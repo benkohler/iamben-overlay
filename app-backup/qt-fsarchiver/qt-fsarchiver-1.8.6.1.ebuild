@@ -34,7 +34,7 @@ DEPEND="${COMMON_DEPEND}"
 S="${WORKDIR}/${PN}"
 
 src_prepare() {
-	sed -i -e "/^  DOC_DIR/ s#qt-fsarchiver#${P}#" qt-fsarchiver.pro || die
+	sed -i -e "/^  DOC_DIR/ s#${PN}#${P}#" qt-fsarchiver.pro || die
 	default
 }
 
