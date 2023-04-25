@@ -19,8 +19,6 @@ COMMON_DEPEND="app-arch/bzip2
 	dev-libs/libgcrypt:=
 	dev-libs/lzo
 	dev-qt/qtcore:5
-	dev-qt/qtgui:5
-	dev-qt/qtwidgets:5
 	sys-apps/util-linux
 	sys-fs/e2fsprogs
 	sys-libs/zlib"
