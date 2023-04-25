@@ -13,7 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 COMMON_DEPEND="app-arch/bzip2
+	app-arch/lz4
 	app-arch/xz-utils
+	app-arch/zstd
 	dev-libs/libgcrypt:=
 	dev-libs/lzo
 	dev-qt/qtcore:5
@@ -23,7 +25,8 @@ COMMON_DEPEND="app-arch/bzip2
 	sys-fs/e2fsprogs
 	sys-libs/zlib"
 RDEPEND="${COMMON_DEPEND}
-	app-backup/fsarchiver[lzma,lzo]"
+	app-backup/fsarchiver[lzma,lzo]
+	app-backup/qt-fsarchiver-terminal"
 
 DEPEND="${COMMON_DEPEND}"
 
