@@ -32,3 +32,8 @@ S="${WORKDIR}/${PN}"
 src_compile() {
 	eqmake5
 }
+
+src_install() {
+	emake INSTALL_ROOT="${D}" install
+	einstalldocs
+}
