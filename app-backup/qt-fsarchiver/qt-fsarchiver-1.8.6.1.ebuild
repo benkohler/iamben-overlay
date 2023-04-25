@@ -8,7 +8,7 @@ DESCRIPTION="Graphical interface for easy operation of fsarchiver."
 HOMEPAGE="https://github.com/DieterBaum/qt-fsarchiver"
 SRC_URI="mirror://sourceforge/${PN}/${PN}-$(ver_rs 3 -).tar.gz"
 
-LICENSE=""
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
