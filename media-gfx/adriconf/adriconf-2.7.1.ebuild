@@ -22,7 +22,7 @@ SLOT="0"
 RDEPEND="
 	dev-cpp/atkmm:0
 	dev-cpp/glibmm:2
-	dev-cpp/gtkmm:3.0
+	dev-cpp/gtkmm:4.0
 	dev-libs/glib:2
 	dev-libs/libsigc++:2
 	dev-libs/pugixml
