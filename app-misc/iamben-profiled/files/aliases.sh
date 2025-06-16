@@ -11,6 +11,7 @@ eb() {
 mynspawn() {
 	mkdir -p ${1}/var/db/repos/gentoo
 	systemd-nspawn \
+		--background= \
 		--bind=/var/db/repos/gentoo \
 		--bind=/var/db/repos/iamben-overlay \
 		-D ${@}
