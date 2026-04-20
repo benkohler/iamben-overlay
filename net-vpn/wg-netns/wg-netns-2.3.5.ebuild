@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_{12,13} )
+PYTHON_COMPAT=( python3_{12,13,14} )
 inherit distutils-r1 systemd
 
 DESCRIPTION="wg-quick with support for Linux network namespaces"
